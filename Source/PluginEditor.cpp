@@ -13,6 +13,7 @@
 
   The Introjucer is part of the JUCE library - "Jules' Utility Class Extensions"
   Copyright (c) 2015 - ROLI Ltd.
+  Author - Casey Bailey 2015
 
   ==============================================================================
 */
