@@ -13,7 +13,6 @@
 
   The Introjucer is part of the JUCE library - "Jules' Utility Class Extensions"
   Copyright (c) 2015 - ROLI Ltd.
-  Author - Casey Bailey 2015
 
   ==============================================================================
 */
@@ -28,7 +27,8 @@
 //[/MiscUserDefs]
 
 //==============================================================================
-PluginEditor::PluginEditor ()
+StereoWidthCtrlAudioProcessorEditor::StereoWidthCtrlAudioProcessorEditor (StereoWidthCtrlAudioProcessor& ownerFilter)
+    : AudioProcessorEditor(ownerFilter)
 {
     //[Constructor_pre] You can add your own custom stuff here..
     //[/Constructor_pre]
@@ -41,10 +41,11 @@ PluginEditor::PluginEditor ()
 
 
     //[Constructor] You can add your own custom stuff here..
+	startTimer(200); // Start timer poll with 200ms rate
     //[/Constructor]
 }
 
-PluginEditor::~PluginEditor()
+StereoWidthCtrlAudioProcessorEditor::~StereoWidthCtrlAudioProcessorEditor()
 {
     //[Destructor_pre]. You can add your own custom destruction code here..
     //[/Destructor_pre]
@@ -56,18 +57,18 @@ PluginEditor::~PluginEditor()
 }
 
 //==============================================================================
-void PluginEditor::paint (Graphics& g)
+void StereoWidthCtrlAudioProcessorEditor::paint (Graphics& g)
 {
     //[UserPrePaint] Add your own custom painting code here..
     //[/UserPrePaint]
 
-    g.fillAll (Colours::white);
+    g.fillAll (Colours::black);
 
     //[UserPaint] Add your own custom painting code here..
     //[/UserPaint]
 }
 
-void PluginEditor::resized()
+void StereoWidthCtrlAudioProcessorEditor::resized()
 {
     //[UserPreResize] Add your own custom resize code here..
     //[/UserPreResize]
@@ -79,6 +80,11 @@ void PluginEditor::resized()
 
 
 //[MiscUserCode] You can add your own definitions of your custom methods or any other code here...
+void StereoWidthCtrlAudioProcessorEditor::timerCallback()
+{
+	StereoWidthCtrlAudioProcessor* ourProcessor = getProcessor();
+	//exchange data between UI Elements and the Plugin (ourProcessor)
+}
 //[/MiscUserCode]
 
 
@@ -91,11 +97,13 @@ void PluginEditor::resized()
 
 BEGIN_JUCER_METADATA
 
-<JUCER_COMPONENT documentType="Component" className="PluginEditor" componentName=""
-                 parentClasses="public Component" constructorParams="" variableInitialisers=""
-                 snapPixels="8" snapActive="1" snapShown="1" overlayOpacity="0.330"
-                 fixedSize="0" initialWidth="600" initialHeight="400">
-  <BACKGROUND backgroundColour="ffffffff"/>
+<JUCER_COMPONENT documentType="Component" className="StereoWidthCtrlAudioProcessorEditor"
+                 componentName="" parentClasses="public AudioProcessorEditor, public Timer"
+                 constructorParams="StereoWidthCtrlAudioProcessor&amp; ownerFilter"
+                 variableInitialisers="AudioProcessorEditor(ownerFilter)" snapPixels="8"
+                 snapActive="1" snapShown="1" overlayOpacity="0.330" fixedSize="0"
+                 initialWidth="600" initialHeight="400">
+  <BACKGROUND backgroundColour="ff000000"/>
 </JUCER_COMPONENT>
 
 END_JUCER_METADATA

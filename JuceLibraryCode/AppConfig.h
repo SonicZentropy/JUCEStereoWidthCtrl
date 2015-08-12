@@ -265,7 +265,7 @@
  #define JucePlugin_ProducesMidiOutput     0
 #endif
 #ifndef  JucePlugin_SilenceInProducesSilenceOut
- #define JucePlugin_SilenceInProducesSilenceOut  0
+ #define JucePlugin_SilenceInProducesSilenceOut  1
 #endif
 #ifndef  JucePlugin_EditorRequiresKeyboardFocus
  #define JucePlugin_EditorRequiresKeyboardFocus  0

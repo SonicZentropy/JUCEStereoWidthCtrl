@@ -17,11 +17,12 @@
   ==============================================================================
 */
 
-#ifndef __JUCE_HEADER_F1B68972952BE4__
-#define __JUCE_HEADER_F1B68972952BE4__
+#ifndef __JUCE_HEADER_F8EB772295D855C6__
+#define __JUCE_HEADER_F8EB772295D855C6__
 
 //[Headers]     -- You can add your own extra header files here --
 #include "JuceHeader.h"
+#include "PluginProcessor.h"
 //[/Headers]
 
 
@@ -34,15 +35,22 @@
     Describe your class and how it works here!
                                                                     //[/Comments]
 */
-class PluginEditor  : public Component
+class StereoWidthCtrlAudioProcessorEditor  : public AudioProcessorEditor,
+                                             public Timer
 {
 public:
     //==============================================================================
-    PluginEditor ();
-    ~PluginEditor();
+    StereoWidthCtrlAudioProcessorEditor (StereoWidthCtrlAudioProcessor& ownerFilter);
+    ~StereoWidthCtrlAudioProcessorEditor();
 
     //==============================================================================
     //[UserMethods]     -- You can add your own custom methods in this section.
+	void timerCallback();
+	StereoWidthCtrlAudioProcessor* getProcessor() const
+	{
+		return static_cast<StereoWidthCtrlAudioProcessor*>(getAudioProcessor());
+	}
+
     //[/UserMethods]
 
     void paint (Graphics& g);
@@ -58,10 +66,10 @@ private:
 
 
     //==============================================================================
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (PluginEditor)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (StereoWidthCtrlAudioProcessorEditor)
 };
 
 //[EndFile] You can add extra defines here...
 //[/EndFile]
 
-#endif   // __JUCE_HEADER_F1B68972952BE4__
+#endif   // __JUCE_HEADER_F8EB772295D855C6__
