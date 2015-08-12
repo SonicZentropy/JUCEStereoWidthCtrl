@@ -12,6 +12,7 @@
 #define PLUGINPROCESSOR_H_INCLUDED
 
 #include "../JuceLibraryCode/JuceHeader.h"
+#include "StereoWidthCtrl.h"
 
 
 //==============================================================================
@@ -20,6 +21,7 @@
 class StereoWidthCtrlAudioProcessor  : public AudioProcessor
 {
 public:
+
     //==============================================================================
     StereoWidthCtrlAudioProcessor();
     ~StereoWidthCtrlAudioProcessor();
@@ -65,9 +67,24 @@ public:
     void getStateInformation (MemoryBlock& destData) override;
     void setStateInformation (const void* data, int sizeInBytes) override;
 
+	// User Configured Area ========================================================
+	enum Parameters
+	{
+		MasterBypass=0,
+		StereoWidth,
+		totalNumParam
+	};
+	bool needsUIUpdate() { return UIUpdateFlag; };
+	void RequestUIUpdate(){ UIUpdateFlag = true; };
+	void ClearUIUpdateFlag() { UIUpdateFlag = false; };
+
 private:
     //==============================================================================
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (StereoWidthCtrlAudioProcessor)
+	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(StereoWidthCtrlAudioProcessor)
+	// User Configured Area ========================================================
+	float UserParams[totalNumParam];
+	StereoWidthCtrl widthControl;
+	bool UIUpdateFlag;
 };
 
 
