@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<JUCERPROJECT id="OOjbwb" name="StereoWidthCtrl" projectType="audioplug" version="1.0.0"
+              bundleIdentifier="com.zentropy.StereoWidthCtrl" includeBinaryInAppConfig="1"
+              buildVST="1" buildVST3="1" buildAU="0" buildRTAS="0" buildAAX="0"
+              pluginName="StereoWidthCtrl" pluginDesc="Change Stereo Width of Audio"
+              pluginManufacturer="Zentropy" pluginManufacturerCode="ZenA" pluginCode="SCtl"
+              pluginChannelConfigs="{2, 2}" pluginIsSynth="0" pluginWantsMidiIn="0"
+              pluginProducesMidiOut="0" pluginSilenceInIsSilenceOut="0" pluginEditorRequiresKeys="0"
+              pluginAUExportPrefix="StereoWidthCtrlAU" pluginRTASCategory=""
+              aaxIdentifier="com.zentropy.StereoWidthCtrl" pluginAAXCategory="AAX_ePlugInCategory_Dynamics"
+              jucerVersion="3.2.0" companyName="Zentropy" companyWebsite="http://www.soundcloud.com/zentropy"
+              companyEmail="SonicZentropy@gmail.com">
+  <MAINGROUP id="JHoKxW" name="StereoWidthCtrl">
+    <GROUP id="{449F2A72-20F9-17C7-2809-5D6ADB01CDA1}" name="Source">
+      <FILE id="uE8FNa" name="PluginProcessor.cpp" compile="1" resource="0"
+            file="Source/PluginProcessor.cpp"/>
+      <FILE id="smIUhC" name="PluginProcessor.h" compile="0" resource="0"
+            file="Source/PluginProcessor.h"/>
+      <FILE id="R36YnP" name="PluginEditor.cpp" compile="1" resource="0"
+            file="Source/PluginEditor.cpp"/>
+      <FILE id="VpHMdV" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
+    </GROUP>
+  </MAINGROUP>
+  <EXPORTFORMATS>
+    <VS2013 targetFolder="Builds/VisualStudio2013" vstFolder="c:\SDKs\VST3 SDK"
+            vst3Folder="c:\SDKs\VST3 SDK">
+      <CONFIGURATIONS>
+        <CONFIGURATION name="Debug" winWarningLevel="4" generateManifest="1" winArchitecture="x64"
+                       isDebug="1" optimisation="1" targetName="StereoWidthCtrl" postbuildCommand="xcopy &quot;$(TargetPath)&quot; &quot;Z:\VSTs\VSTs\Test\&quot;  /q /y"/>
+        <CONFIGURATION name="Release" winWarningLevel="4" generateManifest="1" winArchitecture="x64"
+                       isDebug="0" optimisation="3" targetName="StereoWidthCtrl" postbuildCommand="xcopy &quot;$(TargetPath)&quot; &quot;Z:\VSTs\VSTs\Test\&quot;  /q /y"/>
+        <CONFIGURATION name="x32 Release" winWarningLevel="4" generateManifest="1" winArchitecture="32-bit"
+                       isDebug="0" optimisation="3" targetName="StereoWidthCtrl_x32"
+                       postbuildCommand="xcopy &quot;$(TargetPath)&quot; &quot;Z:\VSTs\VSTs\Test\&quot;  /q /y"/>
+        <CONFIGURATION name="x32 Debug" winWarningLevel="4" generateManifest="1" winArchitecture="32-bit"
+                       isDebug="1" optimisation="1" targetName="StereoWidthCtrl_x32"
+                       postbuildCommand="xcopy &quot;$(TargetPath)&quot; &quot;Z:\VSTs\VSTs\Test\&quot;  /q /y"/>
+      </CONFIGURATIONS>
+      <MODULEPATHS>
+        <MODULEPATH id="juce_core" path="../JUCE/modules"/>
+        <MODULEPATH id="juce_events" path="../JUCE/modules"/>
+        <MODULEPATH id="juce_graphics" path="../JUCE/modules"/>
+        <MODULEPATH id="juce_data_structures" path="../JUCE/modules"/>
+        <MODULEPATH id="juce_gui_basics" path="../JUCE/modules"/>
+        <MODULEPATH id="juce_gui_extra" path="../JUCE/modules"/>
+        <MODULEPATH id="juce_cryptography" path="../JUCE/modules"/>
+        <MODULEPATH id="juce_video" path="../JUCE/modules"/>
+        <MODULEPATH id="juce_opengl" path="../JUCE/modules"/>
+        <MODULEPATH id="juce_audio_basics" path="../JUCE/modules"/>
+        <MODULEPATH id="juce_audio_devices" path="../JUCE/modules"/>
+        <MODULEPATH id="juce_audio_formats" path="../JUCE/modules"/>
+        <MODULEPATH id="juce_audio_processors" path="../JUCE/modules"/>
+        <MODULEPATH id="juce_audio_plugin_client" path="../JUCE/modules"/>
+      </MODULEPATHS>
+    </VS2013>
+  </EXPORTFORMATS>
+  <MODULES>
+    <MODULE id="juce_audio_basics" showAllCode="1" useLocalCopy="0"/>
+    <MODULE id="juce_audio_devices" showAllCode="1" useLocalCopy="0"/>
+    <MODULE id="juce_audio_formats" showAllCode="1" useLocalCopy="0"/>
+    <MODULE id="juce_audio_plugin_client" showAllCode="1" useLocalCopy="0"/>
+    <MODULE id="juce_audio_processors" showAllCode="1" useLocalCopy="0"/>
+    <MODULE id="juce_core" showAllCode="1" useLocalCopy="0"/>
+    <MODULE id="juce_cryptography" showAllCode="1" useLocalCopy="0"/>
+    <MODULE id="juce_data_structures" showAllCode="1" useLocalCopy="0"/>
+    <MODULE id="juce_events" showAllCode="1" useLocalCopy="0"/>
+    <MODULE id="juce_graphics" showAllCode="1" useLocalCopy="0"/>
+    <MODULE id="juce_gui_basics" showAllCode="1" useLocalCopy="0"/>
+    <MODULE id="juce_gui_extra" showAllCode="1" useLocalCopy="0"/>
+    <MODULE id="juce_opengl" showAllCode="1" useLocalCopy="0"/>
+    <MODULE id="juce_video" showAllCode="1" useLocalCopy="0"/>
+  </MODULES>
+  <JUCEOPTIONS JUCE_QUICKTIME="disabled"/>
+</JUCERPROJECT>
