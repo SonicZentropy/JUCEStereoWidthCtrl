@@ -56,7 +56,7 @@ StereoWidthCtrlAudioProcessorEditor::StereoWidthCtrlAudioProcessorEditor (Stereo
     //[UserPreSize]
     //[/UserPreSize]
 
-    setSize (600, 400);
+    setSize (375, 125);
 
 
     //[Constructor] You can add your own custom stuff here..
@@ -113,8 +113,8 @@ void StereoWidthCtrlAudioProcessorEditor::sliderValueChanged (Slider* sliderThat
     if (sliderThatWasMoved == WidthCtrlSld)
     {
         //[UserSliderCode_WidthCtrlSld] -- add your slider handling code here..
-		DBG("Changing SliderValue");
-		ourProcessor->setParameter(StereoWidthCtrlAudioProcessor::StereoWidth, (float)WidthCtrlSld->getValue());
+		DBG("Changing SliderValue from: " + String(StereoWidthCtrlAudioProcessor::StereoWidth) + " to: " + static_cast<String>(WidthCtrlSld->getValue()));
+		ourProcessor->setParameter(StereoWidthCtrlAudioProcessor::StereoWidth, static_cast<float>(WidthCtrlSld->getValue()));
         //[/UserSliderCode_WidthCtrlSld]
     }
 
@@ -132,7 +132,8 @@ void StereoWidthCtrlAudioProcessorEditor::buttonClicked (Button* buttonThatWasCl
     {
         //[UserButtonCode_BypassBtn] -- add your button handler code here..
 		DBG("Changing buttonClicked");
-		ourProcessor->setParameter(StereoWidthCtrlAudioProcessor::MasterBypass, (float)BypassBtn->getToggleState());
+		ourProcessor->setParameter(StereoWidthCtrlAudioProcessor::MasterBypass, static_cast<float>(BypassBtn->getToggleState()));
+		DBG("Button->getToggleState = " + String(BypassBtn->getToggleState()) + " and ourProc Bypass = " + String(ourProcessor->getParameter(StereoWidthCtrlAudioProcessor::MasterBypass)));
         //[/UserButtonCode_BypassBtn]
     }
 
@@ -149,8 +150,9 @@ void StereoWidthCtrlAudioProcessorEditor::timerCallback()
 	//exchange data between UI Elements and the Plugin (ourProcessor)
 	if (ourProcessor->needsUIUpdate())
 	{
-		BypassBtn->setToggleState(1.0f == ourProcessor->getParameter(StereoWidthCtrlAudioProcessor::StereoWidth),
+		BypassBtn->setToggleState(1.0f == ourProcessor->getParameter(StereoWidthCtrlAudioProcessor::MasterBypass),
 			dontSendNotification);
+		WidthCtrlSld->setValue(ourProcessor->getParameter(StereoWidthCtrlAudioProcessor::StereoWidth), dontSendNotification);
 		ourProcessor->ClearUIUpdateFlag();
 	}
 }
@@ -171,7 +173,7 @@ BEGIN_JUCER_METADATA
                  constructorParams="StereoWidthCtrlAudioProcessor&amp; ownerFilter"
                  variableInitialisers="AudioProcessorEditor(ownerFilter)" snapPixels="8"
                  snapActive="1" snapShown="1" overlayOpacity="0.330" fixedSize="0"
-                 initialWidth="600" initialHeight="400">
+                 initialWidth="375" initialHeight="125">
   <BACKGROUND backgroundColour="ff000000"/>
   <SLIDER name="Width Factor Slider" id="8506fc7967803b22" memberName="WidthCtrlSld"
           virtualName="" explicitFocusOrder="0" pos="16 40 352 24" min="0"
