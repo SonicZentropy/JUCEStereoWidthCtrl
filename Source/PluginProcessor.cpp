@@ -17,6 +17,7 @@ StereoWidthCtrlAudioProcessor::StereoWidthCtrlAudioProcessor()
 {
 	UserParams[MasterBypass] = 0.0f; //default to non-bypassed
 	UserParams[StereoWidth] = 1.0f; //Normal stereo width by default
+	UserParams[MuteAudio] = 0.0f; //Not muted by default
 	widthControl.setWidth(UserParams[StereoWidth]); //Push user width to the controller
 	UIUpdateFlag = true; //flag UI for update
 }
@@ -45,6 +46,8 @@ float StereoWidthCtrlAudioProcessor::getParameter (int index)
 	case StereoWidth:
 		UserParams[StereoWidth] = widthControl.getWidth();
 		return UserParams[StereoWidth];
+	case MuteAudio:
+		return UserParams[MuteAudio];
 	default:
 		return 0.0f; //Invalid Index
 	}
@@ -61,6 +64,9 @@ void StereoWidthCtrlAudioProcessor::setParameter (int index, float newValue)
 			UserParams[StereoWidth] = newValue; //Set Width Parameter
 			widthControl.setWidth(UserParams[StereoWidth]); //Update control value
 			break;
+		case MuteAudio:
+			UserParams[MuteAudio] = newValue;
+			break;
 		default: return;
 	}
 	UIUpdateFlag = true;
@@ -72,6 +78,7 @@ const String StereoWidthCtrlAudioProcessor::getParameterName (int index)
 	{
 		case MasterBypass: return "Master Bypass";
 		case StereoWidth: return "StereoWidth Factor";
+		case MuteAudio: return "Mute Audio";
 		default: return String::empty;
 	}
 }
@@ -188,13 +195,34 @@ void StereoWidthCtrlAudioProcessor::processBlock (AudioSampleBuffer& buffer, Mid
 	if (getNumInputChannels() < 2 || UserParams[MasterBypass])
 	{
 		//Do nothing, just pass through
-	} else  //Process channel data here **MAIN LOOP**
+	}
+	else  //Process channel data here **MAIN LOOP**
 	{
-		float* leftData = buffer.getWritePointer(0);  //leftData references left channel now
-		float* rightData = buffer.getWritePointer(1); //right data references right channel now
-		for (long i = 0; i < buffer.getNumSamples(); i++)
+		if (!UserParams[MuteAudio])
 		{
-			widthControl.ClockProcess(&leftData[i], &rightData[i]);;
+			
+			float* leftData = buffer.getWritePointer(0);  //leftData references left channel now
+			float* rightData = buffer.getWritePointer(1); //right data references right channel now
+			for (long i = 0; i < buffer.getNumSamples(); i++)
+			{
+				widthControl.ClockProcess(&leftData[i], &rightData[i]);;
+			}
+		}
+		else if (UserParams[MuteAudio])
+		{
+			
+			float* leftData = buffer.getWritePointer(0);  //leftData references left channel now
+			float* rightData = buffer.getWritePointer(1); //right data references right channel now
+			
+			for (long i = 0; i < buffer.getNumSamples(); i++)
+			{
+				leftData[i] = 0.0f;
+				rightData[i] = 0.0f;
+			}
+		}
+		else
+		{
+			DBG("SHOULD NOT EVER ARRIVE HERE");
 		}
 		
 	}
@@ -224,6 +252,8 @@ void StereoWidthCtrlAudioProcessor::getStateInformation (MemoryBlock& destData)
 	el->addTextElement(String(UserParams[MasterBypass]));
 	el = root.createNewChildElement("StereoWidth");
 	el->addTextElement(String(UserParams[StereoWidth]));
+	el = root.createNewChildElement("Mute");
+	el->addTextElement(String(UserParams[MuteAudio]));
 	copyXmlToBinary(root, destData);
 }
 
@@ -242,6 +272,11 @@ void StereoWidthCtrlAudioProcessor::setStateInformation (const void* data, int s
 				setParameter(MasterBypass, text.getFloatValue());
 			}
 			else if (pChild->hasTagName("StereoWidth"))
+			{
+				String text = pChild->getAllSubText();
+				setParameter(StereoWidth, text.getFloatValue());
+			}
+			else if (pChild->hasTagName("MuteAudio"))
 			{
 				String text = pChild->getAllSubText();
 				setParameter(StereoWidth, text.getFloatValue());

@@ -35,7 +35,7 @@
         <CONFIGURATION name="Debug" winWarningLevel="4" generateManifest="1" winArchitecture="x64"
                        isDebug="1" optimisation="1" targetName="StereoWidthCtrlx64"
                        postbuildCommand="xcopy &quot;$(TargetPath)&quot; &quot;Z:\VSTs\VSTs\Test\&quot;  /q /y"
-                       headerPath="..\.\Source\StereoWidthCtrl;"/>
+                       headerPath="..\.\Source\StereoWidthCtrl;" binaryPath=""/>
         <CONFIGURATION name="Release" winWarningLevel="4" generateManifest="1" winArchitecture="x64"
                        isDebug="0" optimisation="3" targetName="StereoWidthCtrlx64"
                        postbuildCommand="xcopy &quot;$(TargetPath)&quot; &quot;Z:\VSTs\VSTs\Test\&quot;  /q /y"

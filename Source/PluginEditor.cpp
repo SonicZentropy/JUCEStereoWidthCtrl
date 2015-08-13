@@ -42,6 +42,7 @@ StereoWidthCtrlAudioProcessorEditor::StereoWidthCtrlAudioProcessorEditor (Stereo
     addAndMakeVisible (BypassBtn = new TextButton ("Bypass Button"));
     BypassBtn->setButtonText (TRANS("Bypass"));
     BypassBtn->addListener (this);
+    BypassBtn->setColour (TextButton::buttonColourId, Colour (0xffe2e2e2));
 
     addAndMakeVisible (widthLabel = new Label ("Width Label",
                                                TRANS("Stereo Width Factor:")));
@@ -51,6 +52,11 @@ StereoWidthCtrlAudioProcessorEditor::StereoWidthCtrlAudioProcessorEditor (Stereo
     widthLabel->setColour (Label::textColourId, Colours::grey);
     widthLabel->setColour (TextEditor::textColourId, Colours::black);
     widthLabel->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+
+    addAndMakeVisible (muteBtn = new TextButton ("Mute Button"));
+    muteBtn->setButtonText (TRANS("Mute"));
+    muteBtn->addListener (this);
+    muteBtn->setColour (TextButton::buttonColourId, Colour (0xffe2e2e2));
 
 
     //[UserPreSize]
@@ -63,6 +69,7 @@ StereoWidthCtrlAudioProcessorEditor::StereoWidthCtrlAudioProcessorEditor (Stereo
 	getProcessor()->RequestUIUpdate(); //UI Update must be performed every time a new editor is constructed
 	startTimer(200); // Start timer poll with 200ms rate
 	BypassBtn->setClickingTogglesState(true);
+	muteBtn->setClickingTogglesState(true);
     //[/Constructor]
 }
 
@@ -74,6 +81,7 @@ StereoWidthCtrlAudioProcessorEditor::~StereoWidthCtrlAudioProcessorEditor()
     WidthCtrlSld = nullptr;
     BypassBtn = nullptr;
     widthLabel = nullptr;
+    muteBtn = nullptr;
 
 
     //[Destructor]. You can add your own custom destruction code here..
@@ -100,6 +108,7 @@ void StereoWidthCtrlAudioProcessorEditor::resized()
     WidthCtrlSld->setBounds (16, 40, 352, 24);
     BypassBtn->setBounds (8, 72, 360, 24);
     widthLabel->setBounds (8, 8, 150, 24);
+    muteBtn->setBounds (192, 8, 150, 24);
     //[UserResized] Add your own custom resize handling here..
     //[/UserResized]
 }
@@ -136,6 +145,13 @@ void StereoWidthCtrlAudioProcessorEditor::buttonClicked (Button* buttonThatWasCl
 		DBG("Button->getToggleState = " + String(BypassBtn->getToggleState()) + " and ourProc Bypass = " + String(ourProcessor->getParameter(StereoWidthCtrlAudioProcessor::MasterBypass)));
         //[/UserButtonCode_BypassBtn]
     }
+    else if (buttonThatWasClicked == muteBtn)
+    {
+        //[UserButtonCode_muteBtn] -- add your button handler code here..
+		DBG("Changing muteButton");
+		ourProcessor->setParameter(StereoWidthCtrlAudioProcessor::MuteAudio, static_cast<float>(muteBtn->getToggleState()));
+        //[/UserButtonCode_muteBtn]
+    }
 
     //[UserbuttonClicked_Post]
     //[/UserbuttonClicked_Post]
@@ -153,6 +169,7 @@ void StereoWidthCtrlAudioProcessorEditor::timerCallback()
 		BypassBtn->setToggleState(1.0f == ourProcessor->getParameter(StereoWidthCtrlAudioProcessor::MasterBypass),
 			dontSendNotification);
 		WidthCtrlSld->setValue(ourProcessor->getParameter(StereoWidthCtrlAudioProcessor::StereoWidth), dontSendNotification);
+		muteBtn->setToggleState(1.0f == ourProcessor->getParameter(StereoWidthCtrlAudioProcessor::MuteAudio), dontSendNotification);
 		ourProcessor->ClearUIUpdateFlag();
 	}
 }
@@ -180,13 +197,16 @@ BEGIN_JUCER_METADATA
           max="5" int="0.10000000000000001" style="LinearHorizontal" textBoxPos="TextBoxLeft"
           textBoxEditable="1" textBoxWidth="80" textBoxHeight="20" skewFactor="1"/>
   <TEXTBUTTON name="Bypass Button" id="7af29ac990473e08" memberName="BypassBtn"
-              virtualName="" explicitFocusOrder="0" pos="8 72 360 24" buttonText="Bypass"
-              connectedEdges="0" needsCallback="1" radioGroupId="0"/>
+              virtualName="" explicitFocusOrder="0" pos="8 72 360 24" bgColOff="ffe2e2e2"
+              buttonText="Bypass" connectedEdges="0" needsCallback="1" radioGroupId="0"/>
   <LABEL name="Width Label" id="d43333b7c7118250" memberName="widthLabel"
          virtualName="" explicitFocusOrder="0" pos="8 8 150 24" textCol="ff808080"
          edTextCol="ff000000" edBkgCol="0" labelText="Stereo Width Factor:"
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
          fontname="Default font" fontsize="15" bold="0" italic="0" justification="33"/>
+  <TEXTBUTTON name="Mute Button" id="914591cf8043a819" memberName="muteBtn"
+              virtualName="" explicitFocusOrder="0" pos="192 8 150 24" bgColOff="ffe2e2e2"
+              buttonText="Mute" connectedEdges="0" needsCallback="1" radioGroupId="0"/>
 </JUCER_COMPONENT>
 
 END_JUCER_METADATA

@@ -72,6 +72,7 @@ public:
 	{
 		MasterBypass=0,
 		StereoWidth,
+		MuteAudio,
 		totalNumParam
 	};
 	bool needsUIUpdate() { return UIUpdateFlag; };

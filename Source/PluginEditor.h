@@ -70,6 +70,7 @@ private:
     ScopedPointer<Slider> WidthCtrlSld;
     ScopedPointer<TextButton> BypassBtn;
     ScopedPointer<Label> widthLabel;
+    ScopedPointer<TextButton> muteBtn;
 
 
     //==============================================================================
