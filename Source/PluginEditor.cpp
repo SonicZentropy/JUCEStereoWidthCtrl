@@ -232,14 +232,21 @@ void StereoWidthCtrlAudioProcessorEditor::buttonClicked (Button* buttonThatWasCl
 		}
         //[/UserButtonCode_lockGain]
     }
+	/// Phase Inversion routines
     else if (buttonThatWasClicked == invertLeft)
     {
         //[UserButtonCode_invertLeft] -- add your button handler code here..
+		DBG("Before Inverting Left is : " + String(StereoWidthCtrlAudioProcessor::InvertLeft));
+		ourProcessor->setParameter(StereoWidthCtrlAudioProcessor::InvertLeft, static_cast<float>(invertLeft->getToggleStateValue().getValue()));
+		DBG("Inverted is: " + String(StereoWidthCtrlAudioProcessor::InvertLeft) + " From toggle : " + String( static_cast<float>(invertLeft->getToggleStateValue().getValue() ) ) );
         //[/UserButtonCode_invertLeft]
     }
     else if (buttonThatWasClicked == invertRight)
     {
         //[UserButtonCode_invertRight] -- add your button handler code here..
+		DBG("Before Inverting Right is : " + String(StereoWidthCtrlAudioProcessor::InvertRight));
+		ourProcessor->setParameter(StereoWidthCtrlAudioProcessor::InvertRight, static_cast<float>(invertRight->getToggleStateValue().getValue()));
+		DBG("Inverted is: " + String(StereoWidthCtrlAudioProcessor::InvertRight) + " From toggle : " + String(static_cast<float>(invertRight->getToggleStateValue().getValue())));
         //[/UserButtonCode_invertRight]
     }
 

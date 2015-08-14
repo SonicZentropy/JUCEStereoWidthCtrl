@@ -20,6 +20,8 @@ StereoWidthCtrlAudioProcessor::StereoWidthCtrlAudioProcessor()
 	UserParams[MuteAudio] = 0.0f; //Not muted by default
 	UserParams[AudioGain] = 1.0f; //set at 100% volume by default
 	UserParams[LockGain] = 0.0f;
+	UserParams[InvertLeft] = 0.0f;
+	UserParams[InvertRight] = 0.0f;
 	widthControl.setWidth(UserParams[StereoWidth]); //Push user width to the controller
 	gainControl.setGain(UserParams[AudioGain]);
 	UIUpdateFlag = true; //flag UI for update
@@ -55,6 +57,10 @@ float StereoWidthCtrlAudioProcessor::getParameter (int index)
 		return UserParams[AudioGain];
 	case LockGain:
 		return UserParams[LockGain];
+	case InvertLeft:
+		return UserParams[InvertLeft];
+	case InvertRight:
+		return UserParams[InvertRight];
 	default:
 		return 0.0f; //Invalid Index
 	}
@@ -90,6 +96,12 @@ void StereoWidthCtrlAudioProcessor::setParameter (int index, float newValue)
 		case LockGain:
 			UserParams[LockGain] = newValue;
 			break;
+		case InvertLeft:
+			UserParams[InvertLeft] = newValue;
+			break;
+		case InvertRight:
+			UserParams[InvertRight] = newValue;
+			break;
 		default: return;
 	}
 	UIUpdateFlag = true;
@@ -104,6 +116,8 @@ const String StereoWidthCtrlAudioProcessor::getParameterName (int index)
 		case MuteAudio: return "Mute Audio";
 		case AudioGain: return "Audio Gain";
 		case LockGain: return "Lock Gain";
+		case InvertLeft: return "Invert Left";
+		case InvertRight: return "Invert Right";
 		default: return String::empty;
 	}
 }
@@ -223,12 +237,11 @@ void StereoWidthCtrlAudioProcessor::processBlock (AudioSampleBuffer& buffer, Mid
 	}
 	else  //Process channel data here **MAIN LOOP**
 	{
+		float* leftData = buffer.getWritePointer(0);  //leftData references left channel now
+		float* rightData = buffer.getWritePointer(1); //right data references right channel now
 		// Handle Muting
 		if (!UserParams[MuteAudio])
-		{
-			
-			float* leftData = buffer.getWritePointer(0);  //leftData references left channel now
-			float* rightData = buffer.getWritePointer(1); //right data references right channel now
+		{		
 			for (long i = 0; i < buffer.getNumSamples(); i++)
 			{
 				widthControl.ClockProcess(&leftData[i], &rightData[i]);;
@@ -236,10 +249,7 @@ void StereoWidthCtrlAudioProcessor::processBlock (AudioSampleBuffer& buffer, Mid
 		}
 		else if (UserParams[MuteAudio])
 		{
-			
-			float* leftData = buffer.getWritePointer(0);  //leftData references left channel now
-			float* rightData = buffer.getWritePointer(1); //right data references right channel now
-			
+					
 			for (long i = 0; i < buffer.getNumSamples(); i++)
 			{
 				leftData[i] = 0.0f;
@@ -254,14 +264,26 @@ void StereoWidthCtrlAudioProcessor::processBlock (AudioSampleBuffer& buffer, Mid
 		// Handle Gain
 		if (UserParams[AudioGain] != 1.0f && !UserParams[MuteAudio])
 		{ 
-			
-			float* leftData = buffer.getWritePointer(0);  //leftData references left channel now
-			float* rightData = buffer.getWritePointer(1); //right data references right channel now
 			for (long i = 0; i < buffer.getNumSamples(); i++)
 			{
 				gainControl.ClockProcess(&leftData[i], &rightData[i]);;
 			}
 		}
+		if (UserParams[InvertLeft] && !UserParams[MuteAudio])
+		{
+			for (long i = 0; i < buffer.getNumSamples(); i++)
+			{
+				leftData[i] *= -1;
+			}
+		}
+		if (UserParams[InvertRight] && !UserParams[MuteAudio])
+		{
+			for (long i = 0; i < buffer.getNumSamples(); i++)
+			{
+				rightData[i] *= -1;
+			}
+		}
+
 		
 	}
 
@@ -290,7 +312,7 @@ void StereoWidthCtrlAudioProcessor::getStateInformation (MemoryBlock& destData)
 	el->addTextElement(String(UserParams[MasterBypass]));
 	el = root.createNewChildElement("StereoWidth");
 	el->addTextElement(String(UserParams[StereoWidth]));
-	el = root.createNewChildElement("Mute");
+	el = root.createNewChildElement("MuteAudio");      // This shouldn't work? Was "Mute"
 	el->addTextElement(String(UserParams[MuteAudio]));
 	el = root.createNewChildElement("Gain");
 	el->addTextElement(String(UserParams[AudioGain]));

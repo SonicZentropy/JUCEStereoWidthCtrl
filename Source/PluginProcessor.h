@@ -76,6 +76,8 @@ public:
 		MuteAudio,
 		AudioGain,
 		LockGain,
+		InvertLeft,
+		InvertRight,
 		totalNumParam
 	};
 	bool needsUIUpdate() { return UIUpdateFlag; };
