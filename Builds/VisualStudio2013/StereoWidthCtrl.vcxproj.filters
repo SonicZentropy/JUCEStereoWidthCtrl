@@ -8,6 +8,9 @@
     <Filter Include="StereoWidthCtrl\Source">
       <UniqueIdentifier>{1BC2DA06-2716-3F79-5B30-6FEC3256AAC6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="StereoWidthCtrl\Source\VolumeInDB">
+      <UniqueIdentifier>{0265A247-BBB2-D2EA-6E21-CCC135CFDB20}</UniqueIdentifier>
+    </Filter>
     <Filter Include="StereoWidthCtrl\Source\StereoWidthCtrl">
       <UniqueIdentifier>{26203E24-2609-2532-7345-9FBE6A469841}</UniqueIdentifier>
     </Filter>
@@ -325,6 +328,9 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\VolumeInDB.cpp">
+      <Filter>StereoWidthCtrl\Source\VolumeInDB</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\StereoWidthCtrl.cpp">
       <Filter>StereoWidthCtrl\Source\StereoWidthCtrl</Filter>
     </ClCompile>
@@ -1593,6 +1599,9 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\VolumeInDB.h">
+      <Filter>StereoWidthCtrl\Source\VolumeInDB</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\StereoWidthCtrl.h">
       <Filter>StereoWidthCtrl\Source\StereoWidthCtrl</Filter>
     </ClInclude>

@@ -58,6 +58,16 @@ StereoWidthCtrlAudioProcessorEditor::StereoWidthCtrlAudioProcessorEditor (Stereo
     muteBtn->addListener (this);
     muteBtn->setColour (TextButton::buttonColourId, Colour (0xffe2e2e2));
 
+    addAndMakeVisible (gainKnob = new Slider ("Gain Knob"));
+    gainKnob->setRange (0, 1, 0.05);
+    gainKnob->setSliderStyle (Slider::RotaryHorizontalVerticalDrag);
+    gainKnob->setTextBoxStyle (Slider::TextBoxBelow, false, 80, 20);
+    gainKnob->setColour (Slider::backgroundColourId, Colour (0x00868181));
+    gainKnob->setColour (Slider::trackColourId, Colour (0x7fffffff));
+    gainKnob->setColour (Slider::rotarySliderFillColourId, Colour (0x7fbcbcff));
+    gainKnob->setColour (Slider::rotarySliderOutlineColourId, Colour (0x66ffffff));
+    gainKnob->addListener (this);
+
 
     //[UserPreSize]
     //[/UserPreSize]
@@ -82,6 +92,7 @@ StereoWidthCtrlAudioProcessorEditor::~StereoWidthCtrlAudioProcessorEditor()
     BypassBtn = nullptr;
     widthLabel = nullptr;
     muteBtn = nullptr;
+    gainKnob = nullptr;
 
 
     //[Destructor]. You can add your own custom destruction code here..
@@ -106,9 +117,10 @@ void StereoWidthCtrlAudioProcessorEditor::resized()
     //[/UserPreResize]
 
     WidthCtrlSld->setBounds (16, 40, 352, 24);
-    BypassBtn->setBounds (8, 72, 360, 24);
+    BypassBtn->setBounds (8, 192, 360, 24);
     widthLabel->setBounds (8, 8, 150, 24);
-    muteBtn->setBounds (192, 8, 150, 24);
+    muteBtn->setBounds (16, 152, 150, 24);
+    gainKnob->setBounds (200, 72, 150, 104);
     //[UserResized] Add your own custom resize handling here..
     //[/UserResized]
 }
@@ -125,6 +137,13 @@ void StereoWidthCtrlAudioProcessorEditor::sliderValueChanged (Slider* sliderThat
 		DBG("Changing SliderValue from: " + String(StereoWidthCtrlAudioProcessor::StereoWidth) + " to: " + static_cast<String>(WidthCtrlSld->getValue()));
 		ourProcessor->setParameter(StereoWidthCtrlAudioProcessor::StereoWidth, static_cast<float>(WidthCtrlSld->getValue()));
         //[/UserSliderCode_WidthCtrlSld]
+    }
+    else if (sliderThatWasMoved == gainKnob)
+    {
+        //[UserSliderCode_gainKnob] -- add your slider handling code here..
+		DBG("Gain slider value changing");
+		ourProcessor->setParameter(StereoWidthCtrlAudioProcessor::AudioGain, static_cast<float>(gainKnob->getValue()));
+        //[/UserSliderCode_gainKnob]
     }
 
     //[UsersliderValueChanged_Post]
@@ -170,6 +189,7 @@ void StereoWidthCtrlAudioProcessorEditor::timerCallback()
 			dontSendNotification);
 		WidthCtrlSld->setValue(ourProcessor->getParameter(StereoWidthCtrlAudioProcessor::StereoWidth), dontSendNotification);
 		muteBtn->setToggleState(1.0f == ourProcessor->getParameter(StereoWidthCtrlAudioProcessor::MuteAudio), dontSendNotification);
+		gainKnob->setValue(ourProcessor->getParameter(StereoWidthCtrlAudioProcessor::AudioGain), dontSendNotification);
 		ourProcessor->ClearUIUpdateFlag();
 	}
 }
@@ -197,7 +217,7 @@ BEGIN_JUCER_METADATA
           max="5" int="0.10000000000000001" style="LinearHorizontal" textBoxPos="TextBoxLeft"
           textBoxEditable="1" textBoxWidth="80" textBoxHeight="20" skewFactor="1"/>
   <TEXTBUTTON name="Bypass Button" id="7af29ac990473e08" memberName="BypassBtn"
-              virtualName="" explicitFocusOrder="0" pos="8 72 360 24" bgColOff="ffe2e2e2"
+              virtualName="" explicitFocusOrder="0" pos="8 192 360 24" bgColOff="ffe2e2e2"
               buttonText="Bypass" connectedEdges="0" needsCallback="1" radioGroupId="0"/>
   <LABEL name="Width Label" id="d43333b7c7118250" memberName="widthLabel"
          virtualName="" explicitFocusOrder="0" pos="8 8 150 24" textCol="ff808080"
@@ -205,8 +225,14 @@ BEGIN_JUCER_METADATA
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
          fontname="Default font" fontsize="15" bold="0" italic="0" justification="33"/>
   <TEXTBUTTON name="Mute Button" id="914591cf8043a819" memberName="muteBtn"
-              virtualName="" explicitFocusOrder="0" pos="192 8 150 24" bgColOff="ffe2e2e2"
+              virtualName="" explicitFocusOrder="0" pos="16 152 150 24" bgColOff="ffe2e2e2"
               buttonText="Mute" connectedEdges="0" needsCallback="1" radioGroupId="0"/>
+  <SLIDER name="Gain Knob" id="dd791eb940d88513" memberName="gainKnob"
+          virtualName="" explicitFocusOrder="0" pos="200 72 150 104" bkgcol="868181"
+          trackcol="7fffffff" rotarysliderfill="7fbcbcff" rotaryslideroutline="66ffffff"
+          min="0" max="1" int="0.050000000000000003" style="RotaryHorizontalVerticalDrag"
+          textBoxPos="TextBoxBelow" textBoxEditable="1" textBoxWidth="80"
+          textBoxHeight="20" skewFactor="1"/>
 </JUCER_COMPONENT>
 
 END_JUCER_METADATA

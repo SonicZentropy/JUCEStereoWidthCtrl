@@ -47,7 +47,7 @@ public:
 
     //==============================================================================
     //[UserMethods]     -- You can add your own custom methods in this section.
-	void timerCallback();
+	void timerCallback() override;
 	StereoWidthCtrlAudioProcessor* getProcessor() const
 	{
 		return static_cast<StereoWidthCtrlAudioProcessor*>(getAudioProcessor());
@@ -55,7 +55,7 @@ public:
 
     //[/UserMethods]
 
-    void paint (Graphics& g);
+	void paint(Graphics& g) override;
     void resized();
     void sliderValueChanged (Slider* sliderThatWasMoved);
     void buttonClicked (Button* buttonThatWasClicked);
@@ -71,6 +71,7 @@ private:
     ScopedPointer<TextButton> BypassBtn;
     ScopedPointer<Label> widthLabel;
     ScopedPointer<TextButton> muteBtn;
+    ScopedPointer<Slider> gainKnob;
 
 
     //==============================================================================

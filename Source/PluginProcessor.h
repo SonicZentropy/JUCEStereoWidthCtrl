@@ -13,6 +13,7 @@
 
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "StereoWidthCtrl.h"
+#include "VolumeInDB.h"
 
 
 //==============================================================================
@@ -73,6 +74,7 @@ public:
 		MasterBypass=0,
 		StereoWidth,
 		MuteAudio,
+		AudioGain,
 		totalNumParam
 	};
 	bool needsUIUpdate() { return UIUpdateFlag; };
@@ -85,6 +87,7 @@ private:
 	// User Configured Area ========================================================
 	float UserParams[totalNumParam];
 	StereoWidthCtrl widthControl;
+	VolumeInDB gainControl;
 	bool UIUpdateFlag;
 };
 
