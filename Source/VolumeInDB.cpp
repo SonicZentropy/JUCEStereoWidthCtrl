@@ -15,7 +15,7 @@
 
 VolumeInDB::VolumeInDB()
 {
-	setGain(1.0f);
+	setGainFromDB(0.0f);
 }
 
 VolumeInDB::~VolumeInDB()
@@ -23,11 +23,24 @@ VolumeInDB::~VolumeInDB()
 	
 }
 
-void VolumeInDB::setGain(float gain)
+void VolumeInDB::setGainFromDB(float gain)
 {
-	DBG("Setting Gain in VolumeInDB.cpp");
-	audioGain = gain;
+//	convertToDecibels(gain);
+	gainInDB = gain;
+	audioGain = convertDecibelstoValue(gain);
+	DBG("Setting Gain in VolumeInDB.cpp with DB = " + String(gain) + " and Value = " + String(audioGain));
 }
+
+float VolumeInDB::convertValueToDecibels(float gain)
+{
+	return static_cast<float>(Decibels::gainToDecibels(gain, 0.0f));
+}
+
+float VolumeInDB::convertDecibelstoValue(float gain)
+{
+	return static_cast<float>(Decibels::decibelsToGain(gain, -96.0f));
+}
+
 
 void VolumeInDB::ClockProcess(float* LeftSample, float* RightSample)
 {

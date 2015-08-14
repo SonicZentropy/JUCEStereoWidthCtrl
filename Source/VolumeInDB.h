@@ -18,6 +18,7 @@
 #endif  // VOLUMEINDB_H_INCLUDED
 #include "../JuceLibraryCode/JuceHeader.h"
 
+
 class VolumeInDB
 {
 public:
@@ -25,13 +26,15 @@ public:
 	~VolumeInDB();
 
 	//Parms
-	void setGain(float gain);
+	void setGainFromDB(float gain);
 	float getWidth(void) { return audioGain; };
-	
+	float convertValueToDecibels(float gain);
+	float convertDecibelstoValue(float gainInDB);
 
 	// Use
 	void ClockProcess(float* LeftSample, float* RightSample);
 
 private:
-	float audioGain;
+	float audioGain, gainInDB;
+//	Decibels decibelsRep;
 };

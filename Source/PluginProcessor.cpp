@@ -18,9 +18,9 @@ StereoWidthCtrlAudioProcessor::StereoWidthCtrlAudioProcessor()
 	UserParams[MasterBypass] = 0.0f; //default to non-bypassed
 	UserParams[StereoWidth] = 1.0f; //Normal stereo width by default
 	UserParams[MuteAudio] = 0.0f; //Not muted by default
-	UserParams[AudioGain] = 1.0f; //set at max gain
+	UserParams[AudioGain] = 0.0f; //set at 0Decibels by default
 	widthControl.setWidth(UserParams[StereoWidth]); //Push user width to the controller
-	gainControl.setGain(UserParams[AudioGain]);
+	gainControl.setGainFromDB(UserParams[AudioGain]);
 	UIUpdateFlag = true; //flag UI for update
 }
 
@@ -74,7 +74,7 @@ void StereoWidthCtrlAudioProcessor::setParameter (int index, float newValue)
 			break;
 		case AudioGain:
 			UserParams[AudioGain] = newValue;
-			gainControl.setGain(UserParams[AudioGain]);
+			gainControl.setGainFromDB(UserParams[AudioGain]);
 			break;
 		default: return;
 	}

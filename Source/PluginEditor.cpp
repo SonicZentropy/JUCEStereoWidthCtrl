@@ -59,14 +59,17 @@ StereoWidthCtrlAudioProcessorEditor::StereoWidthCtrlAudioProcessorEditor (Stereo
     muteBtn->setColour (TextButton::buttonColourId, Colour (0xffe2e2e2));
 
     addAndMakeVisible (gainKnob = new Slider ("Gain Knob"));
-    gainKnob->setRange (0, 1, 0.05);
-    gainKnob->setSliderStyle (Slider::RotaryHorizontalVerticalDrag);
+    gainKnob->setRange (-96, 18, 0.1);
+    gainKnob->setSliderStyle (Slider::LinearVertical);
     gainKnob->setTextBoxStyle (Slider::TextBoxBelow, false, 80, 20);
     gainKnob->setColour (Slider::backgroundColourId, Colour (0x00868181));
     gainKnob->setColour (Slider::trackColourId, Colour (0x7fffffff));
     gainKnob->setColour (Slider::rotarySliderFillColourId, Colour (0x7fbcbcff));
     gainKnob->setColour (Slider::rotarySliderOutlineColourId, Colour (0x66ffffff));
     gainKnob->addListener (this);
+	gainKnob->setTextValueSuffix("dB");
+	gainKnob->setDoubleClickReturnValue(true, 0.0f);
+	gainKnob->getTextFromValue(1.0f);
 
 
     //[UserPreSize]
@@ -230,7 +233,7 @@ BEGIN_JUCER_METADATA
   <SLIDER name="Gain Knob" id="dd791eb940d88513" memberName="gainKnob"
           virtualName="" explicitFocusOrder="0" pos="200 72 150 104" bkgcol="868181"
           trackcol="7fffffff" rotarysliderfill="7fbcbcff" rotaryslideroutline="66ffffff"
-          min="0" max="1" int="0.050000000000000003" style="RotaryHorizontalVerticalDrag"
+          min="-96" max="18" int="0.10000000000000001" style="LinearVertical"
           textBoxPos="TextBoxBelow" textBoxEditable="1" textBoxWidth="80"
           textBoxHeight="20" skewFactor="1"/>
 </JUCER_COMPONENT>
