@@ -1,7 +1,7 @@
 /*
   ==============================================================================
 
-    VolumeInDB.h
+    VolumeInDBCtrl.h
     Created: 13 Aug 2015 5:57:08am
     Author:  Zentropy
 
@@ -19,14 +19,15 @@
 #include "../JuceLibraryCode/JuceHeader.h"
 
 
-class VolumeInDB
+class VolumeInDBCtrl
 {
 public:
-	VolumeInDB();
-	~VolumeInDB();
+	VolumeInDBCtrl();
+	~VolumeInDBCtrl();
 
 	//Parms
 	void setGainFromDB(float gain);
+	void setGain(float gain);
 	float getWidth(void) { return audioGain; };
 	float convertValueToDecibels(float gain);
 	float convertDecibelstoValue(float gainInDB);

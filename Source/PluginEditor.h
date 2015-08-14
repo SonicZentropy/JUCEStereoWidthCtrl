@@ -75,6 +75,9 @@ private:
     ScopedPointer<TextButton> muteBtn;
     ScopedPointer<GainSlider> gainKnob;
     ScopedPointer<TextButton> lockGain;
+    ScopedPointer<ToggleButton> invertLeft;
+    ScopedPointer<ToggleButton> invertRight;
+    ScopedPointer<Label> invertLabel;
 
 
     //==============================================================================

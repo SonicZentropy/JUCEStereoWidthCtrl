@@ -251,8 +251,9 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\ParamUtil.cpp"/>
     <ClCompile Include="..\..\Source\GainSlider.cpp"/>
-    <ClCompile Include="..\..\Source\VolumeInDB.cpp"/>
+    <ClCompile Include="..\..\Source\VolumeInDBCtrl.cpp"/>
     <ClCompile Include="..\..\Source\StereoWidthCtrl.cpp"/>
     <ClCompile Include="..\..\Source\PluginProcessor.cpp"/>
     <ClCompile Include="..\..\Source\PluginEditor.cpp"/>
@@ -1391,8 +1392,9 @@
     <ClCompile Include="..\..\..\JUCEMain\modules\juce_audio_plugin_client\VST3\juce_VST3_Wrapper.cpp"/>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\ParamUtil.h"/>
     <ClInclude Include="..\..\Source\GainSlider.h"/>
-    <ClInclude Include="..\..\Source\VolumeInDB.h"/>
+    <ClInclude Include="..\..\Source\VolumeInDBCtrl.h"/>
     <ClInclude Include="..\..\Source\StereoWidthCtrl.h"/>
     <ClInclude Include="..\..\Source\PluginProcessor.h"/>
     <ClInclude Include="..\..\Source\PluginEditor.h"/>

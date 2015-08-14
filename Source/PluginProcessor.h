@@ -13,7 +13,7 @@
 
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "StereoWidthCtrl.h"
-#include "VolumeInDB.h"
+#include "VolumeInDBCtrl.h"
 
 
 //==============================================================================
@@ -88,7 +88,7 @@ private:
 	// User Configured Area ========================================================
 	float UserParams[totalNumParam];
 	StereoWidthCtrl widthControl;
-	VolumeInDB gainControl;
+	VolumeInDBCtrl gainControl;
 	bool UIUpdateFlag;
 };
 

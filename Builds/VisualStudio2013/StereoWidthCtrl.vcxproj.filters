@@ -8,6 +8,9 @@
     <Filter Include="StereoWidthCtrl\Source">
       <UniqueIdentifier>{1BC2DA06-2716-3F79-5B30-6FEC3256AAC6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="StereoWidthCtrl\Source\Utility">
+      <UniqueIdentifier>{0FB98A9E-A395-8F4F-9FE7-91555E6C57FF}</UniqueIdentifier>
+    </Filter>
     <Filter Include="StereoWidthCtrl\Source\ComponentOverrides">
       <UniqueIdentifier>{E483C5EE-1A8B-8373-47B3-78DA0CE21A1B}</UniqueIdentifier>
     </Filter>
@@ -331,10 +334,13 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\ParamUtil.cpp">
+      <Filter>StereoWidthCtrl\Source\Utility</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\GainSlider.cpp">
       <Filter>StereoWidthCtrl\Source\ComponentOverrides</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\VolumeInDB.cpp">
+    <ClCompile Include="..\..\Source\VolumeInDBCtrl.cpp">
       <Filter>StereoWidthCtrl\Source\VolumeInDB</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\StereoWidthCtrl.cpp">
@@ -1605,10 +1611,13 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\ParamUtil.h">
+      <Filter>StereoWidthCtrl\Source\Utility</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\GainSlider.h">
       <Filter>StereoWidthCtrl\Source\ComponentOverrides</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\VolumeInDB.h">
+    <ClInclude Include="..\..\Source\VolumeInDBCtrl.h">
       <Filter>StereoWidthCtrl\Source\VolumeInDB</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\StereoWidthCtrl.h">

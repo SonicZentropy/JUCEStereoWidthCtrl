@@ -34,7 +34,8 @@ StereoWidthCtrlAudioProcessorEditor::StereoWidthCtrlAudioProcessorEditor (Stereo
     //[/Constructor_pre]
 
     addAndMakeVisible (WidthCtrlSld = new Slider ("Width Factor Slider"));
-    WidthCtrlSld->setRange (0, 5, 0.1);
+    WidthCtrlSld->setTooltip (TRANS("Stereo Width"));
+    WidthCtrlSld->setRange (0, 2, 0.05);
     WidthCtrlSld->setSliderStyle (Slider::LinearHorizontal);
     WidthCtrlSld->setTextBoxStyle (Slider::TextBoxLeft, false, 80, 20);
     WidthCtrlSld->addListener (this);
@@ -73,9 +74,31 @@ StereoWidthCtrlAudioProcessorEditor::StereoWidthCtrlAudioProcessorEditor (Stereo
     lockGain->addListener (this);
     lockGain->setColour (TextButton::buttonColourId, Colour (0xffe2e2e2));
 
+    addAndMakeVisible (invertLeft = new ToggleButton ("Invert Left"));
+    invertLeft->setTooltip (TRANS("Phase invert Left Channel"));
+    invertLeft->setButtonText (String::empty);
+    invertLeft->addListener (this);
+
+    addAndMakeVisible (invertRight = new ToggleButton ("Invert Right"));
+    invertRight->setTooltip (TRANS("Phase invert Right Channel"));
+    invertRight->setButtonText (String::empty);
+    invertRight->addListener (this);
+    invertRight->setColour (ToggleButton::textColourId, Colours::black);
+
+    addAndMakeVisible (invertLabel = new Label ("Invert Label",
+                                                TRANS("Invert Phase\n"
+                                                "L       R")));
+    invertLabel->setFont (Font (15.00f, Font::plain));
+    invertLabel->setJustificationType (Justification::centredBottom);
+    invertLabel->setEditable (false, false, false);
+    invertLabel->setColour (Label::textColourId, Colours::grey);
+    invertLabel->setColour (TextEditor::textColourId, Colours::black);
+    invertLabel->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+
 
     //[UserPreSize]
 	gainKnob->setDoubleClickReturnValue(true, 0.0f);
+	WidthCtrlSld->setDoubleClickReturnValue(true, 1.0f);
     //[/UserPreSize]
 
     setSize (375, 500);
@@ -87,6 +110,8 @@ StereoWidthCtrlAudioProcessorEditor::StereoWidthCtrlAudioProcessorEditor (Stereo
 	BypassBtn->setClickingTogglesState(true);
 	muteBtn->setClickingTogglesState(true);
 	lockGain->setClickingTogglesState(true);
+	invertLeft->setClickingTogglesState(true);
+	invertRight->setClickingTogglesState(true);
     //[/Constructor]
 }
 
@@ -101,6 +126,9 @@ StereoWidthCtrlAudioProcessorEditor::~StereoWidthCtrlAudioProcessorEditor()
     muteBtn = nullptr;
     gainKnob = nullptr;
     lockGain = nullptr;
+    invertLeft = nullptr;
+    invertRight = nullptr;
+    invertLabel = nullptr;
 
 
     //[Destructor]. You can add your own custom destruction code here..
@@ -130,6 +158,9 @@ void StereoWidthCtrlAudioProcessorEditor::resized()
     muteBtn->setBounds (16, 256, 150, 24);
     gainKnob->setBounds (200, 72, 150, 104);
     lockGain->setBounds (208, 184, 150, 24);
+    invertLeft->setBounds (33, 118, 25, 20);
+    invertRight->setBounds (71, 118, 25, 20);
+    invertLabel->setBounds (12, 80, 100, 32);
     //[UserResized] Add your own custom resize handling here..
     //[/UserResized]
 }
@@ -151,7 +182,7 @@ void StereoWidthCtrlAudioProcessorEditor::sliderValueChanged (Slider* sliderThat
     {
         //[UserSliderCode_gainKnob] -- add your slider handling code here..
 		DBG("Gain slider value changing from: " + String(StereoWidthCtrlAudioProcessor::AudioGain) + " to: " + static_cast<String>(gainKnob->getValue()));
-		ourProcessor->setParameter(StereoWidthCtrlAudioProcessor::AudioGain, static_cast<float>(gainKnob->getValue()));
+		ourProcessor->setParameter(StereoWidthCtrlAudioProcessor::AudioGain, Decibels::decibelsToGain(static_cast<float>(gainKnob->getValue())));
         //[/UserSliderCode_gainKnob]
     }
 
@@ -188,9 +219,9 @@ void StereoWidthCtrlAudioProcessorEditor::buttonClicked (Button* buttonThatWasCl
 		if (lockGain->getToggleState())
 		{
 			gainKnob->setRange(-96, 0, 0.1);
-			gainKnob->setValue(std::min(0.0f, static_cast<float>(gainKnob->getValue())), dontSendNotification);
+			gainKnob->setValue(std::min(0.0f, static_cast<float>(gainKnob->getValue())));
 			gainKnob->repaint();
-			ourProcessor->setParameter(StereoWidthCtrlAudioProcessor::AudioGain, static_cast<float>(gainKnob->getValue()));
+			ourProcessor->setParameter(StereoWidthCtrlAudioProcessor::AudioGain, Decibels::decibelsToGain(static_cast<float>(gainKnob->getValue())));
 			ourProcessor->RequestUIUpdate();
 		}
 		else
@@ -200,6 +231,16 @@ void StereoWidthCtrlAudioProcessorEditor::buttonClicked (Button* buttonThatWasCl
 			ourProcessor->RequestUIUpdate();
 		}
         //[/UserButtonCode_lockGain]
+    }
+    else if (buttonThatWasClicked == invertLeft)
+    {
+        //[UserButtonCode_invertLeft] -- add your button handler code here..
+        //[/UserButtonCode_invertLeft]
+    }
+    else if (buttonThatWasClicked == invertRight)
+    {
+        //[UserButtonCode_invertRight] -- add your button handler code here..
+        //[/UserButtonCode_invertRight]
     }
 
     //[UserbuttonClicked_Post]
@@ -216,10 +257,10 @@ void StereoWidthCtrlAudioProcessorEditor::timerCallback()
 	if (ourProcessor->needsUIUpdate())
 	{
 		BypassBtn->setToggleState(1.0f == ourProcessor->getParameter(StereoWidthCtrlAudioProcessor::MasterBypass),
-			dontSendNotification);
-		WidthCtrlSld->setValue(ourProcessor->getParameter(StereoWidthCtrlAudioProcessor::StereoWidth), dontSendNotification);
-		muteBtn->setToggleState(1.0f == ourProcessor->getParameter(StereoWidthCtrlAudioProcessor::MuteAudio), dontSendNotification);
-		gainKnob->setValue(ourProcessor->getParameter(StereoWidthCtrlAudioProcessor::AudioGain), dontSendNotification);
+			sendNotificationAsync);
+		WidthCtrlSld->setValue(ourProcessor->getParameter(StereoWidthCtrlAudioProcessor::StereoWidth), sendNotificationAsync);
+		muteBtn->setToggleState(1.0f == ourProcessor->getParameter(StereoWidthCtrlAudioProcessor::MuteAudio), sendNotificationAsync);
+		gainKnob->setValue(Decibels::gainToDecibels(ourProcessor->getParameter(StereoWidthCtrlAudioProcessor::AudioGain)), sendNotificationAsync);
 		ourProcessor->ClearUIUpdateFlag();
 	}
 }
@@ -238,14 +279,15 @@ BEGIN_JUCER_METADATA
 <JUCER_COMPONENT documentType="Component" className="StereoWidthCtrlAudioProcessorEditor"
                  componentName="" parentClasses="public AudioProcessorEditor, public Timer"
                  constructorParams="StereoWidthCtrlAudioProcessor&amp; ownerFilter"
-                 variableInitialisers="AudioProcessorEditor(ownerFilter)" snapPixels="8"
+                 variableInitialisers="AudioProcessorEditor(ownerFilter)" snapPixels="4"
                  snapActive="1" snapShown="1" overlayOpacity="0.330" fixedSize="0"
                  initialWidth="375" initialHeight="500">
   <BACKGROUND backgroundColour="ff000000"/>
   <SLIDER name="Width Factor Slider" id="8506fc7967803b22" memberName="WidthCtrlSld"
-          virtualName="" explicitFocusOrder="0" pos="16 40 352 24" min="0"
-          max="5" int="0.10000000000000001" style="LinearHorizontal" textBoxPos="TextBoxLeft"
-          textBoxEditable="1" textBoxWidth="80" textBoxHeight="20" skewFactor="1"/>
+          virtualName="" explicitFocusOrder="0" pos="16 40 352 24" tooltip="Stereo Width"
+          min="0" max="2" int="0.050000000000000003" style="LinearHorizontal"
+          textBoxPos="TextBoxLeft" textBoxEditable="1" textBoxWidth="80"
+          textBoxHeight="20" skewFactor="1"/>
   <TEXTBUTTON name="Bypass Button" id="7af29ac990473e08" memberName="BypassBtn"
               virtualName="" explicitFocusOrder="0" pos="8 296 360 24" bgColOff="ffe2e2e2"
               buttonText="Bypass" connectedEdges="0" needsCallback="1" radioGroupId="0"/>
@@ -267,6 +309,19 @@ BEGIN_JUCER_METADATA
               virtualName="" explicitFocusOrder="0" pos="208 184 150 24" bgColOff="ffe2e2e2"
               buttonText="Lock Gain to 0db" connectedEdges="0" needsCallback="1"
               radioGroupId="0"/>
+  <TOGGLEBUTTON name="Invert Left" id="4fd996f19d4c1c9a" memberName="invertLeft"
+                virtualName="" explicitFocusOrder="0" pos="33 118 25 20" tooltip="Phase invert Left Channel"
+                buttonText="" connectedEdges="0" needsCallback="1" radioGroupId="0"
+                state="0"/>
+  <TOGGLEBUTTON name="Invert Right" id="e82b7317ef02b75f" memberName="invertRight"
+                virtualName="" explicitFocusOrder="0" pos="71 118 25 20" tooltip="Phase invert Right Channel"
+                txtcol="ff000000" buttonText="" connectedEdges="0" needsCallback="1"
+                radioGroupId="0" state="0"/>
+  <LABEL name="Invert Label" id="cc1a383f50c89523" memberName="invertLabel"
+         virtualName="" explicitFocusOrder="0" pos="12 80 100 32" textCol="ff808080"
+         edTextCol="ff000000" edBkgCol="0" labelText="Invert Phase&#10;L       R"
+         editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
+         fontname="Default font" fontsize="15" bold="0" italic="0" justification="20"/>
 </JUCER_COMPONENT>
 
 END_JUCER_METADATA
