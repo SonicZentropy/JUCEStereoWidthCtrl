@@ -334,7 +334,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\Source\ParamUtil.cpp">
+    <ClCompile Include="..\..\Source\ParamUtils.cpp">
       <Filter>StereoWidthCtrl\Source\Utility</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\GainSlider.cpp">
@@ -1611,7 +1611,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\Source\ParamUtil.h">
+    <ClInclude Include="..\..\Source\ParamUtils.h">
       <Filter>StereoWidthCtrl\Source\Utility</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\GainSlider.h">
