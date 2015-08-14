@@ -59,7 +59,7 @@ StereoWidthCtrlAudioProcessorEditor::StereoWidthCtrlAudioProcessorEditor (Stereo
     muteBtn->setColour (TextButton::buttonColourId, Colour (0xffe2e2e2));
 
     addAndMakeVisible (gainKnob = new GainSlider ("Gain Knob"));
-    gainKnob->setRange (-96, 18, 0.1);
+    gainKnob->setRange (-96, 12, 0.1);
     gainKnob->setSliderStyle (Slider::LinearVertical);
     gainKnob->setTextBoxStyle (Slider::TextBoxBelow, false, 80, 20);
     gainKnob->setColour (Slider::backgroundColourId, Colour (0x00868181));
@@ -68,8 +68,14 @@ StereoWidthCtrlAudioProcessorEditor::StereoWidthCtrlAudioProcessorEditor (Stereo
     gainKnob->setColour (Slider::rotarySliderOutlineColourId, Colour (0x66ffffff));
     gainKnob->addListener (this);
 
+    addAndMakeVisible (lockGain = new TextButton ("Lock Gain"));
+    lockGain->setButtonText (TRANS("Lock Gain to 0db"));
+    lockGain->addListener (this);
+    lockGain->setColour (TextButton::buttonColourId, Colour (0xffe2e2e2));
+
 
     //[UserPreSize]
+	gainKnob->setDoubleClickReturnValue(true, 0.0f);
     //[/UserPreSize]
 
     setSize (375, 500);
@@ -80,6 +86,7 @@ StereoWidthCtrlAudioProcessorEditor::StereoWidthCtrlAudioProcessorEditor (Stereo
 	startTimer(200); // Start timer poll with 200ms rate
 	BypassBtn->setClickingTogglesState(true);
 	muteBtn->setClickingTogglesState(true);
+	lockGain->setClickingTogglesState(true);
     //[/Constructor]
 }
 
@@ -93,6 +100,7 @@ StereoWidthCtrlAudioProcessorEditor::~StereoWidthCtrlAudioProcessorEditor()
     widthLabel = nullptr;
     muteBtn = nullptr;
     gainKnob = nullptr;
+    lockGain = nullptr;
 
 
     //[Destructor]. You can add your own custom destruction code here..
@@ -117,10 +125,11 @@ void StereoWidthCtrlAudioProcessorEditor::resized()
     //[/UserPreResize]
 
     WidthCtrlSld->setBounds (16, 40, 352, 24);
-    BypassBtn->setBounds (8, 192, 360, 24);
+    BypassBtn->setBounds (8, 296, 360, 24);
     widthLabel->setBounds (8, 8, 150, 24);
-    muteBtn->setBounds (16, 152, 150, 24);
+    muteBtn->setBounds (16, 256, 150, 24);
     gainKnob->setBounds (200, 72, 150, 104);
+    lockGain->setBounds (208, 184, 150, 24);
     //[UserResized] Add your own custom resize handling here..
     //[/UserResized]
 }
@@ -171,6 +180,27 @@ void StereoWidthCtrlAudioProcessorEditor::buttonClicked (Button* buttonThatWasCl
 		ourProcessor->setParameter(StereoWidthCtrlAudioProcessor::MuteAudio, static_cast<float>(muteBtn->getToggleState()));
         //[/UserButtonCode_muteBtn]
     }
+    else if (buttonThatWasClicked == lockGain)
+    {
+        //[UserButtonCode_lockGain] -- add your button handler code here..
+		DBG("Changing Lock Gain");
+		ourProcessor->setParameter(StereoWidthCtrlAudioProcessor::LockGain, static_cast<float>(lockGain->getToggleState()));
+		if (lockGain->getToggleState())
+		{
+			gainKnob->setRange(-96, 0, 0.1);
+			gainKnob->setValue(std::min(0.0f, static_cast<float>(gainKnob->getValue())), dontSendNotification);
+			gainKnob->repaint();
+			ourProcessor->setParameter(StereoWidthCtrlAudioProcessor::AudioGain, static_cast<float>(gainKnob->getValue()));
+			ourProcessor->RequestUIUpdate();
+		}
+		else
+		{
+			gainKnob->setRange(-96, 12, 0.1);
+			gainKnob->repaint();
+			ourProcessor->RequestUIUpdate();
+		}
+        //[/UserButtonCode_lockGain]
+    }
 
     //[UserbuttonClicked_Post]
     //[/UserbuttonClicked_Post]
@@ -217,7 +247,7 @@ BEGIN_JUCER_METADATA
           max="5" int="0.10000000000000001" style="LinearHorizontal" textBoxPos="TextBoxLeft"
           textBoxEditable="1" textBoxWidth="80" textBoxHeight="20" skewFactor="1"/>
   <TEXTBUTTON name="Bypass Button" id="7af29ac990473e08" memberName="BypassBtn"
-              virtualName="" explicitFocusOrder="0" pos="8 192 360 24" bgColOff="ffe2e2e2"
+              virtualName="" explicitFocusOrder="0" pos="8 296 360 24" bgColOff="ffe2e2e2"
               buttonText="Bypass" connectedEdges="0" needsCallback="1" radioGroupId="0"/>
   <LABEL name="Width Label" id="d43333b7c7118250" memberName="widthLabel"
          virtualName="" explicitFocusOrder="0" pos="8 8 150 24" textCol="ff808080"
@@ -225,14 +255,18 @@ BEGIN_JUCER_METADATA
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
          fontname="Default font" fontsize="15" bold="0" italic="0" justification="33"/>
   <TEXTBUTTON name="Mute Button" id="914591cf8043a819" memberName="muteBtn"
-              virtualName="" explicitFocusOrder="0" pos="16 152 150 24" bgColOff="ffe2e2e2"
+              virtualName="" explicitFocusOrder="0" pos="16 256 150 24" bgColOff="ffe2e2e2"
               buttonText="Mute" connectedEdges="0" needsCallback="1" radioGroupId="0"/>
   <SLIDER name="Gain Knob" id="dd791eb940d88513" memberName="gainKnob"
-          virtualName="" explicitFocusOrder="0" pos="200 72 150 104" bkgcol="868181"
-          trackcol="7fffffff" rotarysliderfill="7fbcbcff" rotaryslideroutline="66ffffff"
-          min="-96" max="18" int="0.10000000000000001" style="LinearVertical"
-          textBoxPos="TextBoxBelow" textBoxEditable="1" textBoxWidth="80"
-          textBoxHeight="20" skewFactor="1"/>
+          virtualName="GainSlider" explicitFocusOrder="0" pos="200 72 150 104"
+          bkgcol="868181" trackcol="7fffffff" rotarysliderfill="7fbcbcff"
+          rotaryslideroutline="66ffffff" min="-96" max="12" int="0.10000000000000001"
+          style="LinearVertical" textBoxPos="TextBoxBelow" textBoxEditable="1"
+          textBoxWidth="80" textBoxHeight="20" skewFactor="1"/>
+  <TEXTBUTTON name="Lock Gain" id="1dcd400b4d4f873f" memberName="lockGain"
+              virtualName="" explicitFocusOrder="0" pos="208 184 150 24" bgColOff="ffe2e2e2"
+              buttonText="Lock Gain to 0db" connectedEdges="0" needsCallback="1"
+              radioGroupId="0"/>
 </JUCER_COMPONENT>
 
 END_JUCER_METADATA

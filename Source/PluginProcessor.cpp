@@ -19,6 +19,7 @@ StereoWidthCtrlAudioProcessor::StereoWidthCtrlAudioProcessor()
 	UserParams[StereoWidth] = 1.0f; //Normal stereo width by default
 	UserParams[MuteAudio] = 0.0f; //Not muted by default
 	UserParams[AudioGain] = 0.0f; //set at 0Decibels by default
+	UserParams[LockGain] = 0.0f;
 	widthControl.setWidth(UserParams[StereoWidth]); //Push user width to the controller
 	gainControl.setGainFromDB(UserParams[AudioGain]);
 	UIUpdateFlag = true; //flag UI for update
@@ -52,6 +53,8 @@ float StereoWidthCtrlAudioProcessor::getParameter (int index)
 		return UserParams[MuteAudio];
 	case AudioGain:
 		return UserParams[AudioGain];
+	case LockGain:
+		return UserParams[LockGain];
 	default:
 		return 0.0f; //Invalid Index
 	}
@@ -73,8 +76,18 @@ void StereoWidthCtrlAudioProcessor::setParameter (int index, float newValue)
 			UserParams[MuteAudio] = newValue;
 			break;
 		case AudioGain:
-			UserParams[AudioGain] = newValue;
+			if (UserParams[LockGain])
+			{
+				UserParams[AudioGain] = std::min<float>(newValue, 0.0f);				
+			}
+			else
+			{
+				UserParams[AudioGain] = newValue;
+			}
 			gainControl.setGainFromDB(UserParams[AudioGain]);
+			break;
+		case LockGain:
+			UserParams[LockGain] = newValue;
 			break;
 		default: return;
 	}
@@ -89,6 +102,7 @@ const String StereoWidthCtrlAudioProcessor::getParameterName (int index)
 		case StereoWidth: return "StereoWidth Factor";
 		case MuteAudio: return "Mute Audio";
 		case AudioGain: return "Audio Gain";
+		case LockGain: return "Lock Gain";
 		default: return String::empty;
 	}
 }

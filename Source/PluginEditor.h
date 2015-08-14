@@ -74,6 +74,7 @@ private:
     ScopedPointer<Label> widthLabel;
     ScopedPointer<TextButton> muteBtn;
     ScopedPointer<GainSlider> gainKnob;
+    ScopedPointer<TextButton> lockGain;
 
 
     //==============================================================================

@@ -75,6 +75,7 @@ public:
 		StereoWidth,
 		MuteAudio,
 		AudioGain,
+		LockGain,
 		totalNumParam
 	};
 	bool needsUIUpdate() { return UIUpdateFlag; };
