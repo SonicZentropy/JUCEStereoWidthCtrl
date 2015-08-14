@@ -31,6 +31,7 @@ void VolumeInDB::setGain(float gain)
 
 void VolumeInDB::ClockProcess(float* LeftSample, float* RightSample)
 {
+	//DBG("In Volume Clock Process gain is : " + String(audioGain));
 	*LeftSample = *LeftSample * audioGain;
 	*RightSample = *RightSample * audioGain;
 }

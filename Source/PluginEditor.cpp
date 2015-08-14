@@ -72,7 +72,7 @@ StereoWidthCtrlAudioProcessorEditor::StereoWidthCtrlAudioProcessorEditor (Stereo
     //[UserPreSize]
     //[/UserPreSize]
 
-    setSize (375, 125);
+    setSize (375, 500);
 
 
     //[Constructor] You can add your own custom stuff here..
@@ -134,14 +134,14 @@ void StereoWidthCtrlAudioProcessorEditor::sliderValueChanged (Slider* sliderThat
     if (sliderThatWasMoved == WidthCtrlSld)
     {
         //[UserSliderCode_WidthCtrlSld] -- add your slider handling code here..
-		DBG("Changing SliderValue from: " + String(StereoWidthCtrlAudioProcessor::StereoWidth) + " to: " + static_cast<String>(WidthCtrlSld->getValue()));
+		DBG("Changing Width SliderValue from: " + String(StereoWidthCtrlAudioProcessor::StereoWidth) + " to: " + static_cast<String>(WidthCtrlSld->getValue()));
 		ourProcessor->setParameter(StereoWidthCtrlAudioProcessor::StereoWidth, static_cast<float>(WidthCtrlSld->getValue()));
         //[/UserSliderCode_WidthCtrlSld]
     }
     else if (sliderThatWasMoved == gainKnob)
     {
         //[UserSliderCode_gainKnob] -- add your slider handling code here..
-		DBG("Gain slider value changing");
+		DBG("Gain slider value changing from: " + String(StereoWidthCtrlAudioProcessor::AudioGain) + " to: " + static_cast<String>(gainKnob->getValue()));
 		ourProcessor->setParameter(StereoWidthCtrlAudioProcessor::AudioGain, static_cast<float>(gainKnob->getValue()));
         //[/UserSliderCode_gainKnob]
     }
@@ -210,7 +210,7 @@ BEGIN_JUCER_METADATA
                  constructorParams="StereoWidthCtrlAudioProcessor&amp; ownerFilter"
                  variableInitialisers="AudioProcessorEditor(ownerFilter)" snapPixels="8"
                  snapActive="1" snapShown="1" overlayOpacity="0.330" fixedSize="0"
-                 initialWidth="375" initialHeight="125">
+                 initialWidth="375" initialHeight="500">
   <BACKGROUND backgroundColour="ff000000"/>
   <SLIDER name="Width Factor Slider" id="8506fc7967803b22" memberName="WidthCtrlSld"
           virtualName="" explicitFocusOrder="0" pos="16 40 352 24" min="0"

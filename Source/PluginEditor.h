@@ -55,7 +55,7 @@ public:
 
     //[/UserMethods]
 
-	void paint(Graphics& g) override;
+    void paint (Graphics& g);
     void resized();
     void sliderValueChanged (Slider* sliderThatWasMoved);
     void buttonClicked (Button* buttonThatWasClicked);

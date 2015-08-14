@@ -57,6 +57,7 @@ float StereoWidthCtrlAudioProcessor::getParameter (int index)
 	}
 }
 
+/// This method takes the GUI value and deposits it into the Corresponding Processor Parameter field
 void StereoWidthCtrlAudioProcessor::setParameter (int index, float newValue)
 {
 	switch (index)
@@ -73,6 +74,7 @@ void StereoWidthCtrlAudioProcessor::setParameter (int index, float newValue)
 			break;
 		case AudioGain:
 			UserParams[AudioGain] = newValue;
+			gainControl.setGain(UserParams[AudioGain]);
 			break;
 		default: return;
 	}
@@ -237,7 +239,7 @@ void StereoWidthCtrlAudioProcessor::processBlock (AudioSampleBuffer& buffer, Mid
 		// Handle Gain
 		if (UserParams[AudioGain] != 1.0f && !UserParams[MuteAudio])
 		{ 
-			DBG("In gain change");
+			
 			float* leftData = buffer.getWritePointer(0);  //leftData references left channel now
 			float* rightData = buffer.getWritePointer(1); //right data references right channel now
 			for (long i = 0; i < buffer.getNumSamples(); i++)
