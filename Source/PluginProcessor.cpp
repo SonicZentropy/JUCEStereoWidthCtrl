@@ -16,7 +16,7 @@
 StereoWidthCtrlAudioProcessor::StereoWidthCtrlAudioProcessor()
 {
 	UserParams[MasterBypass] = 0.0f; //default to non-bypassed
-	UserParams[StereoWidth] = 1.0f; //Normal stereo width by default
+	UserParams[StereoWidth] = 0.5f; //Normal stereo width by default
 	UserParams[MuteAudio] = 0.0f; //Not muted by default
 	UserParams[AudioGain] = 1.0f; //set at 100% volume by default
 	UserParams[LockGain] = 0.0f;

@@ -22,7 +22,7 @@ StereoWidthCtrl::~StereoWidthCtrl()
 
 void StereoWidthCtrl::setWidth(float width)
 {
-	stereoWidthValue = width;
+	stereoWidthValue = width * 2;
 	float temp;
 	if (1.0f + width > 2.0f)
 	{

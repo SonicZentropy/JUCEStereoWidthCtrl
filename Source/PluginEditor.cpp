@@ -175,7 +175,7 @@ void StereoWidthCtrlAudioProcessorEditor::sliderValueChanged (Slider* sliderThat
     {
         //[UserSliderCode_WidthCtrlSld] -- add your slider handling code here..
 		DBG("Changing Width SliderValue from: " + String(StereoWidthCtrlAudioProcessor::StereoWidth) + " to: " + static_cast<String>(WidthCtrlSld->getValue()));
-		ourProcessor->setParameter(StereoWidthCtrlAudioProcessor::StereoWidth, static_cast<float>(WidthCtrlSld->getValue()));
+		ourProcessor->setParameter(StereoWidthCtrlAudioProcessor::StereoWidth, static_cast<float>(WidthCtrlSld->getValue() / 2.0f));
         //[/UserSliderCode_WidthCtrlSld]
     }
     else if (sliderThatWasMoved == gainKnob)
