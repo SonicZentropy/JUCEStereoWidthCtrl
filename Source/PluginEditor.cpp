@@ -58,7 +58,7 @@ StereoWidthCtrlAudioProcessorEditor::StereoWidthCtrlAudioProcessorEditor (Stereo
     muteBtn->addListener (this);
     muteBtn->setColour (TextButton::buttonColourId, Colour (0xffe2e2e2));
 
-    addAndMakeVisible (gainKnob = new Slider ("Gain Knob"));
+    addAndMakeVisible (gainKnob = new GainSlider ("Gain Knob"));
     gainKnob->setRange (-96, 18, 0.1);
     gainKnob->setSliderStyle (Slider::LinearVertical);
     gainKnob->setTextBoxStyle (Slider::TextBoxBelow, false, 80, 20);
@@ -67,9 +67,6 @@ StereoWidthCtrlAudioProcessorEditor::StereoWidthCtrlAudioProcessorEditor (Stereo
     gainKnob->setColour (Slider::rotarySliderFillColourId, Colour (0x7fbcbcff));
     gainKnob->setColour (Slider::rotarySliderOutlineColourId, Colour (0x66ffffff));
     gainKnob->addListener (this);
-	gainKnob->setTextValueSuffix("dB");
-	gainKnob->setDoubleClickReturnValue(true, 0.0f);
-	gainKnob->getTextFromValue(1.0f);
 
 
     //[UserPreSize]

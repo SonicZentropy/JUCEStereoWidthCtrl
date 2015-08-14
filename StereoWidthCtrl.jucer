@@ -13,6 +13,10 @@
               companyEmail="SonicZentropy@gmail.com">
   <MAINGROUP id="JHoKxW" name="StereoWidthCtrl">
     <GROUP id="{449F2A72-20F9-17C7-2809-5D6ADB01CDA1}" name="Source">
+      <GROUP id="{42559586-EA01-54C0-F5FF-91A075BFB7B7}" name="ComponentOverrides">
+        <FILE id="PP5u1k" name="GainSlider.cpp" compile="1" resource="0" file="Source/GainSlider.cpp"/>
+        <FILE id="ST4STp" name="GainSlider.h" compile="0" resource="0" file="Source/GainSlider.h"/>
+      </GROUP>
       <GROUP id="{9BCE696A-216F-6923-111B-B1345868F3EF}" name="VolumeInDB">
         <FILE id="WG5B4D" name="VolumeInDB.cpp" compile="1" resource="0" file="Source/VolumeInDB.cpp"/>
         <FILE id="FFGstp" name="VolumeInDB.h" compile="0" resource="0" file="Source/VolumeInDB.h"/>

@@ -23,6 +23,8 @@
 //[Headers]     -- You can add your own extra header files here --
 #include "JuceHeader.h"
 #include "PluginProcessor.h"
+#include "gainSlider.h"
+
 //[/Headers]
 
 
@@ -71,7 +73,7 @@ private:
     ScopedPointer<TextButton> BypassBtn;
     ScopedPointer<Label> widthLabel;
     ScopedPointer<TextButton> muteBtn;
-    ScopedPointer<Slider> gainKnob;
+    ScopedPointer<GainSlider> gainKnob;
 
 
     //==============================================================================
