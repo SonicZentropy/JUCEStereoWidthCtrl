@@ -8,9 +8,10 @@
   ==============================================================================
 */
 
+#pragma warning (disable : 4100 )  // get rid of unused param warnings
+
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
-
 
 //==============================================================================
 StereoWidthCtrlAudioProcessor::StereoWidthCtrlAudioProcessor()
@@ -22,8 +23,10 @@ StereoWidthCtrlAudioProcessor::StereoWidthCtrlAudioProcessor()
 	UserParams[LockGain] = 0.0f;
 	UserParams[InvertLeft] = 0.0f;
 	UserParams[InvertRight] = 0.0f;
+	
 	widthControl.setWidth(UserParams[StereoWidth]); //Push user width to the controller
 	gainControl.setGain(UserParams[AudioGain]);
+	
 	UIUpdateFlag = true; //flag UI for update
 }
 
@@ -49,7 +52,7 @@ float StereoWidthCtrlAudioProcessor::getParameter (int index)
 	case MasterBypass:
 		return UserParams[MasterBypass];
 	case StereoWidth:
-		UserParams[StereoWidth] = widthControl.getWidth();
+		UserParams[StereoWidth] = (widthControl.getWidth());
 		return UserParams[StereoWidth];
 	case MuteAudio:
 		return UserParams[MuteAudio];
@@ -72,10 +75,9 @@ void StereoWidthCtrlAudioProcessor::setParameter (int index, float newValue)
 	switch (index)
 	{
 		case MasterBypass:
-			UserParams[MasterBypass] = newValue;
+			UserParams[MasterBypass] = newValue;		
 			break;
 		case StereoWidth:
-			DBG("In setParameter block!");
 			UserParams[StereoWidth] = newValue; //Set Width Parameter
 			widthControl.setWidth(UserParams[StereoWidth]); //Update control value
 			break;
@@ -188,15 +190,17 @@ int StereoWidthCtrlAudioProcessor::getCurrentProgram()
 
 void StereoWidthCtrlAudioProcessor::setCurrentProgram (int index)
 {
+
 }
 
 const String StereoWidthCtrlAudioProcessor::getProgramName (int index)
 {
-    return String();
+	return String();
 }
 
 void StereoWidthCtrlAudioProcessor::changeProgramName (int index, const String& newName)
 {
+	
 }
 
 //==============================================================================
@@ -204,6 +208,8 @@ void StereoWidthCtrlAudioProcessor::prepareToPlay (double sampleRate, int sample
 {
     // Use this method as the place to do any pre-playback
     // initialisation that you need..
+	sampleRate = sampleRate;
+	samplesPerBlock = samplesPerBlock;
 }
 
 void StereoWidthCtrlAudioProcessor::releaseResources()
@@ -231,6 +237,7 @@ void StereoWidthCtrlAudioProcessor::processBlock (AudioSampleBuffer& buffer, Mid
 
     //    // ..do something to the data...
     //}
+	
 	if (getNumInputChannels() < 2 || UserParams[MasterBypass])
 	{
 		//Do nothing, just pass through
@@ -266,7 +273,8 @@ void StereoWidthCtrlAudioProcessor::processBlock (AudioSampleBuffer& buffer, Mid
 		{ 
 			for (long i = 0; i < buffer.getNumSamples(); i++)
 			{
-				gainControl.ClockProcess(&leftData[i], &rightData[i]);;
+				gainControl.ClockProcess(&leftData[i], &rightData[i]);
+				
 			}
 		}
 		if (UserParams[InvertLeft] && !UserParams[MuteAudio])
@@ -336,7 +344,7 @@ void StereoWidthCtrlAudioProcessor::setStateInformation (const void* data, int s
 			else if (pChild->hasTagName("StereoWidth"))
 			{
 				String text = pChild->getAllSubText();
-				setParameter(StereoWidth, text.getFloatValue());
+				setParameter(StereoWidth, text.getFloatValue() / 2.0f);
 			}
 			else if (pChild->hasTagName("MuteAudio"))  //This shouldn't work?  Switch MuteAudio to Mute
 			{

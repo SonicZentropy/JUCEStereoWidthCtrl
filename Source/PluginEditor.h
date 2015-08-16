@@ -69,14 +69,14 @@ private:
     //[/UserVariables]
 
     //==============================================================================
-    ScopedPointer<Slider> WidthCtrlSld;
-    ScopedPointer<TextButton> BypassBtn;
+    ScopedPointer<Slider> stereoWidthSldCtrl;
+    ScopedPointer<TextButton> bypassBtnCtrl;
     ScopedPointer<Label> widthLabel;
-    ScopedPointer<TextButton> muteBtn;
-    ScopedPointer<GainSlider> gainKnob;
-    ScopedPointer<TextButton> lockGain;
-    ScopedPointer<ToggleButton> invertLeft;
-    ScopedPointer<ToggleButton> invertRight;
+    ScopedPointer<TextButton> muteBtnCtrl;
+    ScopedPointer<GainSlider> gainSldCtrl;
+    ScopedPointer<TextButton> lockGainBtnCtrl;
+    ScopedPointer<ToggleButton> invertLeftBtnCtrl;
+    ScopedPointer<ToggleButton> invertRightBtnCtrl;
     ScopedPointer<Label> invertLabel;
 
 

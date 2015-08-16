@@ -13,10 +13,6 @@
               companyEmail="SonicZentropy@gmail.com">
   <MAINGROUP id="JHoKxW" name="StereoWidthCtrl">
     <GROUP id="{449F2A72-20F9-17C7-2809-5D6ADB01CDA1}" name="Source">
-      <GROUP id="{C15EF325-0C33-9861-75F1-2FF0D6A7218E}" name="Utility">
-        <FILE id="tWEAYU" name="ParamUtils.cpp" compile="1" resource="0" file="Source/ParamUtils.cpp"/>
-        <FILE id="gGzzzH" name="ParamUtils.h" compile="0" resource="0" file="Source/ParamUtils.h"/>
-      </GROUP>
       <GROUP id="{42559586-EA01-54C0-F5FF-91A075BFB7B7}" name="ComponentOverrides">
         <FILE id="PP5u1k" name="GainSlider.cpp" compile="1" resource="0" file="Source/GainSlider.cpp"/>
         <FILE id="ST4STp" name="GainSlider.h" compile="0" resource="0" file="Source/GainSlider.h"/>
@@ -70,32 +66,24 @@
         <MODULEPATH id="juce_data_structures" path="../JUCEMain/modules"/>
         <MODULEPATH id="juce_gui_basics" path="../JUCEMain/modules"/>
         <MODULEPATH id="juce_gui_extra" path="../JUCEMain/modules"/>
-        <MODULEPATH id="juce_cryptography" path="../JUCEMain/modules"/>
-        <MODULEPATH id="juce_video" path="../JUCEMain/modules"/>
-        <MODULEPATH id="juce_opengl" path="../JUCEMain/modules"/>
         <MODULEPATH id="juce_audio_basics" path="../JUCEMain/modules"/>
-        <MODULEPATH id="juce_audio_devices" path="../JUCEMain/modules"/>
-        <MODULEPATH id="juce_audio_formats" path="../JUCEMain/modules"/>
         <MODULEPATH id="juce_audio_processors" path="../JUCEMain/modules"/>
         <MODULEPATH id="juce_audio_plugin_client" path="../JUCEMain/modules"/>
+        <MODULEPATH id="zen_utils" path="../JUCEMain/modules"/>
       </MODULEPATHS>
     </VS2013>
   </EXPORTFORMATS>
   <MODULES>
     <MODULE id="juce_audio_basics" showAllCode="1" useLocalCopy="0"/>
-    <MODULE id="juce_audio_devices" showAllCode="1" useLocalCopy="0"/>
-    <MODULE id="juce_audio_formats" showAllCode="1" useLocalCopy="0"/>
     <MODULE id="juce_audio_plugin_client" showAllCode="1" useLocalCopy="0"/>
     <MODULE id="juce_audio_processors" showAllCode="1" useLocalCopy="0"/>
     <MODULE id="juce_core" showAllCode="1" useLocalCopy="0"/>
-    <MODULE id="juce_cryptography" showAllCode="1" useLocalCopy="0"/>
     <MODULE id="juce_data_structures" showAllCode="1" useLocalCopy="0"/>
     <MODULE id="juce_events" showAllCode="1" useLocalCopy="0"/>
     <MODULE id="juce_graphics" showAllCode="1" useLocalCopy="0"/>
     <MODULE id="juce_gui_basics" showAllCode="1" useLocalCopy="0"/>
     <MODULE id="juce_gui_extra" showAllCode="1" useLocalCopy="0"/>
-    <MODULE id="juce_opengl" showAllCode="1" useLocalCopy="0"/>
-    <MODULE id="juce_video" showAllCode="1" useLocalCopy="0"/>
+    <MODULE id="zen_utils" showAllCode="1" useLocalCopy="0"/>
   </MODULES>
   <JUCEOPTIONS JUCE_QUICKTIME="disabled"/>
 </JUCERPROJECT>

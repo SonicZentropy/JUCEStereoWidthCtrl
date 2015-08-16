@@ -12,7 +12,7 @@
 
 StereoWidthCtrl::StereoWidthCtrl()
 {
-	setWidth(1.0f);
+	setWidth(0.5f);
 }
 
 StereoWidthCtrl::~StereoWidthCtrl()
@@ -22,14 +22,15 @@ StereoWidthCtrl::~StereoWidthCtrl()
 
 void StereoWidthCtrl::setWidth(float width)
 {
-	stereoWidthValue = width * 2;
+	stereoWidthValue = width;
+	float widthDenormalized = stereoWidthValue * 2.0f;
 	float temp;
 	if (1.0f + width > 2.0f)
 	{
-		temp = 1.0f / (1.0f + stereoWidthValue);
+		temp = 1.0f / (1.0f + widthDenormalized);
 	}
 	else temp = 1.0f / 2.0f;
-	diffGain = stereoWidthValue * temp;  ///diffGain is gain coefficient for Side 
+	diffGain = widthDenormalized * temp;  ///diffGain is gain coefficient for Side 
 	sumGain = temp;  ///sumGain is gain coefficient for Mid
 }
 

@@ -17,11 +17,14 @@
 #ifndef STEREOWIDTHCTRL_H_INCLUDED
 #define STEREOWIDTHCTRL_H_INCLUDED
 
-
+#ifndef noexcept
+#define noexcept throw()
+#endif
 
 
 
 #endif  // STEREOWIDTHCTRL_H_INCLUDED
+#include "../../JUCEMain/modules/juce_core/maths/juce_NormalisableRange.h"
 
 class StereoWidthCtrl
 {
@@ -38,6 +41,7 @@ public:
 
 private:
 	float stereoWidthValue, sumGain, diffGain;
+	NormalisableRange<float> normRange;
 
 
 };
