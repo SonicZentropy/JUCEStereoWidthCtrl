@@ -176,6 +176,7 @@ void StereoWidthCtrlAudioProcessorEditor::sliderValueChanged (Slider* sliderThat
         //[UserSliderCode_stereoWidthSldCtrl] 
 		DBG("Changing Width SliderValue from: " + String(ourProcessor->getParameter(StereoWidthCtrlAudioProcessor::StereoWidth)) + " to: " + static_cast<String>(stereoWidthSldCtrl->getValue()));
 		ourProcessor->setParameter(StereoWidthCtrlAudioProcessor::StereoWidth, static_cast<float>(stereoWidthSldCtrl->getValue() / 2.0f));
+		//ourProcessor->se
 
         //[/UserSliderCode_stereoWidthSldCtrl]
     }
@@ -247,7 +248,8 @@ void StereoWidthCtrlAudioProcessorEditor::buttonClicked (Button* buttonThatWasCl
     {
         //[UserButtonCode_invertRightBtnCtrl] 
 		DBG("Before Inverting Right is : " + String(StereoWidthCtrlAudioProcessor::InvertRight));
-		ourProcessor->setParameter(StereoWidthCtrlAudioProcessor::InvertRight, static_cast<float>(invertRightBtnCtrl->getToggleStateValue().getValue()));
+		ourProcessor->setParameterNotifyingHost(StereoWidthCtrlAudioProcessor::InvertRight, static_cast<float>(invertRightBtnCtrl->getToggleStateValue().getValue()));
+		
 		DBG("Inverted is: " + String(StereoWidthCtrlAudioProcessor::InvertRight) + " From toggle : " + String(static_cast<float>(invertRightBtnCtrl->getToggleStateValue().getValue())));
 
         //[/UserButtonCode_invertRightBtnCtrl]
