@@ -15,10 +15,9 @@
 #include "StereoWidthCtrl.h"
 #include "VolumeInDBCtrl.h"
 
-
-//==============================================================================
-/**
-*/
+/// <summary> Handles main VST processing via reactions to automation
+/// 		  (which calls the .setParameter() method) as well as GUI handling from PluginEditor.cpp</summary>
+/// <seealso cref="T:AudioProcessor"/>
 class StereoWidthCtrlAudioProcessor  : public AudioProcessor
 {
 public:
@@ -30,7 +29,6 @@ public:
     //==============================================================================
     void prepareToPlay (double sampleRate, int samplesPerBlock) override;
     void releaseResources() override;
-
     void processBlock (AudioSampleBuffer&, MidiBuffer&) override;
 
     //==============================================================================
