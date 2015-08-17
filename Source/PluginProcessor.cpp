@@ -37,11 +37,15 @@ StereoWidthCtrlAudioProcessor::StereoWidthCtrlAudioProcessor()
 	UIUpdateFlag = true; //flag UI for update
 
 	// DBG TEST AREA - USER
+
 	ZenUtils testUtil;
 	testUtil.testGain(5.0f);
-//	FloatParameter testParam(0.5, "Test Param");
-//	testParam.getValue();
-	DBG("TEST PARAM WORKING: " + String(testUtil.testGain(50.0f)));
+	
+	FloatParameter testParam;
+	testParam.testFloat(10.0);
+
+	DBG("TEST PARAM WORKING ZenUtils: " + String(testUtil.testGain(50.0f)));
+	DBG("TEST PARAM WORKING FloatParameter: " + String(testParam.testFloat(10.0)));
 	// /DBG TEST AREA - USER
 
 }

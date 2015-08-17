@@ -493,6 +493,9 @@
     <ClCompile Include="..\..\..\JUCEMain\modules\juce_audio_utils\players\juce_AudioProcessorPlayer.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\..\..\JUCEMain\modules\juce_box2d\utils\juce_Box2DRenderer.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\..\JUCEMain\modules\juce_core\text\juce_Base64.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -722,6 +725,24 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\..\JUCEMain\modules\juce_core\native\juce_win32_Threads.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCEMain\modules\juce_cryptography\encryption\juce_BlowFish.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCEMain\modules\juce_cryptography\encryption\juce_Primes.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCEMain\modules\juce_cryptography\encryption\juce_RSAKey.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCEMain\modules\juce_cryptography\hashing\juce_MD5.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCEMain\modules\juce_cryptography\hashing\juce_SHA256.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCEMain\modules\juce_cryptography\hashing\juce_Whirlpool.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\..\JUCEMain\modules\juce_data_structures\values\juce_Value.cpp">
@@ -1315,6 +1336,51 @@
     <ClCompile Include="..\..\..\JUCEMain\modules\juce_gui_extra\native\juce_win32_WebBrowserComponent.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\..\..\JUCEMain\modules\juce_opengl\opengl\juce_OpenGLContext.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCEMain\modules\juce_opengl\opengl\juce_OpenGLFrameBuffer.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCEMain\modules\juce_opengl\opengl\juce_OpenGLGraphicsContext.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCEMain\modules\juce_opengl\opengl\juce_OpenGLHelpers.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCEMain\modules\juce_opengl\opengl\juce_OpenGLImage.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCEMain\modules\juce_opengl\opengl\juce_OpenGLPixelFormat.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCEMain\modules\juce_opengl\opengl\juce_OpenGLShaderProgram.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCEMain\modules\juce_opengl\opengl\juce_OpenGLTexture.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCEMain\modules\juce_opengl\utils\juce_OpenGLAppComponent.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCEMain\modules\juce_video\capture\juce_CameraDevice.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCEMain\modules\juce_video\native\juce_android_CameraDevice.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCEMain\modules\juce_video\native\juce_win32_CameraDevice.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCEMain\modules\juce_video\native\juce_win32_DirectShowComponent.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCEMain\modules\juce_video\native\juce_win32_QuickTimeMovieComponent.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCEMain\modules\zen_utils\imp\FloatParameter.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\..\JUCEMain\modules\zen_utils\imp\ZenParamUtils.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -1327,12 +1393,15 @@
     <ClCompile Include="..\..\..\JUCEMain\modules\juce_audio_formats\juce_audio_formats.cpp"/>
     <ClCompile Include="..\..\..\JUCEMain\modules\juce_audio_processors\juce_audio_processors.cpp"/>
     <ClCompile Include="..\..\..\JUCEMain\modules\juce_audio_utils\juce_audio_utils.cpp"/>
+    <ClCompile Include="..\..\..\JUCEMain\modules\juce_box2d\juce_box2d.cpp"/>
     <ClCompile Include="..\..\..\JUCEMain\modules\juce_core\juce_core.cpp"/>
+    <ClCompile Include="..\..\..\JUCEMain\modules\juce_cryptography\juce_cryptography.cpp"/>
     <ClCompile Include="..\..\..\JUCEMain\modules\juce_data_structures\juce_data_structures.cpp"/>
     <ClCompile Include="..\..\..\JUCEMain\modules\juce_events\juce_events.cpp"/>
     <ClCompile Include="..\..\..\JUCEMain\modules\juce_graphics\juce_graphics.cpp"/>
     <ClCompile Include="..\..\..\JUCEMain\modules\juce_gui_basics\juce_gui_basics.cpp"/>
     <ClCompile Include="..\..\..\JUCEMain\modules\juce_gui_extra\juce_gui_extra.cpp"/>
+    <ClCompile Include="..\..\..\JUCEMain\modules\juce_opengl\juce_opengl.cpp"/>
     <ClCompile Include="..\..\..\JUCEMain\modules\juce_audio_plugin_client\utility\juce_PluginUtilities.cpp"/>
     <ClCompile Include="..\..\..\JUCEMain\modules\juce_audio_plugin_client\RTAS\juce_RTAS_DigiCode1.cpp">
       <CallingConvention>StdCall</CallingConvention>
@@ -1349,6 +1418,7 @@
     <ClCompile Include="..\..\..\JUCEMain\modules\juce_audio_plugin_client\RTAS\juce_RTAS_Wrapper.cpp">
       <CallingConvention>StdCall</CallingConvention>
     </ClCompile>
+    <ClCompile Include="..\..\..\JUCEMain\modules\juce_video\juce_video.cpp"/>
     <ClCompile Include="..\..\..\JUCEMain\modules\juce_audio_plugin_client\VST\juce_VST_Wrapper.cpp"/>
     <ClCompile Include="..\..\..\JUCEMain\modules\juce_audio_plugin_client\VST3\juce_VST3_Wrapper.cpp"/>
     <ClCompile Include="..\..\..\JUCEMain\modules\zen_utils\juce_zen_utils.cpp"/>
@@ -1454,6 +1524,9 @@
     <ClInclude Include="..\..\..\JUCEMain\modules\juce_audio_utils\gui\juce_MidiKeyboardComponent.h"/>
     <ClInclude Include="..\..\..\JUCEMain\modules\juce_audio_utils\players\juce_AudioProcessorPlayer.h"/>
     <ClInclude Include="..\..\..\JUCEMain\modules\juce_audio_utils\juce_audio_utils.h"/>
+    <ClInclude Include="..\..\..\JUCEMain\modules\juce_box2d\box2d\Box2D.h"/>
+    <ClInclude Include="..\..\..\JUCEMain\modules\juce_box2d\utils\juce_Box2DRenderer.h"/>
+    <ClInclude Include="..\..\..\JUCEMain\modules\juce_box2d\juce_box2d.h"/>
     <ClInclude Include="..\..\..\JUCEMain\modules\juce_core\text\juce_Base64.h"/>
     <ClInclude Include="..\..\..\JUCEMain\modules\juce_core\text\juce_CharacterFunctions.h"/>
     <ClInclude Include="..\..\..\JUCEMain\modules\juce_core\text\juce_CharPointer_ASCII.h"/>
@@ -1568,6 +1641,13 @@
     <ClInclude Include="..\..\..\JUCEMain\modules\juce_core\native\juce_posix_SharedCode.h"/>
     <ClInclude Include="..\..\..\JUCEMain\modules\juce_core\native\juce_win32_ComSmartPtr.h"/>
     <ClInclude Include="..\..\..\JUCEMain\modules\juce_core\juce_core.h"/>
+    <ClInclude Include="..\..\..\JUCEMain\modules\juce_cryptography\encryption\juce_BlowFish.h"/>
+    <ClInclude Include="..\..\..\JUCEMain\modules\juce_cryptography\encryption\juce_Primes.h"/>
+    <ClInclude Include="..\..\..\JUCEMain\modules\juce_cryptography\encryption\juce_RSAKey.h"/>
+    <ClInclude Include="..\..\..\JUCEMain\modules\juce_cryptography\hashing\juce_MD5.h"/>
+    <ClInclude Include="..\..\..\JUCEMain\modules\juce_cryptography\hashing\juce_SHA256.h"/>
+    <ClInclude Include="..\..\..\JUCEMain\modules\juce_cryptography\hashing\juce_Whirlpool.h"/>
+    <ClInclude Include="..\..\..\JUCEMain\modules\juce_cryptography\juce_cryptography.h"/>
     <ClInclude Include="..\..\..\JUCEMain\modules\juce_data_structures\values\juce_Value.h"/>
     <ClInclude Include="..\..\..\JUCEMain\modules\juce_data_structures\values\juce_ValueTree.h"/>
     <ClInclude Include="..\..\..\JUCEMain\modules\juce_data_structures\values\juce_ValueTreeSynchroniser.h"/>
@@ -1790,6 +1870,33 @@
     <ClInclude Include="..\..\..\JUCEMain\modules\juce_gui_extra\misc\juce_WebBrowserComponent.h"/>
     <ClInclude Include="..\..\..\JUCEMain\modules\juce_gui_extra\native\juce_mac_CarbonViewWrapperComponent.h"/>
     <ClInclude Include="..\..\..\JUCEMain\modules\juce_gui_extra\juce_gui_extra.h"/>
+    <ClInclude Include="..\..\..\JUCEMain\modules\juce_opengl\opengl\juce_OpenGLContext.h"/>
+    <ClInclude Include="..\..\..\JUCEMain\modules\juce_opengl\opengl\juce_OpenGLFrameBuffer.h"/>
+    <ClInclude Include="..\..\..\JUCEMain\modules\juce_opengl\opengl\juce_OpenGLGraphicsContext.h"/>
+    <ClInclude Include="..\..\..\JUCEMain\modules\juce_opengl\opengl\juce_OpenGLHelpers.h"/>
+    <ClInclude Include="..\..\..\JUCEMain\modules\juce_opengl\opengl\juce_OpenGLImage.h"/>
+    <ClInclude Include="..\..\..\JUCEMain\modules\juce_opengl\opengl\juce_OpenGLPixelFormat.h"/>
+    <ClInclude Include="..\..\..\JUCEMain\modules\juce_opengl\opengl\juce_OpenGLRenderer.h"/>
+    <ClInclude Include="..\..\..\JUCEMain\modules\juce_opengl\opengl\juce_OpenGLShaderProgram.h"/>
+    <ClInclude Include="..\..\..\JUCEMain\modules\juce_opengl\opengl\juce_OpenGLTexture.h"/>
+    <ClInclude Include="..\..\..\JUCEMain\modules\juce_opengl\geometry\juce_Draggable3DOrientation.h"/>
+    <ClInclude Include="..\..\..\JUCEMain\modules\juce_opengl\geometry\juce_Matrix3D.h"/>
+    <ClInclude Include="..\..\..\JUCEMain\modules\juce_opengl\geometry\juce_Quaternion.h"/>
+    <ClInclude Include="..\..\..\JUCEMain\modules\juce_opengl\geometry\juce_Vector3D.h"/>
+    <ClInclude Include="..\..\..\JUCEMain\modules\juce_opengl\utils\juce_OpenGLAppComponent.h"/>
+    <ClInclude Include="..\..\..\JUCEMain\modules\juce_opengl\native\juce_MissingGLDefinitions.h"/>
+    <ClInclude Include="..\..\..\JUCEMain\modules\juce_opengl\native\juce_OpenGL_android.h"/>
+    <ClInclude Include="..\..\..\JUCEMain\modules\juce_opengl\native\juce_OpenGL_ios.h"/>
+    <ClInclude Include="..\..\..\JUCEMain\modules\juce_opengl\native\juce_OpenGL_linux.h"/>
+    <ClInclude Include="..\..\..\JUCEMain\modules\juce_opengl\native\juce_OpenGL_osx.h"/>
+    <ClInclude Include="..\..\..\JUCEMain\modules\juce_opengl\native\juce_OpenGL_win32.h"/>
+    <ClInclude Include="..\..\..\JUCEMain\modules\juce_opengl\native\juce_OpenGLExtensions.h"/>
+    <ClInclude Include="..\..\..\JUCEMain\modules\juce_opengl\juce_opengl.h"/>
+    <ClInclude Include="..\..\..\JUCEMain\modules\juce_video\playback\juce_DirectShowComponent.h"/>
+    <ClInclude Include="..\..\..\JUCEMain\modules\juce_video\playback\juce_QuickTimeMovieComponent.h"/>
+    <ClInclude Include="..\..\..\JUCEMain\modules\juce_video\capture\juce_CameraDevice.h"/>
+    <ClInclude Include="..\..\..\JUCEMain\modules\juce_video\juce_video.h"/>
+    <ClInclude Include="..\..\..\JUCEMain\modules\zen_utils\imp\FloatParameter.h"/>
     <ClInclude Include="..\..\..\JUCEMain\modules\zen_utils\imp\ZenParamUtils.h"/>
     <ClInclude Include="..\..\..\JUCEMain\modules\zen_utils\imp\ZenUtils.h"/>
     <ClInclude Include="..\..\..\JUCEMain\modules\zen_utils\juce_zen_utils.h"/>
@@ -1803,12 +1910,17 @@
     <None Include="..\..\..\JUCEMain\modules\juce_audio_plugin_client\juce_module_info"/>
     <None Include="..\..\..\JUCEMain\modules\juce_audio_processors\juce_module_info"/>
     <None Include="..\..\..\JUCEMain\modules\juce_audio_utils\juce_module_info"/>
+    <None Include="..\..\..\JUCEMain\modules\juce_box2d\box2d\README.txt"/>
+    <None Include="..\..\..\JUCEMain\modules\juce_box2d\juce_module_info"/>
     <None Include="..\..\..\JUCEMain\modules\juce_core\juce_module_info"/>
+    <None Include="..\..\..\JUCEMain\modules\juce_cryptography\juce_module_info"/>
     <None Include="..\..\..\JUCEMain\modules\juce_data_structures\juce_module_info"/>
     <None Include="..\..\..\JUCEMain\modules\juce_events\juce_module_info"/>
     <None Include="..\..\..\JUCEMain\modules\juce_graphics\juce_module_info"/>
     <None Include="..\..\..\JUCEMain\modules\juce_gui_basics\juce_module_info"/>
     <None Include="..\..\..\JUCEMain\modules\juce_gui_extra\juce_module_info"/>
+    <None Include="..\..\..\JUCEMain\modules\juce_opengl\juce_module_info"/>
+    <None Include="..\..\..\JUCEMain\modules\juce_video\juce_module_info"/>
     <None Include="..\..\..\JUCEMain\modules\zen_utils\juce_module_info"/>
     <None Include="..\..\..\JUCEMain\modules\juce_audio_plugin_client\RTAS\juce_RTAS_WinResources.rsr"/>
   </ItemGroup>

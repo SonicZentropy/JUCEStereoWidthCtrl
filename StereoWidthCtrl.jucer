@@ -69,10 +69,14 @@
         <MODULEPATH id="juce_audio_basics" path="../JUCEMain/modules"/>
         <MODULEPATH id="juce_audio_processors" path="../JUCEMain/modules"/>
         <MODULEPATH id="juce_audio_plugin_client" path="../JUCEMain/modules"/>
-        <MODULEPATH id="zen_utils" path="../JUCEMain/modules"/>
         <MODULEPATH id="juce_audio_utils" path="../JUCEMain/modules"/>
         <MODULEPATH id="juce_audio_formats" path="../JUCEMain/modules"/>
         <MODULEPATH id="juce_audio_devices" path="../JUCEMain/modules"/>
+        <MODULEPATH id="juce_box2d" path="../JUCEMain/modules"/>
+        <MODULEPATH id="juce_cryptography" path="../JUCEMain/modules"/>
+        <MODULEPATH id="juce_opengl" path="../JUCEMain/modules"/>
+        <MODULEPATH id="juce_video" path="../JUCEMain/modules"/>
+        <MODULEPATH id="zen_utils" path="../JUCEMain/modules"/>
       </MODULEPATHS>
     </VS2013>
   </EXPORTFORMATS>
@@ -83,12 +87,16 @@
     <MODULE id="juce_audio_plugin_client" showAllCode="1" useLocalCopy="0"/>
     <MODULE id="juce_audio_processors" showAllCode="1" useLocalCopy="0"/>
     <MODULE id="juce_audio_utils" showAllCode="1" useLocalCopy="0"/>
+    <MODULE id="juce_box2d" showAllCode="1" useLocalCopy="0"/>
     <MODULE id="juce_core" showAllCode="1" useLocalCopy="0"/>
+    <MODULE id="juce_cryptography" showAllCode="1" useLocalCopy="0"/>
     <MODULE id="juce_data_structures" showAllCode="1" useLocalCopy="0"/>
     <MODULE id="juce_events" showAllCode="1" useLocalCopy="0"/>
     <MODULE id="juce_graphics" showAllCode="1" useLocalCopy="0"/>
     <MODULE id="juce_gui_basics" showAllCode="1" useLocalCopy="0"/>
     <MODULE id="juce_gui_extra" showAllCode="1" useLocalCopy="0"/>
+    <MODULE id="juce_opengl" showAllCode="1" useLocalCopy="0"/>
+    <MODULE id="juce_video" showAllCode="1" useLocalCopy="0"/>
     <MODULE id="zen_utils" showAllCode="1" useLocalCopy="0"/>
   </MODULES>
   <JUCEOPTIONS JUCE_QUICKTIME="disabled"/>
