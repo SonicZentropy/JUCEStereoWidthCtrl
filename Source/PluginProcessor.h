@@ -67,7 +67,7 @@ public:
     void setStateInformation (const void* data, int sizeInBytes) override;
 
 	// User Configured Area ========================================================
-	enum Parameters
+	enum Parameters // TODO: Restructure This
 	{
 		MasterBypass=0,
 		StereoWidth,
