@@ -6,7 +6,7 @@
 
 
 
-#endif  // VOLUMEINDB_H_INCLUDED
+
 #include "../JuceLibraryCode/JuceHeader.h"
 
 
@@ -36,3 +36,4 @@ private:
 
 
 };
+#endif  // VOLUMEINDB_H_INCLUDED

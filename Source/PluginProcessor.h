@@ -78,6 +78,8 @@ public:
 		InvertRight,
 		totalNumParam
 	};
+	AudioProcessorParameter* muteAudioParam;
+	AudioProcessorParameter* masterBypassParam;
 	bool needsUIUpdate() { return UIUpdateFlag; };
 	void RequestUIUpdate(){ UIUpdateFlag = true; };
 	void ClearUIUpdateFlag() { UIUpdateFlag = false; };

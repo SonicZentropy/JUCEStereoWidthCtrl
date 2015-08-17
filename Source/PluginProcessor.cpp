@@ -18,6 +18,7 @@
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
 
+
 //==============================================================================
 StereoWidthCtrlAudioProcessor::StereoWidthCtrlAudioProcessor()
 {
@@ -28,11 +29,21 @@ StereoWidthCtrlAudioProcessor::StereoWidthCtrlAudioProcessor()
 	UserParams[LockGain] = 0.0f;
 	UserParams[InvertLeft] = 0.0f;
 	UserParams[InvertRight] = 0.0f;
+//	addParameter(muteAudioParam = new FloatParameter(0.0f, "MuteAudio"));
 	
 	widthControl.setWidth(UserParams[StereoWidth]); //Push user width to the controller
 	gainControl.setGain(UserParams[AudioGain]);
 	
 	UIUpdateFlag = true; //flag UI for update
+
+	// DBG TEST AREA - USER
+	ZenUtils testUtil;
+	testUtil.testGain(5.0f);
+//	FloatParameter testParam(0.5, "Test Param");
+//	testParam.getValue();
+	DBG("TEST PARAM WORKING: " + String(testUtil.testGain(50.0f)));
+	// /DBG TEST AREA - USER
+
 }
 
 StereoWidthCtrlAudioProcessor::~StereoWidthCtrlAudioProcessor()

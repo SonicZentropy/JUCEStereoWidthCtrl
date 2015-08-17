@@ -15,7 +15,7 @@
 
 
 
-#endif  // GAINSLIDER_H_INCLUDED
+
 #include "../JuceLibraryCode/JuceHeader.h"
 
 class GainSlider : public Slider
@@ -24,3 +24,4 @@ public:
 	GainSlider(const String& componentName) : Slider(componentName) {};
 	String getTextFromValue(double value) override;
 };
+#endif  // GAINSLIDER_H_INCLUDED
