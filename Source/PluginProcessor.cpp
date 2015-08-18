@@ -22,13 +22,6 @@ using namespace juce;
 //==============================================================================
 StereoWidthCtrlAudioProcessor::StereoWidthCtrlAudioProcessor()
 {
-// 	UserParams[MasterBypass] = 0.0f; //default to non-bypassed
-// 	UserParams[StereoWidth] = 0.5f; //Normal stereo width by default
-// 	UserParams[MuteAudio] = 0.0f; //Not muted by default
-// 	UserParams[AudioGain] = 1.0f; //set at 100% volume by default
-// 	UserParams[LockGain] = 0.0f;
-// 	UserParams[InvertLeft] = 0.0f;
-// 	UserParams[InvertRight] = 0.0f;
 	addParameter(masterBypassParam = new FloatParameter(0.0f, "MasterBypass"));
 	addParameter(stereoWidthParam = new FloatParameter(0.5f, "StereoWidth"));
 	addParameter(muteAudioParam = new FloatParameter(0.0f, "MuteAudio"));
@@ -69,99 +62,6 @@ const String StereoWidthCtrlAudioProcessor::getName() const
 {
     return JucePlugin_Name;
 }
-
-// int StereoWidthCtrlAudioProcessor::getNumParameters()
-// {
-// 	return totalNumParam;
-// }
-
-// AudioProcessorParameter* StereoWidthCtrlAudioProcessor::getParameter (int index)
-// {
-// // 	switch (index)
-// // 	{
-// // 	case MasterBypass:
-// // 		return UserParams[MasterBypass];
-// // 	case StereoWidth:
-// // 		UserParams[StereoWidth] = (widthControl.getWidth());
-// // 		return UserParams[StereoWidth];
-// // 	case MuteAudio:
-// // 		return UserParams[MuteAudio];
-// // 	case AudioGain:
-// // 		return UserParams[AudioGain];
-// // 	case LockGain:
-// // 		return UserParams[LockGain];
-// // 	case InvertLeft:
-// // 		return UserParams[InvertLeft];
-// // 	case InvertRight:
-// // 		return UserParams[InvertRight];
-// // 	default:
-// // 		return 0.0f; //Invalid Index - Should Never Happen
-// // 	}
-// 	return 
-// }
-
-// /// This method takes the GUI value and deposits it into the Corresponding Processor Parameter field
-// void StereoWidthCtrlAudioProcessor::setParameter (int index, float newValue)
-// {
-// 	this->managedParameters[index];
-// 	switch (index)
-// 	{
-// 		case MasterBypass:
-// 			UserParams[MasterBypass] = newValue;		
-// 			break;
-// 		case StereoWidth:
-// 			UserParams[StereoWidth] = newValue; //Set Width Parameter
-// 			widthControl.setWidth(UserParams[StereoWidth]); //Update control value
-// 			break;
-// 		case MuteAudio:
-// 			UserParams[MuteAudio] = newValue;
-// 			break;
-// 		case AudioGain:
-// 			if (UserParams[LockGain])
-// 			{
-// 				UserParams[AudioGain] = std::min<float>(newValue, 1.0f);
-// 				audioGainParam->setValue(std::min<float>(newValue, 1.0f));
-// 			}
-// 			else
-// 			{
-// 				UserParams[AudioGain] = newValue;
-// 				audioGainParam->setValue(newValue);
-// 			}
-// 			gainControl.setGain(audioGainParam->getValue());
-// 			break;
-// 		case LockGain:
-// 			UserParams[LockGain] = newValue;
-// 			break;
-// 		case InvertLeft:
-// 			UserParams[InvertLeft] = newValue;
-// 			break;
-// 		case InvertRight:
-// 			UserParams[InvertRight] = newValue;
-// 			break;
-// 		default: return;
-// 	}
-// 	UIUpdateFlag = true;
-// }
-
-// const String StereoWidthCtrlAudioProcessor::getParameterName (int index)
-// {
-// 	switch (index)
-// 	{
-// 		case MasterBypass: return "Master Bypass";
-// 		case StereoWidth: return "Stereo Width";
-// 		case MuteAudio: return "Mute Audio";
-// 		case AudioGain: return "Audio Gain";
-// 		case LockGain: return "Lock Gain";
-// 		case InvertLeft: return "Invert Left";
-// 		case InvertRight: return "Invert Right";
-// 		default: return String::empty;
-// 	}
-// }
-
-// const String StereoWidthCtrlAudioProcessor::getParameterText (int index)
-// {
-//     return String();
-// }
 
 const String StereoWidthCtrlAudioProcessor::getInputChannelName (int channelIndex) const
 {
@@ -254,25 +154,10 @@ void StereoWidthCtrlAudioProcessor::releaseResources()
 
 void StereoWidthCtrlAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuffer& midiMessages)
 {
-    // In case we have more outputs than inputs, this code clears any output
-    // channels that didn't contain input data, (because these aren't
-    // guaranteed to be empty - they may contain garbage).
-    // I've added this to avoid people getting screaming feedback
-    // when they first compile the plugin, but obviously you don't need to
-    // this code if your algorithm already fills all the output channels.
-    //for (int i = getNumInputChannels(); i < getNumOutputChannels(); ++i)
-    //    buffer.clear (i, 0, buffer.getNumSamples());
-
-    //// This is the place where you'd normally do the guts of your plugin's
-    //// audio processing...
-    //for (int channel = 0; channel < getNumInputChannels(); ++channel)
-    //{
-    //    float* channelData = buffer.getWritePointer (channel);
-
-    //    // ..do something to the data...
-    //}
+	// Assumes Stereo channels only
+	// Assumes Equal number of inputs and outputs
 	
-	if (getNumInputChannels() < 2 || UserParams[MasterBypass])
+	if (getNumInputChannels() < 2 || masterBypassParam->getValue())
 	{
 		//Do nothing, just pass through
 	}
@@ -283,9 +168,10 @@ void StereoWidthCtrlAudioProcessor::processBlock (AudioSampleBuffer& buffer, Mid
 		// Handle Muting
 		if (!muteAudioParam->getValue())
 		{		
+			widthControl.setWidth(stereoWidthParam->getValue());
 			for (long i = 0; i < buffer.getNumSamples(); i++)
 			{
-				widthControl.ClockProcess(&leftData[i], &rightData[i]);;
+				widthControl.processBufferSample(&leftData[i], &rightData[i]);;
 			}
 		}
 		else if (muteAudioParam->getValue())
@@ -299,26 +185,27 @@ void StereoWidthCtrlAudioProcessor::processBlock (AudioSampleBuffer& buffer, Mid
 		}
 		else
 		{
-			DBG("SHOULD NOT EVER ARRIVE HERE");
+		//	throw new 
 		}
 
 		// Handle Gain
-		if (UserParams[AudioGain] != 1.0f && !muteAudioParam->getValue())
+		if (audioGainParam->getValue() != 1.0f && !muteAudioParam->getValue())
 		{ 
+			gainControl.setGain(audioGainParam->getValue());
 			for (long i = 0; i < buffer.getNumSamples(); i++)
 			{
-				gainControl.ClockProcess(&leftData[i], &rightData[i]);
+				gainControl.processBufferSample(&leftData[i], &rightData[i]);
 				
 			}
 		}
-		if (UserParams[InvertLeft] && !muteAudioParam->getValue())
+		if (invertLeftParam->getValue() && !muteAudioParam->getValue())
 		{
 			for (long i = 0; i < buffer.getNumSamples(); i++)
 			{
 				leftData[i] *= -1;
 			}
 		}
-		if (UserParams[InvertRight] && !muteAudioParam->getValue())
+		if (invertRightParam->getValue() && !muteAudioParam->getValue())
 		{
 			for (long i = 0; i < buffer.getNumSamples(); i++)
 			{

@@ -79,6 +79,7 @@ public:
 		totalNumParam
 	};
 	
+	//add boolean param derived class
 	AudioProcessorParameter* masterBypassParam;
 	AudioProcessorParameter* stereoWidthParam;
 	AudioProcessorParameter* muteAudioParam;

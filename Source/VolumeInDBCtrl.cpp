@@ -36,7 +36,7 @@ float VolumeInDBCtrl::convertDecibelstoValue(float gain)
 
 
 
-void VolumeInDBCtrl::ClockProcess(float* LeftSample, float* RightSample)
+void VolumeInDBCtrl::processBufferSample(float* LeftSample, float* RightSample)
 {
 	//DBG("In Volume Clock Process gain is : " + String(audioGain));
 	*LeftSample = *LeftSample * audioGain;

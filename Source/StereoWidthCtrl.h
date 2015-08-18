@@ -33,11 +33,11 @@ public:
 	~StereoWidthCtrl();
 
 	//Parms
-	void setWidth(float width);
+	void setWidth(const float& width);
 	float getWidth(void) { return stereoWidthValue; };
 
 	// Use
-	void ClockProcess(float* LeftSample, float* RightSample);
+	void processBufferSample(float* LeftSample, float* RightSample);
 
 private:
 	float stereoWidthValue, sumGain, diffGain;

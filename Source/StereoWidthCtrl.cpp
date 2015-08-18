@@ -20,7 +20,7 @@ StereoWidthCtrl::~StereoWidthCtrl()
 	
 }
 
-void StereoWidthCtrl::setWidth(float width)
+void StereoWidthCtrl::setWidth(const float& width)
 {
 	stereoWidthValue = width;
 	float widthDenormalized = stereoWidthValue * 2.0f;
@@ -34,7 +34,7 @@ void StereoWidthCtrl::setWidth(float width)
 	sumGain = temp;  ///sumGain is gain coefficient for Mid
 }
 
-void StereoWidthCtrl::ClockProcess(float* LeftSample, float* RightSample)
+void StereoWidthCtrl::processBufferSample(float* LeftSample, float* RightSample)
 {
 	float mid = sumGain * (*LeftSample + *RightSample);
 	float side = diffGain * (*RightSample - *LeftSample);

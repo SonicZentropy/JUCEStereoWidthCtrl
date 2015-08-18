@@ -27,7 +27,7 @@ public:
 	float convertDecibelstoValue(float gainInDB);
 
 
-	void ClockProcess(float* LeftSample, float* RightSample);
+	void processBufferSample(float* LeftSample, float* RightSample);
 
 private:
 
