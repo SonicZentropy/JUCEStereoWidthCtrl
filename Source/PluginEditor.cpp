@@ -217,7 +217,6 @@ void StereoWidthCtrlAudioProcessorEditor::buttonClicked (Button* buttonThatWasCl
 
         //[/UserButtonCode_bypassBtnCtrl]
     }
-//	else if (AudioProcessorParameter* param = getParameterFromSlider)
     else if (buttonThatWasClicked == muteBtnCtrl)
     {
         //[UserButtonCode_muteBtnCtrl] -- add your button handler code here..

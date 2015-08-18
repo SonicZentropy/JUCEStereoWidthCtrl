@@ -42,20 +42,24 @@
     <VS2013 targetFolder="Builds/VisualStudio2013" vstFolder="c:\SDKs\VST3 SDK"
             vst3Folder="c:\SDKs\VST3 SDK">
       <CONFIGURATIONS>
+        <CONFIGURATION name="DebugLite" winWarningLevel="4" generateManifest="1" winArchitecture="x64"
+                       isDebug="1" optimisation="1" targetName="StereoWidthCtrlx64"
+                       postbuildCommand="xcopy &quot;$(TargetPath)&quot; &quot;Z:\VSTs\VSTs\Test\&quot;  /q /y"
+                       headerPath="..\.\Source\StereoWidthCtrl;" binaryPath=""/>
         <CONFIGURATION name="Debug" winWarningLevel="4" generateManifest="1" winArchitecture="x64"
+                       isDebug="1" optimisation="1" targetName="StereoWidthCtrlx64"
+                       postbuildCommand="xcopy &quot;$(TargetPath)&quot; &quot;Z:\VSTs\VSTs\Test\&quot;  /q /y"
+                       headerPath="..\.\Source\StereoWidthCtrl;" binaryPath=""/>
+        <CONFIGURATION name="DebugNoAudio" winWarningLevel="4" generateManifest="1"
+                       winArchitecture="x64" isDebug="1" optimisation="1" targetName="StereoWidthCtrlx64"
+                       postbuildCommand="xcopy &quot;$(TargetPath)&quot; &quot;Z:\VSTs\VSTs\Test\&quot;  /q /y"
+                       headerPath="..\.\Source\StereoWidthCtrl;" binaryPath=""/>
+        <CONFIGURATION name="DebugLive" winWarningLevel="4" generateManifest="1" winArchitecture="x64"
                        isDebug="1" optimisation="1" targetName="StereoWidthCtrlx64"
                        postbuildCommand="xcopy &quot;$(TargetPath)&quot; &quot;Z:\VSTs\VSTs\Test\&quot;  /q /y"
                        headerPath="..\.\Source\StereoWidthCtrl;" binaryPath=""/>
         <CONFIGURATION name="Release" winWarningLevel="4" generateManifest="1" winArchitecture="x64"
                        isDebug="0" optimisation="3" targetName="StereoWidthCtrlx64"
-                       postbuildCommand="xcopy &quot;$(TargetPath)&quot; &quot;Z:\VSTs\VSTs\Test\&quot;  /q /y"
-                       headerPath="..\.\Source\StereoWidthCtrl;"/>
-        <CONFIGURATION name="x32 Release" winWarningLevel="4" generateManifest="1" winArchitecture="32-bit"
-                       isDebug="0" optimisation="3" targetName="StereoWidthCtrlx32"
-                       postbuildCommand="xcopy &quot;$(TargetPath)&quot; &quot;Z:\VSTs\VSTs\Test\&quot;  /q /y"
-                       headerPath="..\.\Source\StereoWidthCtrl;"/>
-        <CONFIGURATION name="x32 Debug" winWarningLevel="4" generateManifest="1" winArchitecture="32-bit"
-                       isDebug="1" optimisation="1" targetName="StereoWidthCtrlx32"
                        postbuildCommand="xcopy &quot;$(TargetPath)&quot; &quot;Z:\VSTs\VSTs\Test\&quot;  /q /y"
                        headerPath="..\.\Source\StereoWidthCtrl;"/>
       </CONFIGURATIONS>

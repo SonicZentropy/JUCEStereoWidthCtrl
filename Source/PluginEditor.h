@@ -59,15 +59,15 @@ public:
 
     void paint (Graphics& g);
     void resized();
-    void sliderValueChanged (Slider*) override;
-    void buttonClicked (Button*) override;
+    void sliderValueChanged (Slider* sliderThatWasMoved);
+    void buttonClicked (Button* buttonThatWasClicked);
 
 
 
 private:
     //[UserVariables]   -- You can add your own custom variables in this section.
 	AudioProcessorParameter* getParameterFromSlider(const Slider*) const;
-	//[/UserVariables]
+    //[/UserVariables]
 
     //==============================================================================
     ScopedPointer<Slider> stereoWidthSldCtrl;
