@@ -304,6 +304,10 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\zen_utils\BoolParameter.cpp"/>
+    <ClCompile Include="..\..\Source\zen_utils\FloatParameter.cpp"/>
+    <ClCompile Include="..\..\Source\zen_utils\ZenParamUtils.cpp"/>
+    <ClCompile Include="..\..\Source\zen_utils\ZenUtils.cpp"/>
     <ClCompile Include="..\..\Source\GainSlider.cpp"/>
     <ClCompile Include="..\..\Source\VolumeInDBCtrl.cpp"/>
     <ClCompile Include="..\..\Source\StereoWidthCtrl.cpp"/>
@@ -1431,18 +1435,6 @@
     <ClCompile Include="..\..\..\JUCEMain\modules\juce_video\native\juce_win32_QuickTimeMovieComponent.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\..\..\JUCEMain\modules\zen_utils\imp\BoolParameter.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\JUCEMain\modules\zen_utils\imp\FloatParameter.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\JUCEMain\modules\zen_utils\imp\ZenParamUtils.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\JUCEMain\modules\zen_utils\imp\ZenUtils.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="..\..\..\JUCEMain\modules\juce_audio_plugin_client\AAX\juce_AAX_Wrapper.cpp"/>
     <ClCompile Include="..\..\..\JUCEMain\modules\juce_audio_basics\juce_audio_basics.cpp"/>
     <ClCompile Include="..\..\..\JUCEMain\modules\juce_audio_devices\juce_audio_devices.cpp"/>
@@ -1477,9 +1469,13 @@
     <ClCompile Include="..\..\..\JUCEMain\modules\juce_video\juce_video.cpp"/>
     <ClCompile Include="..\..\..\JUCEMain\modules\juce_audio_plugin_client\VST\juce_VST_Wrapper.cpp"/>
     <ClCompile Include="..\..\..\JUCEMain\modules\juce_audio_plugin_client\VST3\juce_VST3_Wrapper.cpp"/>
-    <ClCompile Include="..\..\..\JUCEMain\modules\zen_utils\juce_zen_utils.cpp"/>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\zen_utils\BoolParameter.h"/>
+    <ClInclude Include="..\..\Source\zen_utils\FloatParameter.h"/>
+    <ClInclude Include="..\..\Source\zen_utils\juce_zen_utils.h"/>
+    <ClInclude Include="..\..\Source\zen_utils\ZenParamUtils.h"/>
+    <ClInclude Include="..\..\Source\zen_utils\ZenUtils.h"/>
     <ClInclude Include="..\..\Source\GainSlider.h"/>
     <ClInclude Include="..\..\Source\VolumeInDBCtrl.h"/>
     <ClInclude Include="..\..\Source\StereoWidthCtrl.h"/>
@@ -1952,11 +1948,6 @@
     <ClInclude Include="..\..\..\JUCEMain\modules\juce_video\playback\juce_QuickTimeMovieComponent.h"/>
     <ClInclude Include="..\..\..\JUCEMain\modules\juce_video\capture\juce_CameraDevice.h"/>
     <ClInclude Include="..\..\..\JUCEMain\modules\juce_video\juce_video.h"/>
-    <ClInclude Include="..\..\..\JUCEMain\modules\zen_utils\imp\BoolParameter.h"/>
-    <ClInclude Include="..\..\..\JUCEMain\modules\zen_utils\imp\FloatParameter.h"/>
-    <ClInclude Include="..\..\..\JUCEMain\modules\zen_utils\imp\ZenParamUtils.h"/>
-    <ClInclude Include="..\..\..\JUCEMain\modules\zen_utils\imp\ZenUtils.h"/>
-    <ClInclude Include="..\..\..\JUCEMain\modules\zen_utils\juce_zen_utils.h"/>
     <ClInclude Include="..\..\JuceLibraryCode\AppConfig.h"/>
     <ClInclude Include="..\..\JuceLibraryCode\JuceHeader.h"/>
   </ItemGroup>
@@ -1978,7 +1969,6 @@
     <None Include="..\..\..\JUCEMain\modules\juce_gui_extra\juce_module_info"/>
     <None Include="..\..\..\JUCEMain\modules\juce_opengl\juce_module_info"/>
     <None Include="..\..\..\JUCEMain\modules\juce_video\juce_module_info"/>
-    <None Include="..\..\..\JUCEMain\modules\zen_utils\juce_module_info"/>
     <None Include="..\..\..\JUCEMain\modules\juce_audio_plugin_client\RTAS\juce_RTAS_WinResources.rsr"/>
   </ItemGroup>
   <ItemGroup>

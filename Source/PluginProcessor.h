@@ -12,6 +12,7 @@
 #define PLUGINPROCESSOR_H_INCLUDED
 
 #include "../JuceLibraryCode/JuceHeader.h"
+#include "zen_utils/juce_zen_utils.h"
 #include "StereoWidthCtrl.h"
 #include "VolumeInDBCtrl.h"
 
@@ -80,7 +81,8 @@ public:
 	};
 	
 	//add boolean param derived class
-	AudioProcessorParameter* masterBypassParam;
+	//AudioProcessorParameter* masterBypassParam;
+	BoolParameter* masterBypassParam;
 	AudioProcessorParameter* stereoWidthParam;
 	AudioProcessorParameter* muteAudioParam;
 	AudioProcessorParameter* audioGainParam;

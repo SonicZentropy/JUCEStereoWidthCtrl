@@ -8,6 +8,9 @@
     <Filter Include="StereoWidthCtrl\Source">
       <UniqueIdentifier>{1BC2DA06-2716-3F79-5B30-6FEC3256AAC6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="StereoWidthCtrl\Source\zen_utils">
+      <UniqueIdentifier>{42A3CBD4-4421-D6F4-BDD1-F1D0B741116D}</UniqueIdentifier>
+    </Filter>
     <Filter Include="StereoWidthCtrl\Source\ComponentOverrides">
       <UniqueIdentifier>{E483C5EE-1A8B-8373-47B3-78DA0CE21A1B}</UniqueIdentifier>
     </Filter>
@@ -344,17 +347,23 @@
     <Filter Include="Juce Modules\juce_video\native">
       <UniqueIdentifier>{EE985DEA-CD83-8132-7219-542BB1DAD560}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Juce Modules\zen_utils">
-      <UniqueIdentifier>{C2A2C6C8-14F8-100E-D7FD-38FD5A10B922}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Juce Modules\zen_utils\imp">
-      <UniqueIdentifier>{B43EA308-9A73-2ED4-3951-E85BA0E21F5B}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Juce Library Code">
       <UniqueIdentifier>{8B4D1BAA-6DB4-CAEC-A0FA-271F354D5C61}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\zen_utils\BoolParameter.cpp">
+      <Filter>StereoWidthCtrl\Source\zen_utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\zen_utils\FloatParameter.cpp">
+      <Filter>StereoWidthCtrl\Source\zen_utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\zen_utils\ZenParamUtils.cpp">
+      <Filter>StereoWidthCtrl\Source\zen_utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\zen_utils\ZenUtils.cpp">
+      <Filter>StereoWidthCtrl\Source\zen_utils</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\GainSlider.cpp">
       <Filter>StereoWidthCtrl\Source\ComponentOverrides</Filter>
     </ClCompile>
@@ -1582,18 +1591,6 @@
     <ClCompile Include="..\..\..\JUCEMain\modules\juce_video\native\juce_win32_QuickTimeMovieComponent.cpp">
       <Filter>Juce Modules\juce_video\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\JUCEMain\modules\zen_utils\imp\BoolParameter.cpp">
-      <Filter>Juce Modules\zen_utils\imp</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\JUCEMain\modules\zen_utils\imp\FloatParameter.cpp">
-      <Filter>Juce Modules\zen_utils\imp</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\JUCEMain\modules\zen_utils\imp\ZenParamUtils.cpp">
-      <Filter>Juce Modules\zen_utils\imp</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\JUCEMain\modules\zen_utils\imp\ZenUtils.cpp">
-      <Filter>Juce Modules\zen_utils\imp</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\JUCEMain\modules\juce_audio_plugin_client\AAX\juce_AAX_Wrapper.cpp">
       <Filter>Juce Library Code</Filter>
     </ClCompile>
@@ -1666,11 +1663,23 @@
     <ClCompile Include="..\..\..\JUCEMain\modules\juce_audio_plugin_client\VST3\juce_VST3_Wrapper.cpp">
       <Filter>Juce Library Code</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\JUCEMain\modules\zen_utils\juce_zen_utils.cpp">
-      <Filter>Juce Library Code</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\zen_utils\BoolParameter.h">
+      <Filter>StereoWidthCtrl\Source\zen_utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\zen_utils\FloatParameter.h">
+      <Filter>StereoWidthCtrl\Source\zen_utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\zen_utils\juce_zen_utils.h">
+      <Filter>StereoWidthCtrl\Source\zen_utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\zen_utils\ZenParamUtils.h">
+      <Filter>StereoWidthCtrl\Source\zen_utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\zen_utils\ZenUtils.h">
+      <Filter>StereoWidthCtrl\Source\zen_utils</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\GainSlider.h">
       <Filter>StereoWidthCtrl\Source\ComponentOverrides</Filter>
     </ClInclude>
@@ -3087,21 +3096,6 @@
     <ClInclude Include="..\..\..\JUCEMain\modules\juce_video\juce_video.h">
       <Filter>Juce Modules\juce_video</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\JUCEMain\modules\zen_utils\imp\BoolParameter.h">
-      <Filter>Juce Modules\zen_utils\imp</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\JUCEMain\modules\zen_utils\imp\FloatParameter.h">
-      <Filter>Juce Modules\zen_utils\imp</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\JUCEMain\modules\zen_utils\imp\ZenParamUtils.h">
-      <Filter>Juce Modules\zen_utils\imp</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\JUCEMain\modules\zen_utils\imp\ZenUtils.h">
-      <Filter>Juce Modules\zen_utils\imp</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\JUCEMain\modules\zen_utils\juce_zen_utils.h">
-      <Filter>Juce Modules\zen_utils</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\JuceLibraryCode\AppConfig.h">
       <Filter>Juce Library Code</Filter>
     </ClInclude>
@@ -3160,9 +3154,6 @@
     </None>
     <None Include="..\..\..\JUCEMain\modules\juce_video\juce_module_info">
       <Filter>Juce Modules\juce_video</Filter>
-    </None>
-    <None Include="..\..\..\JUCEMain\modules\zen_utils\juce_module_info">
-      <Filter>Juce Modules\zen_utils</Filter>
     </None>
     <None Include="..\..\..\JUCEMain\modules\juce_audio_plugin_client\RTAS\juce_RTAS_WinResources.rsr">
       <Filter>Juce Library Code</Filter>

@@ -24,6 +24,7 @@
 #include "JuceHeader.h"
 #include "PluginProcessor.h"
 #include "gainSlider.h"
+#include "zen_utils/juce_zen_utils.h"
 
 //[/Headers]
 

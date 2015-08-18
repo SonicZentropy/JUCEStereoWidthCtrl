@@ -13,6 +13,22 @@
               companyEmail="SonicZentropy@gmail.com">
   <MAINGROUP id="JHoKxW" name="StereoWidthCtrl">
     <GROUP id="{449F2A72-20F9-17C7-2809-5D6ADB01CDA1}" name="Source">
+      <GROUP id="{C15EF325-0C33-9861-75F1-2FF0D6A7218E}" name="zen_utils">
+        <FILE id="AwAEu8" name="BoolParameter.cpp" compile="1" resource="0"
+              file="Source/zen_utils/BoolParameter.cpp"/>
+        <FILE id="Z48M3A" name="BoolParameter.h" compile="0" resource="0" file="Source/zen_utils/BoolParameter.h"/>
+        <FILE id="BwsTyk" name="FloatParameter.cpp" compile="1" resource="0"
+              file="Source/zen_utils/FloatParameter.cpp"/>
+        <FILE id="XaPD3r" name="FloatParameter.h" compile="0" resource="0"
+              file="Source/zen_utils/FloatParameter.h"/>
+        <FILE id="GRCDbi" name="juce_zen_utils.h" compile="0" resource="0"
+              file="Source/zen_utils/juce_zen_utils.h"/>
+        <FILE id="Xmkkle" name="ZenParamUtils.cpp" compile="1" resource="0"
+              file="Source/zen_utils/ZenParamUtils.cpp"/>
+        <FILE id="dgi06i" name="ZenParamUtils.h" compile="0" resource="0" file="Source/zen_utils/ZenParamUtils.h"/>
+        <FILE id="v5Xcah" name="ZenUtils.cpp" compile="1" resource="0" file="Source/zen_utils/ZenUtils.cpp"/>
+        <FILE id="ufjEtz" name="ZenUtils.h" compile="0" resource="0" file="Source/zen_utils/ZenUtils.h"/>
+      </GROUP>
       <GROUP id="{42559586-EA01-54C0-F5FF-91A075BFB7B7}" name="ComponentOverrides">
         <FILE id="PP5u1k" name="GainSlider.cpp" compile="1" resource="0" file="Source/GainSlider.cpp"/>
         <FILE id="ST4STp" name="GainSlider.h" compile="0" resource="0" file="Source/GainSlider.h"/>
@@ -80,7 +96,6 @@
         <MODULEPATH id="juce_cryptography" path="../JUCEMain/modules"/>
         <MODULEPATH id="juce_opengl" path="../JUCEMain/modules"/>
         <MODULEPATH id="juce_video" path="../JUCEMain/modules"/>
-        <MODULEPATH id="zen_utils" path="../JUCEMain/modules"/>
       </MODULEPATHS>
     </VS2013>
   </EXPORTFORMATS>
@@ -101,7 +116,6 @@
     <MODULE id="juce_gui_extra" showAllCode="1" useLocalCopy="0"/>
     <MODULE id="juce_opengl" showAllCode="1" useLocalCopy="0"/>
     <MODULE id="juce_video" showAllCode="1" useLocalCopy="0"/>
-    <MODULE id="zen_utils" showAllCode="1" useLocalCopy="0"/>
   </MODULES>
   <JUCEOPTIONS JUCE_QUICKTIME="disabled"/>
 </JUCERPROJECT>
