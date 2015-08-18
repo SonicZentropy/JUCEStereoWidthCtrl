@@ -1582,6 +1582,9 @@
     <ClCompile Include="..\..\..\JUCEMain\modules\juce_video\native\juce_win32_QuickTimeMovieComponent.cpp">
       <Filter>Juce Modules\juce_video\native</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\JUCEMain\modules\zen_utils\imp\BoolParameter.cpp">
+      <Filter>Juce Modules\zen_utils\imp</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\JUCEMain\modules\zen_utils\imp\FloatParameter.cpp">
       <Filter>Juce Modules\zen_utils\imp</Filter>
     </ClCompile>
@@ -3083,6 +3086,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\JUCEMain\modules\juce_video\juce_video.h">
       <Filter>Juce Modules\juce_video</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\JUCEMain\modules\zen_utils\imp\BoolParameter.h">
+      <Filter>Juce Modules\zen_utils\imp</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\JUCEMain\modules\zen_utils\imp\FloatParameter.h">
       <Filter>Juce Modules\zen_utils\imp</Filter>

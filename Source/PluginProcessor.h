@@ -96,7 +96,7 @@ private:
     //==============================================================================
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(StereoWidthCtrlAudioProcessor)
 	// User Configured Area ========================================================
-	float UserParams[totalNumParam];
+	//float UserParams[totalNumParam];
 	StereoWidthCtrl widthControl;
 	VolumeInDBCtrl gainControl;
 	bool UIUpdateFlag;

@@ -1431,6 +1431,9 @@
     <ClCompile Include="..\..\..\JUCEMain\modules\juce_video\native\juce_win32_QuickTimeMovieComponent.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\..\..\JUCEMain\modules\zen_utils\imp\BoolParameter.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\..\JUCEMain\modules\zen_utils\imp\FloatParameter.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -1949,6 +1952,7 @@
     <ClInclude Include="..\..\..\JUCEMain\modules\juce_video\playback\juce_QuickTimeMovieComponent.h"/>
     <ClInclude Include="..\..\..\JUCEMain\modules\juce_video\capture\juce_CameraDevice.h"/>
     <ClInclude Include="..\..\..\JUCEMain\modules\juce_video\juce_video.h"/>
+    <ClInclude Include="..\..\..\JUCEMain\modules\zen_utils\imp\BoolParameter.h"/>
     <ClInclude Include="..\..\..\JUCEMain\modules\zen_utils\imp\FloatParameter.h"/>
     <ClInclude Include="..\..\..\JUCEMain\modules\zen_utils\imp\ZenParamUtils.h"/>
     <ClInclude Include="..\..\..\JUCEMain\modules\zen_utils\imp\ZenUtils.h"/>

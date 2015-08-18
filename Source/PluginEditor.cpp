@@ -278,13 +278,15 @@ void StereoWidthCtrlAudioProcessorEditor::timerCallback()
 	//exchange data between UI Elements and the Plugin (ourProcessor)
 	if (ourProcessor->needsUIUpdate())
 	{
-		bypassBtnCtrl->setToggleState(1.0f == ourProcessor->getParameter(StereoWidthCtrlAudioProcessor::MasterBypass),
-			sendNotificationAsync);
-		DBG("Changing Width SliderValue from proc: " + String(ourProcessor->getParameter(StereoWidthCtrlAudioProcessor::StereoWidth)) + " to WidthSld/2: " + static_cast<String>(stereoWidthSldCtrl->getValue() / 2.0f));
-		stereoWidthSldCtrl->setValue(ourProcessor->getParameter(StereoWidthCtrlAudioProcessor::StereoWidth) * 2.0f, sendNotificationAsync);
-		muteBtnCtrl->setToggleState(1.0f == ourProcessor->getParameter(StereoWidthCtrlAudioProcessor::MuteAudio), sendNotificationAsync);
+		muteBtnCtrl->setToggleState(1.0f == ourProcessor->muteAudioParam->getValue(), sendNotification);
+		DBG("Past muteBtn");
+		bypassBtnCtrl->setToggleState(1.0f == ourProcessor->masterBypassParam->getValue(), sendNotification);
+		DBG("Past bypassBtn");
+		DBG("Changing Width SliderValue from proc: " + String(ourProcessor->stereoWidthParam->getValue()) + " to WidthSld/2: " + static_cast<String>(stereoWidthSldCtrl->getValue() / 2.0f));
+		stereoWidthSldCtrl->setValue(ourProcessor->stereoWidthParam->getValue() * 2.0f, sendNotification);
+		
 		DBG("Changing gainSldCtrl Value: " + String(gainSldCtrl->getValue()) + " to audioGainParam: " + String(ourProcessor->audioGainParam->getValue()) );
-		gainSldCtrl->setValue(Decibels::gainToDecibels(ourProcessor->audioGainParam->getValue()), sendNotificationAsync);
+		gainSldCtrl->setValue(Decibels::gainToDecibels(ourProcessor->audioGainParam->getValue()), sendNotification);
 		DBG("gainSldCtrl value set (converted gain to Decibels) : " + String(gainSldCtrl->getValue()));
 		ourProcessor->ClearUIUpdateFlag();
 	}
