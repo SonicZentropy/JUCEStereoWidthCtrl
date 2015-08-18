@@ -24,6 +24,7 @@
 
 
 //[MiscUserDefs] You can add your own user definitions and misc code here...
+using namespace juce;
 //[/MiscUserDefs]
 
 //==============================================================================
@@ -183,8 +184,17 @@ void StereoWidthCtrlAudioProcessorEditor::sliderValueChanged (Slider* sliderThat
     else if (sliderThatWasMoved == gainSldCtrl)
     {
         //[UserSliderCode_gainSldCtrl] -- add your slider handling code here..
-		DBG("Gain slider value changing from: " + String(ourProcessor->getParameter(StereoWidthCtrlAudioProcessor::AudioGain)) + " to: " + static_cast<String>(gainSldCtrl->getValue()));
-		ourProcessor->setParameter(StereoWidthCtrlAudioProcessor::AudioGain, Decibels::decibelsToGain(static_cast<float>(gainSldCtrl->getValue())));
+//		DBG("Gain slider value changing from: " + String(ourProcessor->getParameter(StereoWidthCtrlAudioProcessor::AudioGain)) + " to: " + static_cast<String>(gainSldCtrl->getValue()));
+//		ourProcessor->setParameter(StereoWidthCtrlAudioProcessor::AudioGain, Decibels::decibelsToGain(static_cast<float>(gainSldCtrl->getValue())));
+		if (AudioProcessorParameter* param = getParameterFromSlider(sliderThatWasMoved))
+		{
+			DBG("Gain slider value changing from: " + String(param->getValue()) + " to: " + static_cast<String>(sliderThatWasMoved->getValue()));
+			//CONVERT FROM DB TO VALUE
+			float valueDenormal = static_cast<float>(sliderThatWasMoved->getValue());
+			float valueNorm = Decibels::decibelsToGain(valueDenormal, -96.0f);
+			param->setValueNotifyingHost( valueNorm );
+			DBG("audioGainParam is now: " + static_cast<String>(param->getValue()));
+		}
         //[/UserSliderCode_gainSldCtrl]
     }
 
@@ -207,6 +217,7 @@ void StereoWidthCtrlAudioProcessorEditor::buttonClicked (Button* buttonThatWasCl
 
         //[/UserButtonCode_bypassBtnCtrl]
     }
+//	else if (AudioProcessorParameter* param = getParameterFromSlider)
     else if (buttonThatWasClicked == muteBtnCtrl)
     {
         //[UserButtonCode_muteBtnCtrl] -- add your button handler code here..
@@ -273,10 +284,23 @@ void StereoWidthCtrlAudioProcessorEditor::timerCallback()
 		DBG("Changing Width SliderValue from proc: " + String(ourProcessor->getParameter(StereoWidthCtrlAudioProcessor::StereoWidth)) + " to WidthSld/2: " + static_cast<String>(stereoWidthSldCtrl->getValue() / 2.0f));
 		stereoWidthSldCtrl->setValue(ourProcessor->getParameter(StereoWidthCtrlAudioProcessor::StereoWidth) * 2.0f, sendNotificationAsync);
 		muteBtnCtrl->setToggleState(1.0f == ourProcessor->getParameter(StereoWidthCtrlAudioProcessor::MuteAudio), sendNotificationAsync);
-		gainSldCtrl->setValue(Decibels::gainToDecibels(ourProcessor->getParameter(StereoWidthCtrlAudioProcessor::AudioGain)), sendNotificationAsync);
+		DBG("Changing gainSldCtrl Value: " + String(gainSldCtrl->getValue()) + " to audioGainParam: " + String(ourProcessor->audioGainParam->getValue()) );
+		gainSldCtrl->setValue(Decibels::gainToDecibels(ourProcessor->audioGainParam->getValue()), sendNotificationAsync);
+		DBG("gainSldCtrl value set (converted gain to Decibels) : " + String(gainSldCtrl->getValue()));
 		ourProcessor->ClearUIUpdateFlag();
 	}
 }
+
+AudioProcessorParameter* StereoWidthCtrlAudioProcessorEditor::getParameterFromSlider(const Slider* slider) const
+{
+	if (slider == gainSldCtrl)
+	{
+		return getProcessor()->audioGainParam;
+	}
+	return nullptr;
+}
+
+
 //[/MiscUserCode]
 
 

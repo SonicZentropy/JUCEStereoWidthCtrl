@@ -18,34 +18,44 @@
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
 
-
+using namespace juce;
 //==============================================================================
 StereoWidthCtrlAudioProcessor::StereoWidthCtrlAudioProcessor()
 {
-	UserParams[MasterBypass] = 0.0f; //default to non-bypassed
-	UserParams[StereoWidth] = 0.5f; //Normal stereo width by default
-	UserParams[MuteAudio] = 0.0f; //Not muted by default
-	UserParams[AudioGain] = 1.0f; //set at 100% volume by default
-	UserParams[LockGain] = 0.0f;
-	UserParams[InvertLeft] = 0.0f;
-	UserParams[InvertRight] = 0.0f;
-//	addParameter(muteAudioParam = new FloatParameter(0.0f, "MuteAudio"));
+// 	UserParams[MasterBypass] = 0.0f; //default to non-bypassed
+// 	UserParams[StereoWidth] = 0.5f; //Normal stereo width by default
+// 	UserParams[MuteAudio] = 0.0f; //Not muted by default
+// 	UserParams[AudioGain] = 1.0f; //set at 100% volume by default
+// 	UserParams[LockGain] = 0.0f;
+// 	UserParams[InvertLeft] = 0.0f;
+// 	UserParams[InvertRight] = 0.0f;
+	addParameter(masterBypassParam = new FloatParameter(0.0f, "MasterBypass"));
+	addParameter(stereoWidthParam = new FloatParameter(0.5f, "StereoWidth"));
+	addParameter(muteAudioParam = new FloatParameter(0.0f, "MuteAudio"));
+	addParameter(audioGainParam = new FloatParameter(1.0f, "AudioGain"));
+	addParameter(lockGainParam = new FloatParameter(0.0f, "LockGain"));
+	addParameter(invertLeftParam = new FloatParameter(0.0f, "InvertLeft"));
+	addParameter(invertRightParam = new FloatParameter(0.0f, "InvertRight"));
+
 	
-	widthControl.setWidth(UserParams[StereoWidth]); //Push user width to the controller
-	gainControl.setGain(UserParams[AudioGain]);
+	
+	widthControl.setWidth(stereoWidthParam->getValue()); //Push user width to the controller
+	gainControl.setGain(audioGainParam->getValue());
 	
 	UIUpdateFlag = true; //flag UI for update
 
 	// DBG TEST AREA - USER
+/*
 
 	ZenUtils testUtil;
-	testUtil.testGain(5.0f);
+	testUtil.testGain(5.0f);*/
 	
-	FloatParameter testParam;
-	testParam.testFloat(10.0);
+//	AudioProcessorParameter* testParam = new FloatParameter(0.5f, "testParam");
+//	static_cast<FloatParameter*> (testParam)->testGain(5.0f);
+//	testParam->testFloat(10.0);
 
-	DBG("TEST PARAM WORKING ZenUtils: " + String(testUtil.testGain(50.0f)));
-	DBG("TEST PARAM WORKING FloatParameter: " + String(testParam.testFloat(10.0)));
+	//DBG("TEST PARAM WORKING ZenUtils: " + String(testUtil.testGain(50.0f)));
+	//DBG("TEST PARAM WORKING FloatParameter: " + String(testParam->testFloat(10.0)));
 	// /DBG TEST AREA - USER
 
 }
@@ -60,94 +70,98 @@ const String StereoWidthCtrlAudioProcessor::getName() const
     return JucePlugin_Name;
 }
 
-int StereoWidthCtrlAudioProcessor::getNumParameters()
-{
-	return totalNumParam;
-}
+// int StereoWidthCtrlAudioProcessor::getNumParameters()
+// {
+// 	return totalNumParam;
+// }
 
-float StereoWidthCtrlAudioProcessor::getParameter (int index)
-{
-	switch (index)
-	{
-	case MasterBypass:
-		return UserParams[MasterBypass];
-	case StereoWidth:
-		UserParams[StereoWidth] = (widthControl.getWidth());
-		return UserParams[StereoWidth];
-	case MuteAudio:
-		return UserParams[MuteAudio];
-	case AudioGain:
-		return UserParams[AudioGain];
-	case LockGain:
-		return UserParams[LockGain];
-	case InvertLeft:
-		return UserParams[InvertLeft];
-	case InvertRight:
-		return UserParams[InvertRight];
-	default:
-		return 0.0f; //Invalid Index - Should Never Happen
-	}
-}
+// AudioProcessorParameter* StereoWidthCtrlAudioProcessor::getParameter (int index)
+// {
+// // 	switch (index)
+// // 	{
+// // 	case MasterBypass:
+// // 		return UserParams[MasterBypass];
+// // 	case StereoWidth:
+// // 		UserParams[StereoWidth] = (widthControl.getWidth());
+// // 		return UserParams[StereoWidth];
+// // 	case MuteAudio:
+// // 		return UserParams[MuteAudio];
+// // 	case AudioGain:
+// // 		return UserParams[AudioGain];
+// // 	case LockGain:
+// // 		return UserParams[LockGain];
+// // 	case InvertLeft:
+// // 		return UserParams[InvertLeft];
+// // 	case InvertRight:
+// // 		return UserParams[InvertRight];
+// // 	default:
+// // 		return 0.0f; //Invalid Index - Should Never Happen
+// // 	}
+// 	return 
+// }
 
-/// This method takes the GUI value and deposits it into the Corresponding Processor Parameter field
-void StereoWidthCtrlAudioProcessor::setParameter (int index, float newValue)
-{
-	switch (index)
-	{
-		case MasterBypass:
-			UserParams[MasterBypass] = newValue;		
-			break;
-		case StereoWidth:
-			UserParams[StereoWidth] = newValue; //Set Width Parameter
-			widthControl.setWidth(UserParams[StereoWidth]); //Update control value
-			break;
-		case MuteAudio:
-			UserParams[MuteAudio] = newValue;
-			break;
-		case AudioGain:
-			if (UserParams[LockGain])
-			{
-				UserParams[AudioGain] = std::min<float>(newValue, 1.0f);				
-			}
-			else
-			{
-				UserParams[AudioGain] = newValue;
-			}
-			gainControl.setGain(UserParams[AudioGain]);
-			break;
-		case LockGain:
-			UserParams[LockGain] = newValue;
-			break;
-		case InvertLeft:
-			UserParams[InvertLeft] = newValue;
-			break;
-		case InvertRight:
-			UserParams[InvertRight] = newValue;
-			break;
-		default: return;
-	}
-	UIUpdateFlag = true;
-}
+// /// This method takes the GUI value and deposits it into the Corresponding Processor Parameter field
+// void StereoWidthCtrlAudioProcessor::setParameter (int index, float newValue)
+// {
+// 	this->managedParameters[index];
+// 	switch (index)
+// 	{
+// 		case MasterBypass:
+// 			UserParams[MasterBypass] = newValue;		
+// 			break;
+// 		case StereoWidth:
+// 			UserParams[StereoWidth] = newValue; //Set Width Parameter
+// 			widthControl.setWidth(UserParams[StereoWidth]); //Update control value
+// 			break;
+// 		case MuteAudio:
+// 			UserParams[MuteAudio] = newValue;
+// 			break;
+// 		case AudioGain:
+// 			if (UserParams[LockGain])
+// 			{
+// 				UserParams[AudioGain] = std::min<float>(newValue, 1.0f);
+// 				audioGainParam->setValue(std::min<float>(newValue, 1.0f));
+// 			}
+// 			else
+// 			{
+// 				UserParams[AudioGain] = newValue;
+// 				audioGainParam->setValue(newValue);
+// 			}
+// 			gainControl.setGain(audioGainParam->getValue());
+// 			break;
+// 		case LockGain:
+// 			UserParams[LockGain] = newValue;
+// 			break;
+// 		case InvertLeft:
+// 			UserParams[InvertLeft] = newValue;
+// 			break;
+// 		case InvertRight:
+// 			UserParams[InvertRight] = newValue;
+// 			break;
+// 		default: return;
+// 	}
+// 	UIUpdateFlag = true;
+// }
 
-const String StereoWidthCtrlAudioProcessor::getParameterName (int index)
-{
-	switch (index)
-	{
-		case MasterBypass: return "Master Bypass";
-		case StereoWidth: return "Stereo Width";
-		case MuteAudio: return "Mute Audio";
-		case AudioGain: return "Audio Gain";
-		case LockGain: return "Lock Gain";
-		case InvertLeft: return "Invert Left";
-		case InvertRight: return "Invert Right";
-		default: return String::empty;
-	}
-}
+// const String StereoWidthCtrlAudioProcessor::getParameterName (int index)
+// {
+// 	switch (index)
+// 	{
+// 		case MasterBypass: return "Master Bypass";
+// 		case StereoWidth: return "Stereo Width";
+// 		case MuteAudio: return "Mute Audio";
+// 		case AudioGain: return "Audio Gain";
+// 		case LockGain: return "Lock Gain";
+// 		case InvertLeft: return "Invert Left";
+// 		case InvertRight: return "Invert Right";
+// 		default: return String::empty;
+// 	}
+// }
 
-const String StereoWidthCtrlAudioProcessor::getParameterText (int index)
-{
-    return String();
-}
+// const String StereoWidthCtrlAudioProcessor::getParameterText (int index)
+// {
+//     return String();
+// }
 
 const String StereoWidthCtrlAudioProcessor::getInputChannelName (int channelIndex) const
 {
@@ -267,14 +281,14 @@ void StereoWidthCtrlAudioProcessor::processBlock (AudioSampleBuffer& buffer, Mid
 		float* leftData = buffer.getWritePointer(0);  //leftData references left channel now
 		float* rightData = buffer.getWritePointer(1); //right data references right channel now
 		// Handle Muting
-		if (!UserParams[MuteAudio])
+		if (!muteAudioParam->getValue())
 		{		
 			for (long i = 0; i < buffer.getNumSamples(); i++)
 			{
 				widthControl.ClockProcess(&leftData[i], &rightData[i]);;
 			}
 		}
-		else if (UserParams[MuteAudio])
+		else if (muteAudioParam->getValue())
 		{
 					
 			for (long i = 0; i < buffer.getNumSamples(); i++)
@@ -289,7 +303,7 @@ void StereoWidthCtrlAudioProcessor::processBlock (AudioSampleBuffer& buffer, Mid
 		}
 
 		// Handle Gain
-		if (UserParams[AudioGain] != 1.0f && !UserParams[MuteAudio])
+		if (UserParams[AudioGain] != 1.0f && !muteAudioParam->getValue())
 		{ 
 			for (long i = 0; i < buffer.getNumSamples(); i++)
 			{
@@ -297,14 +311,14 @@ void StereoWidthCtrlAudioProcessor::processBlock (AudioSampleBuffer& buffer, Mid
 				
 			}
 		}
-		if (UserParams[InvertLeft] && !UserParams[MuteAudio])
+		if (UserParams[InvertLeft] && !muteAudioParam->getValue())
 		{
 			for (long i = 0; i < buffer.getNumSamples(); i++)
 			{
 				leftData[i] *= -1;
 			}
 		}
-		if (UserParams[InvertRight] && !UserParams[MuteAudio])
+		if (UserParams[InvertRight] && !muteAudioParam->getValue())
 		{
 			for (long i = 0; i < buffer.getNumSamples(); i++)
 			{

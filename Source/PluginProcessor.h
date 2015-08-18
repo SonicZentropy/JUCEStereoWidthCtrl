@@ -18,7 +18,7 @@
 /// <summary> Handles main VST processing via reactions to automation
 /// 		  (which calls the .setParameter() method) as well as GUI handling from PluginEditor.cpp</summary>
 /// <seealso cref="T:AudioProcessor"/>
-class StereoWidthCtrlAudioProcessor  : public AudioProcessor
+class StereoWidthCtrlAudioProcessor  :  public AudioProcessor
 {
 public:
 
@@ -38,12 +38,12 @@ public:
     //==============================================================================
     const String getName() const override;
 
-    int getNumParameters() override;
-    float getParameter (int index) override;
-    void setParameter (int index, float newValue) override;
+    //int getNumParameters() override;
+    //float getParameter (int index) override;
+    //void setParameter (int index, float newValue) override;
 
-    const String getParameterName (int index) override;
-    const String getParameterText (int index) override;
+    //const String getParameterName (int index) override;
+    //const String getParameterText (int index) override;
 
     const String getInputChannelName (int channelIndex) const override;
     const String getOutputChannelName (int channelIndex) const override;
@@ -78,8 +78,15 @@ public:
 		InvertRight,
 		totalNumParam
 	};
-	AudioProcessorParameter* muteAudioParam;
+	
 	AudioProcessorParameter* masterBypassParam;
+	AudioProcessorParameter* stereoWidthParam;
+	AudioProcessorParameter* muteAudioParam;
+	AudioProcessorParameter* audioGainParam;
+	AudioProcessorParameter* lockGainParam;
+	AudioProcessorParameter* invertLeftParam;
+	AudioProcessorParameter* invertRightParam;
+
 	bool needsUIUpdate() { return UIUpdateFlag; };
 	void RequestUIUpdate(){ UIUpdateFlag = true; };
 	void ClearUIUpdateFlag() { UIUpdateFlag = false; };
