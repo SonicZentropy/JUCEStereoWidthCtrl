@@ -32,6 +32,7 @@ StereoWidthCtrlAudioProcessorEditor::StereoWidthCtrlAudioProcessorEditor (Stereo
     : AudioProcessorEditor(ownerFilter)
 {
     //[Constructor_pre] You can add your own custom stuff here..
+	
     //[/Constructor_pre]
 
     addAndMakeVisible (stereoWidthSldCtrl = new Slider ("Width Factor Slider"));
@@ -104,7 +105,7 @@ StereoWidthCtrlAudioProcessorEditor::StereoWidthCtrlAudioProcessorEditor (Stereo
 
     setSize (375, 500);
 
-
+	
     //[Constructor] You can add your own custom stuff here..
 	getProcessor()->RequestUIUpdate(); //UI Update must be performed every time a new editor is constructed
 	startTimer(200); // Start timer poll with 200ms rate
@@ -169,24 +170,22 @@ void StereoWidthCtrlAudioProcessorEditor::resized()
 void StereoWidthCtrlAudioProcessorEditor::sliderValueChanged (Slider* sliderThatWasMoved)
 {
     //[UsersliderValueChanged_Pre]
-	StereoWidthCtrlAudioProcessor* ourProcessor = getProcessor();
     //[/UsersliderValueChanged_Pre]
 
     if (sliderThatWasMoved == stereoWidthSldCtrl)
     {
-        //[UserSliderCode_stereoWidthSldCtrl] -- add your slider handling code here..
-		DBG("Changing Width SliderValue from: " + String(ourProcessor->getParameter(StereoWidthCtrlAudioProcessor::StereoWidth)) + " to: " + static_cast<String>(stereoWidthSldCtrl->getValue()));
-		ourProcessor->setParameter(StereoWidthCtrlAudioProcessor::StereoWidth, static_cast<float>(stereoWidthSldCtrl->getValue() / 2.0f));
-		//ourProcessor->se
-
+		//[UserSliderCode_stereoWidthSldCtrl] -- add your slider handling code here..	
+		if (AudioProcessorParameter* param = getParameterFromComponent(sliderThatWasMoved))
+		{
+			DBG("Changing Width SliderValue from: " + String(param->getValue()) + " to: " + static_cast<String>(stereoWidthSldCtrl->getValue() / 2.0f));
+			param->setValueNotifyingHost(static_cast<float>(stereoWidthSldCtrl->getValue() / 2.0f));			
+		}
         //[/UserSliderCode_stereoWidthSldCtrl]
     }
     else if (sliderThatWasMoved == gainSldCtrl)
     {
         //[UserSliderCode_gainSldCtrl] -- add your slider handling code here..
-//		DBG("Gain slider value changing from: " + String(ourProcessor->getParameter(StereoWidthCtrlAudioProcessor::AudioGain)) + " to: " + static_cast<String>(gainSldCtrl->getValue()));
-//		ourProcessor->setParameter(StereoWidthCtrlAudioProcessor::AudioGain, Decibels::decibelsToGain(static_cast<float>(gainSldCtrl->getValue())));
-		if (AudioProcessorParameter* param = getParameterFromSlider(sliderThatWasMoved))
+		if (AudioProcessorParameter* param = getParameterFromComponent(sliderThatWasMoved))
 		{
 			DBG("Gain slider value changing from: " + String(param->getValue()) + " to: " + static_cast<String>(sliderThatWasMoved->getValue()));
 			//CONVERT FROM DB TO VALUE
@@ -205,63 +204,77 @@ void StereoWidthCtrlAudioProcessorEditor::sliderValueChanged (Slider* sliderThat
 void StereoWidthCtrlAudioProcessorEditor::buttonClicked (Button* buttonThatWasClicked)
 {
     //[UserbuttonClicked_Pre]
-	StereoWidthCtrlAudioProcessor* ourProcessor = getProcessor();
+	
     //[/UserbuttonClicked_Pre]
 
     if (buttonThatWasClicked == bypassBtnCtrl)
     {
         //[UserButtonCode_bypassBtnCtrl] -- add your button handler code here..
-		DBG("Changing buttonClicked");
-		ourProcessor->setParameter(StereoWidthCtrlAudioProcessor::MasterBypass, static_cast<float>(bypassBtnCtrl->getToggleState()));
-		DBG("Button->getToggleState = " + String(bypassBtnCtrl->getToggleState()) + " and ourProc Bypass = " + String(ourProcessor->getParameter(StereoWidthCtrlAudioProcessor::MasterBypass)));
-
+		if (AudioProcessorParameter* param = getParameterFromComponent(buttonThatWasClicked))
+		{
+			DBG("Changing buttonClicked");
+			param->setValue(static_cast<float>(bypassBtnCtrl->getToggleState()));
+			DBG("Button->getToggleState = " + String(bypassBtnCtrl->getToggleState()) + " and ourProc Bypass = " + String(param->getValue()));
+		}
         //[/UserButtonCode_bypassBtnCtrl]
     }
     else if (buttonThatWasClicked == muteBtnCtrl)
     {
         //[UserButtonCode_muteBtnCtrl] -- add your button handler code here..
-		DBG("Changing muteButton");
-		ourProcessor->setParameter(StereoWidthCtrlAudioProcessor::MuteAudio, static_cast<float>(muteBtnCtrl->getToggleState()));
-        //[/UserButtonCode_muteBtnCtrl]
+		if (AudioProcessorParameter* param = getParameterFromComponent(buttonThatWasClicked))
+		{
+			DBG("Changing muteButton");
+			param->setValue(static_cast<float>(muteBtnCtrl->getToggleState()));
+		}
+		//[/UserButtonCode_muteBtnCtrl]
     }
     else if (buttonThatWasClicked == lockGainBtnCtrl)
     {
         //[UserButtonCode_lockGainBtnCtrl] -- add your button handler code here..
-		DBG("Changing Lock Gain");
-		ourProcessor->setParameter(StereoWidthCtrlAudioProcessor::LockGain, static_cast<float>(lockGainBtnCtrl->getToggleState()));
-		if (lockGainBtnCtrl->getToggleState())
+		if (AudioProcessorParameter* param = getParameterFromComponent(buttonThatWasClicked))
 		{
-			gainSldCtrl->setRange(-96, 0, 0.1);
-			gainSldCtrl->setValue(std::min(0.0f, static_cast<float>(gainSldCtrl->getValue())));
-			gainSldCtrl->repaint();
-			ourProcessor->setParameter(StereoWidthCtrlAudioProcessor::AudioGain, Decibels::decibelsToGain(static_cast<float>(gainSldCtrl->getValue())));
-			ourProcessor->RequestUIUpdate();
-		}
-		else
-		{
-			gainSldCtrl->setRange(-96, 12, 0.1);
-			gainSldCtrl->repaint();
-			ourProcessor->RequestUIUpdate();
+			DBG("Changing Lock Gain");
+			param->setValue(static_cast<float>(lockGainBtnCtrl->getToggleState()));
+			if (lockGainBtnCtrl->getToggleState())
+			{
+				gainSldCtrl->setRange(-96, 0, 0.1);
+				gainSldCtrl->setValue(std::min(0.0f, static_cast<float>(gainSldCtrl->getValue())));
+				gainSldCtrl->repaint();
+				param->setValue(Decibels::decibelsToGain(static_cast<float>(gainSldCtrl->getValue())));
+				//StereoWidthCtrlAudioProcessor* ourProcessor = getProcessor();
+				
+				getProcessor()->RequestUIUpdate();
+			}
+			else
+			{
+				gainSldCtrl->setRange(-96, 12, 0.1);
+				gainSldCtrl->repaint();
+				getProcessor()->RequestUIUpdate();
+			}
 		}
         //[/UserButtonCode_lockGainBtnCtrl]
     }
     else if (buttonThatWasClicked == invertLeftBtnCtrl)
     {
         //[UserButtonCode_invertLeftBtnCtrl] -- add your button handler code here..
-		DBG("Before Inverting Left is : " + String(StereoWidthCtrlAudioProcessor::InvertLeft));
-		ourProcessor->setParameter(StereoWidthCtrlAudioProcessor::InvertLeft, static_cast<float>(invertLeftBtnCtrl->getToggleStateValue().getValue()));
-		DBG("Inverted is: " + String(StereoWidthCtrlAudioProcessor::InvertLeft) + " From toggle : " + String(static_cast<float>(invertLeftBtnCtrl->getToggleStateValue().getValue())));
-
+		if (AudioProcessorParameter* param = getParameterFromComponent(buttonThatWasClicked))
+		{
+			DBG("Before Inverting Left is : " + String(StereoWidthCtrlAudioProcessor::InvertLeft));
+			param->setValue( static_cast<float>(invertLeftBtnCtrl->getToggleStateValue().getValue()));
+			DBG("Inverted is: " + String(param->getValue()) + " From toggle : " + String(static_cast<float>(invertLeftBtnCtrl->getToggleStateValue().getValue())));
+		}
         //[/UserButtonCode_invertLeftBtnCtrl]
     }
     else if (buttonThatWasClicked == invertRightBtnCtrl)
     {
         //[UserButtonCode_invertRightBtnCtrl] -- add your button handler code here..
-		DBG("Before Inverting Right is : " + String(StereoWidthCtrlAudioProcessor::InvertRight));
-		ourProcessor->setParameterNotifyingHost(StereoWidthCtrlAudioProcessor::InvertRight, static_cast<float>(invertRightBtnCtrl->getToggleStateValue().getValue()));
+		if (AudioProcessorParameter* param = getParameterFromComponent(buttonThatWasClicked))
+		{
+			DBG("Before Inverting Right is : " + String(StereoWidthCtrlAudioProcessor::InvertRight));
+			param->setValue( static_cast<float>(invertRightBtnCtrl->getToggleStateValue().getValue()));
 
-		DBG("Inverted is: " + String(StereoWidthCtrlAudioProcessor::InvertRight) + " From toggle : " + String(static_cast<float>(invertRightBtnCtrl->getToggleStateValue().getValue())));
-
+			DBG("Inverted is: " + String(param->getValue()) + " From toggle : " + String(static_cast<float>(invertRightBtnCtrl->getToggleStateValue().getValue())));
+		}
         //[/UserButtonCode_invertRightBtnCtrl]
     }
 
@@ -292,15 +305,25 @@ void StereoWidthCtrlAudioProcessorEditor::timerCallback()
 	}
 }
 
-AudioProcessorParameter* StereoWidthCtrlAudioProcessorEditor::getParameterFromSlider(const Slider* slider) const
+AudioProcessorParameter* StereoWidthCtrlAudioProcessorEditor::getParameterFromComponent(const Component* comp) const
 {
-	if (slider == gainSldCtrl)
+	if (comp == gainSldCtrl)
 	{
 		return getProcessor()->audioGainParam;
 	}
-	return nullptr;
+	//throw exception
+	throw std::invalid_argument("Unrecognized Component");
+	//return nullptr;
 }
 
+// AudioProcessorParameter* StereoWidthCtrlAudioProcessorEditor::getParameterFromComponent(const Slider* slider) const
+// {
+// 	if (slider == gainSldCtrl)
+// 	{
+// 		return getProcessor()->audioGainParam;
+// 	}
+// 	return nullptr;
+// }
 
 //[/MiscUserCode]
 

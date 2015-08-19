@@ -22,6 +22,11 @@ class GainSlider : public Slider
 {
 public:
 	explicit GainSlider(const String& componentName);
+	GainSlider(const String& componentName, AudioProcessorParameter* associatedParam);
+	void setAssociatedParameter(AudioProcessorParameter* associatedParam);
+	AudioProcessorParameter* getAssociatedParameter();
 	String getTextFromValue(double value) override;
+private:
+	AudioProcessorParameter* associatedParameter;
 };
 #endif  // GAINSLIDER_H_INCLUDED

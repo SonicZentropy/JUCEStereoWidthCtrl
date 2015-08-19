@@ -16,6 +16,22 @@ GainSlider::GainSlider(const String& componentName) : Slider(componentName)
 	setTextValueSuffix("dB");
 }
 
+GainSlider::GainSlider(const String& componentName, AudioProcessorParameter* associatedParam) : Slider(componentName)
+{
+	setTextValueSuffix("dB");
+	associatedParameter = associatedParam;
+}
+
+void GainSlider::setAssociatedParameter(AudioProcessorParameter* associatedParam)
+{
+	associatedParameter = associatedParam;
+}
+
+AudioProcessorParameter* GainSlider::getAssociatedParameter()
+{
+	return associatedParameter;
+}
+
 // Override Slider::getTextFromValue to force value to -inf display
 String GainSlider::getTextFromValue(double value)
 {

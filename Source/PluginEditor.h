@@ -67,7 +67,8 @@ public:
 
 private:
     //[UserVariables]   -- You can add your own custom variables in this section.
-	AudioProcessorParameter* getParameterFromSlider(const Slider*) const;
+	AudioProcessorParameter* getParameterFromComponent(const Component*) const;
+	//AudioProcessorParameter* getParameterFromComponent(const Slider*) const;
     //[/UserVariables]
 
     //==============================================================================
