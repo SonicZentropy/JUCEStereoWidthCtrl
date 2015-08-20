@@ -25,6 +25,7 @@
 
 //[MiscUserDefs] You can add your own user definitions and misc code here...
 using namespace juce;
+// #TODO: Change PluginEditor in IntroJucer to not be GUI managed.  Make dummy managed version to snag code
 //[/MiscUserDefs]
 
 //==============================================================================
@@ -32,7 +33,7 @@ StereoWidthCtrlAudioProcessorEditor::StereoWidthCtrlAudioProcessorEditor (Stereo
     : AudioProcessorEditor(ownerFilter)
 {
     //[Constructor_pre] You can add your own custom stuff here..
-	
+	//TODO Check GainSlider from introjucer
     //[/Constructor_pre]
 
     addAndMakeVisible (stereoWidthSldCtrl = new Slider ("Width Factor Slider"));
@@ -99,6 +100,8 @@ StereoWidthCtrlAudioProcessorEditor::StereoWidthCtrlAudioProcessorEditor (Stereo
 
 
     //[UserPreSize]
+	// #TODO: Change these to use getDefaultValue from param
+	
 	gainSldCtrl->setDoubleClickReturnValue(true, 0.0f);
 	stereoWidthSldCtrl->setDoubleClickReturnValue(true, 1.0f);
     //[/UserPreSize]
@@ -114,6 +117,8 @@ StereoWidthCtrlAudioProcessorEditor::StereoWidthCtrlAudioProcessorEditor (Stereo
 	lockGainBtnCtrl->setClickingTogglesState(true);
 	invertLeftBtnCtrl->setClickingTogglesState(true);
 	invertRightBtnCtrl->setClickingTogglesState(true);
+	gainSldCtrl->setAssociatedParameter(getProcessor()->audioGainParam);
+	DBG("Just set associated Parameter: " + String(getProcessor()->audioGainParam->getName(20)));
     //[/Constructor]
 }
 
@@ -185,7 +190,8 @@ void StereoWidthCtrlAudioProcessorEditor::sliderValueChanged (Slider* sliderThat
     else if (sliderThatWasMoved == gainSldCtrl)
     {
         //[UserSliderCode_gainSldCtrl] -- add your slider handling code here..
-		if (AudioProcessorParameter* param = getParameterFromComponent(sliderThatWasMoved))
+		// #TODO: change gain automation to set 0dB = 0.75 and skew it logarithmically
+		if (AudioProcessorParameter* param = static_cast<GainSlider*>(sliderThatWasMoved)->getAssociatedParameter())
 		{
 			DBG("Gain slider value changing from: " + String(param->getValue()) + " to: " + static_cast<String>(sliderThatWasMoved->getValue()));
 			//CONVERT FROM DB TO VALUE
@@ -282,6 +288,7 @@ void StereoWidthCtrlAudioProcessorEditor::buttonClicked (Button* buttonThatWasCl
     //[/UserbuttonClicked_Post]
 }
 
+//#TODO: add begin/end param change methods
 
 
 //[MiscUserCode] You can add your own definitions of your custom methods or any other code here...
@@ -307,13 +314,17 @@ void StereoWidthCtrlAudioProcessorEditor::timerCallback()
 
 AudioProcessorParameter* StereoWidthCtrlAudioProcessorEditor::getParameterFromComponent(const Component* comp) const
 {
+	//#TODO: Finish Ctrls conversion -- this method should eventually be pared down/eliminated
+	// #TODO: This should enable automation to update GUI effectively
 	if (comp == gainSldCtrl)
 	{
+		DBG("Returning gainSldCtrl");
 		return getProcessor()->audioGainParam;
 	}
 	//throw exception
-	throw std::invalid_argument("Unrecognized Component");
-	//return nullptr;
+	//throw std::invalid_argument("Unrecognized Component");
+	
+	return nullptr;
 }
 
 // AudioProcessorParameter* StereoWidthCtrlAudioProcessorEditor::getParameterFromComponent(const Slider* slider) const

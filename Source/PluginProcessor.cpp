@@ -179,6 +179,7 @@ void StereoWidthCtrlAudioProcessor::processBlock (AudioSampleBuffer& buffer, Mid
 					
 			for (long i = 0; i < buffer.getNumSamples(); i++)
 			{
+				
 				leftData[i] = 0.0f;
 				rightData[i] = 0.0f;
 			}

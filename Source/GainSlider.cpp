@@ -10,7 +10,7 @@
 
 #include "gainSlider.h"
 
-
+// #TODO: Move this out of gain-specific and convert to generic derived Slider that contains normalization methods
 GainSlider::GainSlider(const String& componentName) : Slider(componentName)
 {
 	setTextValueSuffix("dB");
@@ -27,7 +27,7 @@ void GainSlider::setAssociatedParameter(AudioProcessorParameter* associatedParam
 	associatedParameter = associatedParam;
 }
 
-AudioProcessorParameter* GainSlider::getAssociatedParameter()
+AudioProcessorParameter* GainSlider::getAssociatedParameter() const
 {
 	return associatedParameter;
 }
