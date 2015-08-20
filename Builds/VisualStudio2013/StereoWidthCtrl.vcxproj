@@ -234,6 +234,7 @@
       <WarningLevel>Level4</WarningLevel>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <ExceptionHandling>Async</ExceptionHandling>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -311,6 +312,7 @@
     <ClCompile Include="..\..\Source\StereoWidthCtrl.cpp" />
     <ClCompile Include="..\..\Source\PluginProcessor.cpp" />
     <ClCompile Include="..\..\Source\PluginEditor.cpp" />
+    <ClCompile Include="..\..\Source\PluginEditorRef.cpp" />
     <ClCompile Include="..\..\..\JUCEMain\modules\juce_audio_basics\buffers\juce_AudioDataConverters.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -1479,6 +1481,7 @@
     <ClInclude Include="..\..\Source\StereoWidthCtrl.h" />
     <ClInclude Include="..\..\Source\PluginProcessor.h" />
     <ClInclude Include="..\..\Source\PluginEditor.h" />
+    <ClInclude Include="..\..\Source\PluginEditorRef.h" />
     <ClInclude Include="..\..\..\JUCEMain\modules\juce_audio_basics\buffers\juce_AudioDataConverters.h" />
     <ClInclude Include="..\..\..\JUCEMain\modules\juce_audio_basics\buffers\juce_AudioSampleBuffer.h" />
     <ClInclude Include="..\..\..\JUCEMain\modules\juce_audio_basics\buffers\juce_FloatVectorOperations.h" />

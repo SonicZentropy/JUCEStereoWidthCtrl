@@ -2,7 +2,7 @@
 
 <JUCERPROJECT id="OOjbwb" name="StereoWidthCtrl" projectType="audioplug" version="1.0.0"
               bundleIdentifier="com.zentropy.StereoWidthCtrl" includeBinaryInAppConfig="1"
-              buildVST="1" buildVST3="1" buildAU="0" buildRTAS="0" buildAAX="0"
+              buildVST="1" buildVST3="0" buildAU="0" buildRTAS="0" buildAAX="0"
               pluginName="StereoWidthCtrl" pluginDesc="Change Stereo Width of Audio"
               pluginManufacturer="Zentropy" pluginManufacturerCode="ZenA" pluginCode="SCtl"
               pluginChannelConfigs="{2, 2}" pluginIsSynth="0" pluginWantsMidiIn="0"
@@ -45,13 +45,17 @@
         <FILE id="nQzevI" name="StereoWidthCtrl.cpp" compile="1" resource="0"
               file="Source/StereoWidthCtrl.cpp"/>
       </GROUP>
-      <FILE id="uE8FNa" name="PluginProcessor.cpp" compile="1" resource="0"
-            file="Source/PluginProcessor.cpp"/>
       <FILE id="smIUhC" name="PluginProcessor.h" compile="0" resource="0"
             file="Source/PluginProcessor.h"/>
-      <FILE id="R36YnP" name="PluginEditor.cpp" compile="1" resource="0"
+      <FILE id="uE8FNa" name="PluginProcessor.cpp" compile="1" resource="0"
+            file="Source/PluginProcessor.cpp"/>
+      <FILE id="juqvB5" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
+      <FILE id="UNq7uV" name="PluginEditor.cpp" compile="1" resource="0"
             file="Source/PluginEditor.cpp"/>
-      <FILE id="VpHMdV" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
+      <FILE id="VpHMdV" name="PluginEditorRef.h" compile="0" resource="0"
+            file="Source/PluginEditorRef.h"/>
+      <FILE id="R36YnP" name="PluginEditorRef.cpp" compile="1" resource="0"
+            file="Source/PluginEditorRef.cpp"/>
     </GROUP>
   </MAINGROUP>
   <EXPORTFORMATS>
