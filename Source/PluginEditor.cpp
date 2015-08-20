@@ -109,8 +109,8 @@ StereoWidthCtrlAudioProcessorEditor::StereoWidthCtrlAudioProcessorEditor(StereoW
 	lockGainBtnCtrl->setClickingTogglesState(true);
 	invertLeftBtnCtrl->setClickingTogglesState(true);
 	invertRightBtnCtrl->setClickingTogglesState(true);
-	//gainSldCtrl->setAssociatedParameter(getProcessor()->audioGainParam);
-	//DBG("Just set associated Parameter: " + String(getProcessor()->audioGainParam->getName(20)));
+	gainSldCtrl->setAssociatedParameter(getProcessor()->audioGainParam);
+	DBG("Just set associated Parameter: " + String(getProcessor()->audioGainParam->getName(20)));
 }
 
 StereoWidthCtrlAudioProcessorEditor::~StereoWidthCtrlAudioProcessorEditor()
@@ -147,6 +147,9 @@ void StereoWidthCtrlAudioProcessorEditor::resized()
 
 void StereoWidthCtrlAudioProcessorEditor::sliderValueChanged(Slider* sliderThatWasMoved)
 {
+
+	
+
 	if (sliderThatWasMoved == stereoWidthSldCtrl)
 	{
 		if (AudioProcessorParameter* param = getParameterFromComponent(sliderThatWasMoved))
@@ -158,12 +161,13 @@ void StereoWidthCtrlAudioProcessorEditor::sliderValueChanged(Slider* sliderThatW
 	else if (sliderThatWasMoved == gainSldCtrl)
 	{
 		// #TODO: change gain automation to set 0dB = 0.75 and skew it logarithmically
+		// #BUG: getAssociatedParam not properly set
 		try
 		{
 
 			AudioProcessorParameter* param = static_cast<GainSlider*>(sliderThatWasMoved)->getAssociatedParameter();
 			DBG("Param casted: " + String(param->getName(20)));
-			if (AudioProcessorParameter* param = static_cast<GainSlider*>(sliderThatWasMoved)->getAssociatedParameter())
+			if (param = static_cast<GainSlider*>(sliderThatWasMoved)->getAssociatedParameter())
 			{
 				DBG("Gain slider value changing from: " + String(param->getValue()) + " to: " + static_cast<String>(sliderThatWasMoved->getValue()));
 				//CONVERT FROM DB TO VALUE
