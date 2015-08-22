@@ -14,13 +14,29 @@
   <MAINGROUP id="JHoKxW" name="StereoWidthCtrl">
     <GROUP id="{449F2A72-20F9-17C7-2809-5D6ADB01CDA1}" name="Source">
       <GROUP id="{C15EF325-0C33-9861-75F1-2FF0D6A7218E}" name="zen_utils">
-        <FILE id="AwAEu8" name="BoolParameter.cpp" compile="1" resource="0"
-              file="Source/zen_utils/BoolParameter.cpp"/>
-        <FILE id="Z48M3A" name="BoolParameter.h" compile="0" resource="0" file="Source/zen_utils/BoolParameter.h"/>
-        <FILE id="BwsTyk" name="FloatParameter.cpp" compile="1" resource="0"
-              file="Source/zen_utils/FloatParameter.cpp"/>
-        <FILE id="XaPD3r" name="FloatParameter.h" compile="0" resource="0"
-              file="Source/zen_utils/FloatParameter.h"/>
+        <GROUP id="{BAEE0A9C-7188-6E0E-CBF4-49DEEF0C1544}" name="params">
+          <FILE id="rh153h" name="BoolParameter.cpp" compile="1" resource="0"
+                file="Source/zen_utils/params/BoolParameter.cpp"/>
+          <FILE id="CtHq8f" name="BoolParameter.h" compile="0" resource="0" file="Source/zen_utils/params/BoolParameter.h"/>
+          <FILE id="iB5IUF" name="FloatParameter.cpp" compile="1" resource="0"
+                file="Source/zen_utils/params/FloatParameter.cpp"/>
+          <FILE id="giRGLj" name="FloatParameter.h" compile="0" resource="0"
+                file="Source/zen_utils/params/FloatParameter.h"/>
+        </GROUP>
+        <GROUP id="{9590649E-7D54-D296-9A41-E68DF55C5BED}" name="components">
+          <FILE id="LN6oWt" name="AssociatedButton.cpp" compile="1" resource="0"
+                file="Source/zen_utils/components/AssociatedButton.cpp"/>
+          <FILE id="UrN13L" name="AssociatedButton.h" compile="0" resource="0"
+                file="Source/zen_utils/components/AssociatedButton.h"/>
+          <FILE id="dZsFRh" name="AssociatedParameter.cpp" compile="1" resource="0"
+                file="Source/zen_utils/components/AssociatedParameter.cpp"/>
+          <FILE id="rUVyFl" name="AssociatedParameter.h" compile="0" resource="0"
+                file="Source/zen_utils/components/AssociatedParameter.h"/>
+          <FILE id="xe7wWf" name="AssociatedSlider.cpp" compile="1" resource="0"
+                file="Source/zen_utils/components/AssociatedSlider.cpp"/>
+          <FILE id="AGaeZk" name="AssociatedSlider.h" compile="0" resource="0"
+                file="Source/zen_utils/components/AssociatedSlider.h"/>
+        </GROUP>
         <FILE id="GRCDbi" name="juce_zen_utils.h" compile="0" resource="0"
               file="Source/zen_utils/juce_zen_utils.h"/>
         <FILE id="Xmkkle" name="ZenParamUtils.cpp" compile="1" resource="0"
@@ -29,22 +45,21 @@
         <FILE id="v5Xcah" name="ZenUtils.cpp" compile="1" resource="0" file="Source/zen_utils/ZenUtils.cpp"/>
         <FILE id="ufjEtz" name="ZenUtils.h" compile="0" resource="0" file="Source/zen_utils/ZenUtils.h"/>
       </GROUP>
-      <GROUP id="{42559586-EA01-54C0-F5FF-91A075BFB7B7}" name="ComponentOverrides">
-        <FILE id="PP5u1k" name="GainSlider.cpp" compile="1" resource="0" file="Source/GainSlider.cpp"/>
-        <FILE id="ST4STp" name="GainSlider.h" compile="0" resource="0" file="Source/GainSlider.h"/>
+      <GROUP id="{104AE82E-1250-F11B-35E4-B191404D7D4A}" name="components">
+        <GROUP id="{9BCE696A-216F-6923-111B-B1345868F3EF}" name="VolumeInDB">
+          <FILE id="LCkrV5" name="VolumeInDBCtrl.cpp" compile="1" resource="0"
+                file="Source/components/VolumeInDB/VolumeInDBCtrl.cpp"/>
+          <FILE id="ulW0Zz" name="VolumeInDBCtrl.h" compile="0" resource="0"
+                file="Source/components/VolumeInDB/VolumeInDBCtrl.h"/>
+        </GROUP>
+        <GROUP id="{58E798AF-47E0-CABC-7804-1D45D9E3FCBD}" name="StereoWidthCtrl">
+          <FILE id="b3oc7i" name="StereoWidthCtrl.cpp" compile="1" resource="0"
+                file="Source/components/StereoWidthCtrl/StereoWidthCtrl.cpp"/>
+          <FILE id="E2crH2" name="StereoWidthCtrl.h" compile="0" resource="0"
+                file="Source/components/StereoWidthCtrl/StereoWidthCtrl.h"/>
+        </GROUP>
       </GROUP>
-      <GROUP id="{9BCE696A-216F-6923-111B-B1345868F3EF}" name="VolumeInDB">
-        <FILE id="WG5B4D" name="VolumeInDBCtrl.cpp" compile="1" resource="0"
-              file="Source/VolumeInDBCtrl.cpp"/>
-        <FILE id="FFGstp" name="VolumeInDBCtrl.h" compile="0" resource="0"
-              file="Source/VolumeInDBCtrl.h"/>
-      </GROUP>
-      <GROUP id="{58E798AF-47E0-CABC-7804-1D45D9E3FCBD}" name="StereoWidthCtrl">
-        <FILE id="Qi69rn" name="StereoWidthCtrl.h" compile="0" resource="0"
-              file="Source/StereoWidthCtrl.h"/>
-        <FILE id="nQzevI" name="StereoWidthCtrl.cpp" compile="1" resource="0"
-              file="Source/StereoWidthCtrl.cpp"/>
-      </GROUP>
+      <GROUP id="{F46E9D92-3A07-75C2-3273-B97B429663FA}" name="params"/>
       <FILE id="smIUhC" name="PluginProcessor.h" compile="0" resource="0"
             file="Source/PluginProcessor.h"/>
       <FILE id="uE8FNa" name="PluginProcessor.cpp" compile="1" resource="0"

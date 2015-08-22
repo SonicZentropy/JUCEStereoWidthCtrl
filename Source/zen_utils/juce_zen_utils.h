@@ -8,7 +8,8 @@
 
 #include "ZenParamUtils.h"
 #include "ZenUtils.h"
-#include "FloatParameter.h"
-#include "BoolParameter.h"
+#include "params/FloatParameter.h"
+#include "params/BoolParameter.h"
+#include "components/AssociatedSlider.h"
 
 #endif   // JUCE_ZEN_UTILS_H_INCLUDED

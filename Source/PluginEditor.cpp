@@ -33,9 +33,10 @@ StereoWidthCtrlAudioProcessorEditor::StereoWidthCtrlAudioProcessorEditor(StereoW
 	//Audio Processor reference
 	StereoWidthCtrlAudioProcessor* audioProc = getProcessor();
 
-	addAndMakeVisible(stereoWidthSldCtrl = new Slider("Width Factor Slider"));
+	// #TODO: Create AssociatedParameter class for holding reference to control within param, set it inside the Associated Slider's constructor
+	addAndMakeVisible(stereoWidthSldCtrl = new AssociatedSlider("Width Factor Slider", audioProc->stereoWidthParam));
 	stereoWidthSldCtrl->setTooltip(TRANS("Stereo Width"));
-	stereoWidthSldCtrl->setRange(0, 2, 0.05);
+	stereoWidthSldCtrl->setRange(0, 1, 0.05);
 	stereoWidthSldCtrl->setSliderStyle(Slider::LinearHorizontal);
 	stereoWidthSldCtrl->setTextBoxStyle(Slider::TextBoxLeft, false, 80, 20);
 	stereoWidthSldCtrl->addListener(this);
@@ -59,8 +60,9 @@ StereoWidthCtrlAudioProcessorEditor::StereoWidthCtrlAudioProcessorEditor(StereoW
 	muteBtnCtrl->addListener(this);
 	muteBtnCtrl->setColour(TextButton::buttonColourId, Colour(0xffe2e2e2));
 
-	addAndMakeVisible(gainSldCtrl = new GainSlider("Gain Knob"));
-	gainSldCtrl->setRange(-96, 12, 0.1);
+	addAndMakeVisible(gainSldCtrl = new AssociatedSlider("Gain Knob", audioProc->audioGainParam));
+	//gainSldCtrl->setRange(-96, 12, 0.1);
+	gainSldCtrl->setRange(0.0, 1.0, 0.01);
 	gainSldCtrl->setSliderStyle(Slider::LinearVertical);
 	gainSldCtrl->setTextBoxStyle(Slider::TextBoxBelow, false, 80, 20);
 	gainSldCtrl->setColour(Slider::backgroundColourId, Colour(0x00868181));
@@ -145,18 +147,28 @@ void StereoWidthCtrlAudioProcessorEditor::resized()
 	invertLabel->setBounds(12, 80, 100, 32);
 }
 
+/// <summary> Called by JUCE when slider is moved.  Casts slider as Associated and passes to associatedSliderValueChanged</summary>
+/// <param name="sliderThatWasMoved"> The slider that was moved.</param>
 void StereoWidthCtrlAudioProcessorEditor::sliderValueChanged(Slider* sliderThatWasMoved)
 {
+	try
+	{
+		associatedSliderValueChanged(static_cast<AssociatedSlider*>(sliderThatWasMoved));
+	}
+	catch (std::exception& e)
+	{
+		DBG("Casting >" + sliderThatWasMoved->getName() +"< to AssociatedSlider* Failed: " + String(e.what()));
+	}
+}
 
-	
-
+void StereoWidthCtrlAudioProcessorEditor::associatedSliderValueChanged(AssociatedSlider* sliderThatWasMoved)
+{
+	AudioProcessorParameter* param = sliderThatWasMoved->getAssociatedParameter();
 	if (sliderThatWasMoved == stereoWidthSldCtrl)
 	{
-		if (AudioProcessorParameter* param = getParameterFromComponent(sliderThatWasMoved))
-		{
-			DBG("Changing Width SliderValue from: " + String(param->getValue()) + " to: " + static_cast<String>(stereoWidthSldCtrl->getValue() / 2.0f));
-			param->setValueNotifyingHost(static_cast<float>(stereoWidthSldCtrl->getValue() / 2.0f));
-		}
+		DBG("Changing Width SliderValue from: " + String(param->getValue()) + " to: " + static_cast<String>(stereoWidthSldCtrl->getValue() / 2.0f));
+		// #TODO: Restructure stereoWidthSldCtrl to get rid of the 2.0f manipulation, just move the 2.0f into getTextFromValue
+		param->setValueNotifyingHost(static_cast<float>(stereoWidthSldCtrl->getValue()));
 	}
 	else if (sliderThatWasMoved == gainSldCtrl)
 	{
@@ -164,25 +176,21 @@ void StereoWidthCtrlAudioProcessorEditor::sliderValueChanged(Slider* sliderThatW
 		// #BUG: getAssociatedParam not properly set
 		try
 		{
+			//param = static_cast<AssociatedSlider*>(sliderThatWasMoved)->getAssociatedParameter();
+			DBG("Gain slider value changing from: " + String(param->getValue()) + " to: " + static_cast<String>(sliderThatWasMoved->getValue()));
+			//#TODO: Restructure to get rid of this decibels->gain conversion, move it into getTextFromValue only
+			float valueDenormal = static_cast<float>(sliderThatWasMoved->getValue());
+			float valueNorm = Decibels::decibelsToGain(valueDenormal, -96.0f);
 
-			AudioProcessorParameter* param = static_cast<GainSlider*>(sliderThatWasMoved)->getAssociatedParameter();
-			DBG("Param casted: " + String(param->getName(20)));
-			if (param = static_cast<GainSlider*>(sliderThatWasMoved)->getAssociatedParameter())
-			{
-				DBG("Gain slider value changing from: " + String(param->getValue()) + " to: " + static_cast<String>(sliderThatWasMoved->getValue()));
-				//CONVERT FROM DB TO VALUE
-				float valueDenormal = static_cast<float>(sliderThatWasMoved->getValue());
-				float valueNorm = Decibels::decibelsToGain(valueDenormal, -96.0f);
-
-				param->setValueNotifyingHost(valueNorm);
-				DBG("audioGainParam is now: " + static_cast<String>(param->getValue()));
-			}
+			param->setValueNotifyingHost(valueNorm);
+			DBG("audioGainParam is now: " + static_cast<String>(param->getValue()));
 		}
-		catch (...)
+		catch(...)
 		{
 			DBG("Access Violation Exception Caught In PluginEditor.cpp sliderValueChanged ");
 		}
 	}
+
 }
 
 void StereoWidthCtrlAudioProcessorEditor::buttonClicked(Button* buttonThatWasClicked)
@@ -277,6 +285,10 @@ AudioProcessorParameter* StereoWidthCtrlAudioProcessorEditor::getParameterFromCo
 	{
 		DBG("Returning gainSldCtrl");
 		return getProcessor()->audioGainParam;
+	}
+	else if (comp == stereoWidthSldCtrl)
+	{
+		return getProcessor()->stereoWidthParam;
 	}
 
 	//throw std::invalid_argument("Unrecognized Component");

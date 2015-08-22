@@ -10,14 +10,23 @@
     <Filter Include="StereoWidthCtrl\Source\zen_utils">
       <UniqueIdentifier>{42A3CBD4-4421-D6F4-BDD1-F1D0B741116D}</UniqueIdentifier>
     </Filter>
-    <Filter Include="StereoWidthCtrl\Source\ComponentOverrides">
-      <UniqueIdentifier>{E483C5EE-1A8B-8373-47B3-78DA0CE21A1B}</UniqueIdentifier>
+    <Filter Include="StereoWidthCtrl\Source\zen_utils\params">
+      <UniqueIdentifier>{5680D239-06D6-B083-C944-55AFE6644D16}</UniqueIdentifier>
     </Filter>
-    <Filter Include="StereoWidthCtrl\Source\VolumeInDB">
-      <UniqueIdentifier>{0265A247-BBB2-D2EA-6E21-CCC135CFDB20}</UniqueIdentifier>
+    <Filter Include="StereoWidthCtrl\Source\zen_utils\components">
+      <UniqueIdentifier>{74EA75D9-AE44-ACBD-CB1A-54FFA7EB78A3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="StereoWidthCtrl\Source\StereoWidthCtrl">
-      <UniqueIdentifier>{26203E24-2609-2532-7345-9FBE6A469841}</UniqueIdentifier>
+    <Filter Include="StereoWidthCtrl\Source\components">
+      <UniqueIdentifier>{212289F6-B89F-2BEF-149D-C9B5C4B2ED48}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="StereoWidthCtrl\Source\components\VolumeInDB">
+      <UniqueIdentifier>{B6696F90-424B-CB7A-1036-B48BBED9CBA2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="StereoWidthCtrl\Source\components\StereoWidthCtrl">
+      <UniqueIdentifier>{E0185541-45CE-6245-DA43-CDAAE6CC343E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="StereoWidthCtrl\Source\params">
+      <UniqueIdentifier>{856D0085-EE2B-0735-A4FC-6267F1968054}</UniqueIdentifier>
     </Filter>
     <Filter Include="Juce Modules">
       <UniqueIdentifier>{422C46B7-0467-2DB0-BF3C-16DFCAFD69AC}</UniqueIdentifier>
@@ -351,11 +360,20 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\Source\zen_utils\BoolParameter.cpp">
-      <Filter>StereoWidthCtrl\Source\zen_utils</Filter>
+    <ClCompile Include="..\..\Source\zen_utils\params\BoolParameter.cpp">
+      <Filter>StereoWidthCtrl\Source\zen_utils\params</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\zen_utils\FloatParameter.cpp">
-      <Filter>StereoWidthCtrl\Source\zen_utils</Filter>
+    <ClCompile Include="..\..\Source\zen_utils\params\FloatParameter.cpp">
+      <Filter>StereoWidthCtrl\Source\zen_utils\params</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\zen_utils\components\AssociatedButton.cpp">
+      <Filter>StereoWidthCtrl\Source\zen_utils\components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\zen_utils\components\AssociatedParameter.cpp">
+      <Filter>StereoWidthCtrl\Source\zen_utils\components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\zen_utils\components\AssociatedSlider.cpp">
+      <Filter>StereoWidthCtrl\Source\zen_utils\components</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\zen_utils\ZenParamUtils.cpp">
       <Filter>StereoWidthCtrl\Source\zen_utils</Filter>
@@ -363,14 +381,11 @@
     <ClCompile Include="..\..\Source\zen_utils\ZenUtils.cpp">
       <Filter>StereoWidthCtrl\Source\zen_utils</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\GainSlider.cpp">
-      <Filter>StereoWidthCtrl\Source\ComponentOverrides</Filter>
+    <ClCompile Include="..\..\Source\components\VolumeInDB\VolumeInDBCtrl.cpp">
+      <Filter>StereoWidthCtrl\Source\components\VolumeInDB</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\VolumeInDBCtrl.cpp">
-      <Filter>StereoWidthCtrl\Source\VolumeInDB</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\StereoWidthCtrl.cpp">
-      <Filter>StereoWidthCtrl\Source\StereoWidthCtrl</Filter>
+    <ClCompile Include="..\..\Source\components\StereoWidthCtrl\StereoWidthCtrl.cpp">
+      <Filter>StereoWidthCtrl\Source\components\StereoWidthCtrl</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\PluginProcessor.cpp">
       <Filter>StereoWidthCtrl\Source</Filter>
@@ -1577,11 +1592,20 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\Source\zen_utils\BoolParameter.h">
-      <Filter>StereoWidthCtrl\Source\zen_utils</Filter>
+    <ClInclude Include="..\..\Source\zen_utils\params\BoolParameter.h">
+      <Filter>StereoWidthCtrl\Source\zen_utils\params</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\zen_utils\FloatParameter.h">
-      <Filter>StereoWidthCtrl\Source\zen_utils</Filter>
+    <ClInclude Include="..\..\Source\zen_utils\params\FloatParameter.h">
+      <Filter>StereoWidthCtrl\Source\zen_utils\params</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\zen_utils\components\AssociatedButton.h">
+      <Filter>StereoWidthCtrl\Source\zen_utils\components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\zen_utils\components\AssociatedParameter.h">
+      <Filter>StereoWidthCtrl\Source\zen_utils\components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\zen_utils\components\AssociatedSlider.h">
+      <Filter>StereoWidthCtrl\Source\zen_utils\components</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\zen_utils\juce_zen_utils.h">
       <Filter>StereoWidthCtrl\Source\zen_utils</Filter>
@@ -1592,14 +1616,11 @@
     <ClInclude Include="..\..\Source\zen_utils\ZenUtils.h">
       <Filter>StereoWidthCtrl\Source\zen_utils</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\GainSlider.h">
-      <Filter>StereoWidthCtrl\Source\ComponentOverrides</Filter>
+    <ClInclude Include="..\..\Source\components\VolumeInDB\VolumeInDBCtrl.h">
+      <Filter>StereoWidthCtrl\Source\components\VolumeInDB</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\VolumeInDBCtrl.h">
-      <Filter>StereoWidthCtrl\Source\VolumeInDB</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\StereoWidthCtrl.h">
-      <Filter>StereoWidthCtrl\Source\StereoWidthCtrl</Filter>
+    <ClInclude Include="..\..\Source\components\StereoWidthCtrl\StereoWidthCtrl.h">
+      <Filter>StereoWidthCtrl\Source\components\StereoWidthCtrl</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\PluginProcessor.h">
       <Filter>StereoWidthCtrl\Source</Filter>

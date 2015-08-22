@@ -17,9 +17,9 @@
 
 #include "JuceHeader.h"
 #include "PluginProcessor.h"
-#include "gainSlider.h"
+//#include "AssociatedSlider.h"
 #include <exception>
-//#include "zen_utils/juce_zen_utils.h"
+#include "zen_utils/juce_zen_utils.h"
 
 
 //==============================================================================
@@ -36,7 +36,7 @@ class StereoWidthCtrlAudioProcessorEditor : public AudioProcessorEditor,
 {
 public:
 	//==============================================================================
-	StereoWidthCtrlAudioProcessorEditor(StereoWidthCtrlAudioProcessor& ownerFilter);
+	explicit StereoWidthCtrlAudioProcessorEditor(StereoWidthCtrlAudioProcessor& ownerFilter);
 	~StereoWidthCtrlAudioProcessorEditor();
 
 	//==============================================================================
@@ -48,10 +48,11 @@ public:
 		return static_cast<StereoWidthCtrlAudioProcessor*>(getAudioProcessor());
 	}
 
-	void paint(Graphics& g);
-	void resized();
-	void sliderValueChanged(Slider* sliderThatWasMoved);
-	void buttonClicked(Button* buttonThatWasClicked);
+	void paint(Graphics& g) override;
+	void resized() override;
+	void sliderValueChanged(Slider* sliderThatWasMoved) override;
+	void associatedSliderValueChanged(AssociatedSlider* sliderThatWasMoved);
+	void buttonClicked(Button* buttonThatWasClicked) override;
 
 
 private:
@@ -60,11 +61,11 @@ private:
 	//AudioProcessorParameter* getParameterFromComponent(const Slider*) const;
 
 	//==============================================================================
-	ScopedPointer<Slider> stereoWidthSldCtrl;
+	ScopedPointer<AssociatedSlider> stereoWidthSldCtrl;
 	ScopedPointer<TextButton> bypassBtnCtrl;
 	ScopedPointer<Label> widthLabel;
 	ScopedPointer<TextButton> muteBtnCtrl;
-	ScopedPointer<GainSlider> gainSldCtrl;
+	ScopedPointer<AssociatedSlider> gainSldCtrl;
 	ScopedPointer<TextButton> lockGainBtnCtrl;
 	ScopedPointer<ToggleButton> invertLeftBtnCtrl;
 	ScopedPointer<ToggleButton> invertRightBtnCtrl;
