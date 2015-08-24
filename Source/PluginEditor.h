@@ -17,10 +17,9 @@
 
 #include "JuceHeader.h"
 #include "PluginProcessor.h"
-//#include "AssociatedSlider.h"
-#include <exception>
 #include "zen_utils/juce_zen_utils.h"
-
+//#include "AssociatedSlider.h"
+//#include <exception>
 
 //==============================================================================
 
@@ -57,19 +56,19 @@ public:
 
 private:
 
-	AudioProcessorParameter* getParameterFromComponent(const Component*) const;
-	//AudioProcessorParameter* getParameterFromComponent(const Slider*) const;
+	//AudioProcessorParameter* getParameterFromComponent(const Component*) const;
+	// //AudioProcessorParameter* getParameterFromComponent(const Slider*) const;
 
 	//==============================================================================
-	ScopedPointer<AssociatedSlider> stereoWidthSldCtrl;
-	ScopedPointer<TextButton> bypassBtnCtrl;
-	ScopedPointer<Label> widthLabel;
-	ScopedPointer<TextButton> muteBtnCtrl;
-	ScopedPointer<AssociatedSlider> gainSldCtrl;
-	ScopedPointer<TextButton> lockGainBtnCtrl;
-	ScopedPointer<ToggleButton> invertLeftBtnCtrl;
-	ScopedPointer<ToggleButton> invertRightBtnCtrl;
-	ScopedPointer<Label> invertLabel;
+ 	ScopedPointer<StereoWidthCtrlSlider> stereoWidthSldCtrl;
+ 	ScopedPointer<TextButton> bypassBtnCtrl;
+ 	ScopedPointer<Label> widthLabel;
+ 	ScopedPointer<TextButton> muteBtnCtrl;
+ 	ScopedPointer<AssociatedSlider> gainSldCtrl;
+ 	ScopedPointer<TextButton> lockGainBtnCtrl;
+ 	ScopedPointer<ToggleButton> invertLeftBtnCtrl;
+ 	ScopedPointer<ToggleButton> invertRightBtnCtrl;
+ 	ScopedPointer<Label> invertLabel;
 
 
 	//==============================================================================

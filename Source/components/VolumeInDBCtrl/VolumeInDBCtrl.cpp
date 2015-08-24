@@ -34,8 +34,6 @@ float VolumeInDBCtrl::convertDecibelstoValue(float gain)
 	return static_cast<float>(Decibels::decibelsToGain(gain, -96.0f));
 }
 
-
-
 void VolumeInDBCtrl::processBufferSample(float* LeftSample, float* RightSample)
 {
 	//DBG("In Volume Clock Process gain is : " + String(audioGain));

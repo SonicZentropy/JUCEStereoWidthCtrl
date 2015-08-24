@@ -22,42 +22,157 @@ using namespace juce;
 //==============================================================================
 StereoWidthCtrlAudioProcessor::StereoWidthCtrlAudioProcessor()
 {
-	addParameter(masterBypassParam = new BoolParameter(0.0f, "MasterBypass"));
-	addParameter(stereoWidthParam = new FloatParameter(0.5f, "StereoWidth"));
-	addParameter(muteAudioParam = new BoolParameter(0.0f, "MuteAudio"));
-	addParameter(audioGainParam = new FloatParameter(1.0f, "AudioGain"));
-	addParameter(lockGainParam = new BoolParameter(0.0f, "LockGain"));
-	addParameter(invertLeftParam = new BoolParameter(0.0f, "InvertLeft"));
-	addParameter(invertRightParam = new BoolParameter(0.0f, "InvertRight"));
+ 	addParameter(masterBypassParam = new BoolParameter(0.0f, "MasterBypass"));
+ 	addParameter(stereoWidthParam = new FloatParameter(0.5f, "StereoWidth"));
+ 	addParameter(muteAudioParam = new BoolParameter(0.0f, "MuteAudio"));
+ 	addParameter(audioGainParam = new FloatParameter(1.0f, "AudioGain"));
+ 	addParameter(lockGainParam = new BoolParameter(0.0f, "LockGain"));
+ 	addParameter(invertLeftParam = new BoolParameter(0.0f, "InvertLeft"));
+ 	addParameter(invertRightParam = new BoolParameter(0.0f, "InvertRight"));
 
+	//widthControl = new StereoWidthCtrlSlider("StereoWidthCtrlSlider", stereoWidthParam);
 	
-	
-	widthControl.setWidth(stereoWidthParam->getValue()); //Push user width to the controller
-	gainControl.setGain(audioGainParam->getValue());
+	//widthControl->setValue(stereoWidthParam->getValue()); //Push user width to the controller, should happen in constructor now
+	//gainControl.setGain(audioGainParam->getValue());
 	
 	UIUpdateFlag = true; //flag UI for update
-
-	// DBG TEST AREA - USER
-/*
-
-	ZenUtils testUtil;
-	testUtil.testGain(5.0f);*/
-	
-//	AudioProcessorParameter* testParam = new FloatParameter(0.5f, "testParam");
-//	static_cast<FloatParameter*> (testParam)->testGain(5.0f);
-//	testParam->testFloat(10.0);
-
-	//DBG("TEST PARAM WORKING ZenUtils: " + String(testUtil.testGain(50.0f)));
-	//DBG("TEST PARAM WORKING FloatParameter: " + String(testParam->testFloat(10.0)));
-	// /DBG TEST AREA - USER
 
 }
 
 StereoWidthCtrlAudioProcessor::~StereoWidthCtrlAudioProcessor()
 {
+	//delete widthControl;
 }
 
 //==============================================================================
+
+void StereoWidthCtrlAudioProcessor::processBlock(AudioSampleBuffer& buffer, MidiBuffer& midiMessages)
+{
+	/*
+	// Assumes Stereo channels only
+	// Assumes Equal number of inputs and outputs
+	*/
+	if (getNumInputChannels() < 2 || masterBypassParam->getValue())
+	{
+		//Do nothing, just pass through
+	}
+	else  //Process channel data here **MAIN LOOP**
+	{
+		float* leftData = buffer.getWritePointer(0);  //leftData references left channel now
+		float* rightData = buffer.getWritePointer(1); //right data references right channel now
+		//Handle Muting
+		if (!muteAudioParam->getValue())
+		{
+			//Stereo Width Process
+			for (long i = 0; i < buffer.getNumSamples(); i++)
+			{
+				BufferSampleProcesses::processStereoWidth(&leftData[i], &rightData[i], stereoWidthParam->getValue());
+			}
+		}
+		else if (muteAudioParam->getValue())  // MUTE ALL Audio
+		{
+
+			for (long i = 0; i < buffer.getNumSamples(); i++)
+			{
+				leftData[i] = 0.0f;
+				rightData[i] = 0.0f;
+			}
+		}
+		else
+		{
+			//	throw 
+		}
+	
+		// Handle Gain
+		if (audioGainParam->getValue() != 1.0f && !muteAudioParam->getValue())
+		{
+			//gainControl.setGain(audioGainParam->getValue());
+			for (long i = 0; i < buffer.getNumSamples(); i++)
+			{
+				//gainControl.processBufferSample(&leftData[i], &rightData[i]);
+				BufferSampleProcesses::processGain(&leftData[i], &rightData[i], audioGainParam->getValue());
+
+			}
+		}
+		if (invertLeftParam->getValue() && !muteAudioParam->getValue())
+		{
+			for (long i = 0; i < buffer.getNumSamples(); i++)
+			{
+				leftData[i] *= -1;
+			}
+		}
+		if (invertRightParam->getValue() && !muteAudioParam->getValue())
+		{
+			for (long i = 0; i < buffer.getNumSamples(); i++)
+			{
+				rightData[i] *= -1;
+			}
+		}
+
+
+	}
+	
+}
+
+//==============================================================================
+
+//==============================================================================
+void StereoWidthCtrlAudioProcessor::getStateInformation(MemoryBlock& destData)
+{
+	// #TODO: Implement State Information
+	// You should use this method to store your parameters in the memory block.
+	// You could do that either as raw data, or use the XML or ValueTree classes
+	// as intermediaries to make it easy to save and load complex data.
+	// 	XmlElement root("Root");
+	// 	XmlElement* el;
+	// 	el = root.createNewChildElement("Bypass");
+	// 	el->addTextElement(String(UserParams[MasterBypass]));
+	// 	el = root.createNewChildElement("StereoWidth");
+	// 	el->addTextElement(String(UserParams[StereoWidth]));
+	// 	el = root.createNewChildElement("MuteAudio");      // This shouldn't work? Was "Mute"
+	// 	el->addTextElement(String(UserParams[MuteAudio]));
+	// 	el = root.createNewChildElement("Gain");
+	// 	el->addTextElement(String(UserParams[AudioGain]));
+	// 	copyXmlToBinary(root, destData);
+}
+
+void StereoWidthCtrlAudioProcessor::setStateInformation(const void* data, int sizeInBytes)
+{
+	// You should use this method to restore your parameters from this memory block,
+	// whose contents will have been created by the getStateInformation() call.
+	// 	XmlElement* pRoot = getXmlFromBinary(data, sizeInBytes);
+	// 	if (pRoot != nullptr)
+	// 	{
+	// 		forEachXmlChildElement((*pRoot), pChild)
+	// 		{
+	// 			if (pChild->hasTagName("Bypass"))
+	// 			{
+	// 				String text = pChild->getAllSubText();
+	// 				setParameter(MasterBypass, text.getFloatValue());
+	// 			}
+	// 			else if (pChild->hasTagName("StereoWidth"))
+	// 			{
+	// 				String text = pChild->getAllSubText();
+	// 				setParameter(StereoWidth, text.getFloatValue() / 2.0f);
+	// 			}
+	// 			else if (pChild->hasTagName("MuteAudio"))  //This shouldn't work?  Switch MuteAudio to Mute
+	// 			{
+	// 				String text = pChild->getAllSubText();
+	// 				setParameter(StereoWidth, text.getFloatValue());
+	// 			}
+	// 			else if (pChild->hasTagName("Gain"))
+	// 			{
+	// 				String text = pChild->getAllSubText();
+	// 				setParameter(StereoWidth, text.getFloatValue());
+	// 			}
+	// 		}
+	// 		delete pRoot;
+	// 		UIUpdateFlag = true;
+	//	}
+}
+
+//==============================================================================
+
 const String StereoWidthCtrlAudioProcessor::getName() const
 {
     return JucePlugin_Name;
@@ -103,7 +218,7 @@ bool StereoWidthCtrlAudioProcessor::producesMidi() const
 
 bool StereoWidthCtrlAudioProcessor::silenceInProducesSilenceOut() const
 {
-    return false;
+    return true;
 }
 
 double StereoWidthCtrlAudioProcessor::getTailLengthSeconds() const
@@ -138,85 +253,20 @@ void StereoWidthCtrlAudioProcessor::changeProgramName (int index, const String& 
 }
 
 //==============================================================================
-void StereoWidthCtrlAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
+
+void StereoWidthCtrlAudioProcessor::prepareToPlay (double inSampleRate, int samplesPerBlock)
 {
     // Use this method as the place to do any pre-playback
     // initialisation that you need..
-	sampleRate = sampleRate;
+	//sampleRate = inSampleRate;
 	samplesPerBlock = samplesPerBlock;
 }
+
 
 void StereoWidthCtrlAudioProcessor::releaseResources()
 {
     // When playback stops, you can use this as an opportunity to free up any
     // spare memory, etc.
-}
-
-void StereoWidthCtrlAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuffer& midiMessages)
-{
-	// Assumes Stereo channels only
-	// Assumes Equal number of inputs and outputs
-	
-	if (getNumInputChannels() < 2 || masterBypassParam->getValue())
-	{
-		//Do nothing, just pass through
-	}
-	else  //Process channel data here **MAIN LOOP**
-	{
-		float* leftData = buffer.getWritePointer(0);  //leftData references left channel now
-		float* rightData = buffer.getWritePointer(1); //right data references right channel now
-		// Handle Muting
-		if (!muteAudioParam->getValue())
-		{		
-			widthControl.setWidth(stereoWidthParam->getValue());
-			for (long i = 0; i < buffer.getNumSamples(); i++)
-			{
-				widthControl.processBufferSample(&leftData[i], &rightData[i]);;
-			}
-		}
-		else if (muteAudioParam->getValue())
-		{
-					
-			for (long i = 0; i < buffer.getNumSamples(); i++)
-			{
-				
-				leftData[i] = 0.0f;
-				rightData[i] = 0.0f;
-			}
-		}
-		else
-		{
-		//	throw new 
-		}
-
-		// Handle Gain
-		if (audioGainParam->getValue() != 1.0f && !muteAudioParam->getValue())
-		{ 
-			gainControl.setGain(audioGainParam->getValue());
-			for (long i = 0; i < buffer.getNumSamples(); i++)
-			{
-				gainControl.processBufferSample(&leftData[i], &rightData[i]);
-				
-			}
-		}
-		if (invertLeftParam->getValue() && !muteAudioParam->getValue())
-		{
-			for (long i = 0; i < buffer.getNumSamples(); i++)
-			{
-				leftData[i] *= -1;
-			}
-		}
-		if (invertRightParam->getValue() && !muteAudioParam->getValue())
-		{
-			for (long i = 0; i < buffer.getNumSamples(); i++)
-			{
-				rightData[i] *= -1;
-			}
-		}
-
-		
-	}
-
 }
 
 //==============================================================================
@@ -228,60 +278,6 @@ bool StereoWidthCtrlAudioProcessor::hasEditor() const
 AudioProcessorEditor* StereoWidthCtrlAudioProcessor::createEditor()
 {
     return new StereoWidthCtrlAudioProcessorEditor (*this);
-}
-
-//==============================================================================
-void StereoWidthCtrlAudioProcessor::getStateInformation (MemoryBlock& destData)
-{
-    // You should use this method to store your parameters in the memory block.
-    // You could do that either as raw data, or use the XML or ValueTree classes
-    // as intermediaries to make it easy to save and load complex data.
-// 	XmlElement root("Root");
-// 	XmlElement* el;
-// 	el = root.createNewChildElement("Bypass");
-// 	el->addTextElement(String(UserParams[MasterBypass]));
-// 	el = root.createNewChildElement("StereoWidth");
-// 	el->addTextElement(String(UserParams[StereoWidth]));
-// 	el = root.createNewChildElement("MuteAudio");      // This shouldn't work? Was "Mute"
-// 	el->addTextElement(String(UserParams[MuteAudio]));
-// 	el = root.createNewChildElement("Gain");
-// 	el->addTextElement(String(UserParams[AudioGain]));
-// 	copyXmlToBinary(root, destData);
-}
-
-void StereoWidthCtrlAudioProcessor::setStateInformation (const void* data, int sizeInBytes)
-{
-    // You should use this method to restore your parameters from this memory block,
-    // whose contents will have been created by the getStateInformation() call.
-// 	XmlElement* pRoot = getXmlFromBinary(data, sizeInBytes);
-// 	if (pRoot != nullptr)
-// 	{
-// 		forEachXmlChildElement((*pRoot), pChild)
-// 		{
-// 			if (pChild->hasTagName("Bypass"))
-// 			{
-// 				String text = pChild->getAllSubText();
-// 				setParameter(MasterBypass, text.getFloatValue());
-// 			}
-// 			else if (pChild->hasTagName("StereoWidth"))
-// 			{
-// 				String text = pChild->getAllSubText();
-// 				setParameter(StereoWidth, text.getFloatValue() / 2.0f);
-// 			}
-// 			else if (pChild->hasTagName("MuteAudio"))  //This shouldn't work?  Switch MuteAudio to Mute
-// 			{
-// 				String text = pChild->getAllSubText();
-// 				setParameter(StereoWidth, text.getFloatValue());
-// 			}
-// 			else if (pChild->hasTagName("Gain"))
-// 			{
-// 				String text = pChild->getAllSubText();
-// 				setParameter(StereoWidth, text.getFloatValue());
-// 			}
-// 		}
-// 		delete pRoot;
-// 		UIUpdateFlag = true;
-//	}
 }
 
 //==============================================================================

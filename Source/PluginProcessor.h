@@ -5,8 +5,9 @@
 
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "zen_utils/juce_zen_utils.h"
-#include "components/StereoWidthCtrl/StereoWidthCtrl.h"
-#include "components/VolumeInDB/VolumeInDBCtrl.h"
+#include "components/StereoWidthCtrlSlider/StereoWidthCtrlSlider.h"
+#include "components/VolumeInDBCtrl/VolumeInDBCtrl.h"
+#include "BufferSampleProcesses.h"
 
 /// <summary> Handles main VST processing via reactions to automation
 /// 		  (which calls the .setParameter() method) as well as GUI handling from PluginEditor.cpp</summary>
@@ -19,10 +20,16 @@ public:
     StereoWidthCtrlAudioProcessor();
     ~StereoWidthCtrlAudioProcessor();
 
+	//==============================================================================
+	void processBlock(AudioSampleBuffer&, MidiBuffer&) override;
+
+	//==============================================================================
+	void getStateInformation(MemoryBlock& destData) override;
+	void setStateInformation(const void* data, int sizeInBytes) override;
+
     //==============================================================================
     void prepareToPlay (double sampleRate, int samplesPerBlock) override;
     void releaseResources() override;
-    void processBlock (AudioSampleBuffer&, MidiBuffer&) override;
 
     //==============================================================================
     AudioProcessorEditor* createEditor() override;
@@ -55,32 +62,17 @@ public:
     const String getProgramName (int index) override;
     void changeProgramName (int index, const String& newName) override;
 
-    //==============================================================================
-    void getStateInformation (MemoryBlock& destData) override;
-    void setStateInformation (const void* data, int sizeInBytes) override;
+	//==============================================================================
 
-	// User Configured Area ========================================================
-	enum Parameters // TODO: Restructure This
-	{
-		MasterBypass=0,
-		StereoWidth,
-		MuteAudio,
-		AudioGain,
-		LockGain,
-		InvertLeft,
-		InvertRight,
-		totalNumParam
-	};
 	
 	//add boolean param derived class
-	//AudioProcessorParameter* masterBypassParam;
-	BoolParameter* masterBypassParam;
-	AudioProcessorParameter* stereoWidthParam;
-	AudioProcessorParameter* muteAudioParam;
-	AudioProcessorParameter* audioGainParam;
-	AudioProcessorParameter* lockGainParam;
-	AudioProcessorParameter* invertLeftParam;
-	AudioProcessorParameter* invertRightParam;
+	AudioProcessorParameter* masterBypassParam;
+ 	AudioProcessorParameter* stereoWidthParam;
+ 	AudioProcessorParameter* muteAudioParam;
+ 	AudioProcessorParameter* audioGainParam;
+ 	AudioProcessorParameter* lockGainParam;
+ 	AudioProcessorParameter* invertLeftParam;
+ 	AudioProcessorParameter* invertRightParam;
 
 	bool needsUIUpdate() { return UIUpdateFlag; };
 	void RequestUIUpdate(){ UIUpdateFlag = true; };
@@ -89,10 +81,9 @@ public:
 private:
     //==============================================================================
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(StereoWidthCtrlAudioProcessor)
-	// User Configured Area ========================================================
-	//float UserParams[totalNumParam];
-	StereoWidthCtrl widthControl;
-	VolumeInDBCtrl gainControl;
+	
+	//ScopedPointer<StereoWidthCtrlSlider> widthControl;
+//	VolumeInDBCtrl gainControl;
 	bool UIUpdateFlag;
 };
 

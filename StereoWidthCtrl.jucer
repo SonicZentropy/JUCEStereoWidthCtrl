@@ -13,6 +13,10 @@
               companyEmail="SonicZentropy@gmail.com">
   <MAINGROUP id="JHoKxW" name="StereoWidthCtrl">
     <GROUP id="{449F2A72-20F9-17C7-2809-5D6ADB01CDA1}" name="Source">
+      <FILE id="nSqWBA" name="BufferSampleProcesses.cpp" compile="1" resource="0"
+            file="Source/BufferSampleProcesses.cpp"/>
+      <FILE id="pwCJAR" name="BufferSampleProcesses.h" compile="0" resource="0"
+            file="Source/BufferSampleProcesses.h"/>
       <GROUP id="{C15EF325-0C33-9861-75F1-2FF0D6A7218E}" name="zen_utils">
         <GROUP id="{BAEE0A9C-7188-6E0E-CBF4-49DEEF0C1544}" name="params">
           <FILE id="rh153h" name="BoolParameter.cpp" compile="1" resource="0"
@@ -46,17 +50,12 @@
         <FILE id="ufjEtz" name="ZenUtils.h" compile="0" resource="0" file="Source/zen_utils/ZenUtils.h"/>
       </GROUP>
       <GROUP id="{104AE82E-1250-F11B-35E4-B191404D7D4A}" name="components">
-        <GROUP id="{9BCE696A-216F-6923-111B-B1345868F3EF}" name="VolumeInDB">
-          <FILE id="LCkrV5" name="VolumeInDBCtrl.cpp" compile="1" resource="0"
-                file="Source/components/VolumeInDB/VolumeInDBCtrl.cpp"/>
-          <FILE id="ulW0Zz" name="VolumeInDBCtrl.h" compile="0" resource="0"
-                file="Source/components/VolumeInDB/VolumeInDBCtrl.h"/>
-        </GROUP>
-        <GROUP id="{58E798AF-47E0-CABC-7804-1D45D9E3FCBD}" name="StereoWidthCtrl">
-          <FILE id="b3oc7i" name="StereoWidthCtrl.cpp" compile="1" resource="0"
-                file="Source/components/StereoWidthCtrl/StereoWidthCtrl.cpp"/>
-          <FILE id="E2crH2" name="StereoWidthCtrl.h" compile="0" resource="0"
-                file="Source/components/StereoWidthCtrl/StereoWidthCtrl.h"/>
+        <GROUP id="{9BCE696A-216F-6923-111B-B1345868F3EF}" name="VolumeInDBCtrl"/>
+        <GROUP id="{58E798AF-47E0-CABC-7804-1D45D9E3FCBD}" name="StereoWidthCtrlSlider">
+          <FILE id="rPCu8U" name="StereoWidthCtrlSlider.cpp" compile="1" resource="0"
+                file="Source/components/StereoWidthCtrlSlider/StereoWidthCtrlSlider.cpp"/>
+          <FILE id="rN7LK7" name="StereoWidthCtrlSlider.h" compile="0" resource="0"
+                file="Source/components/StereoWidthCtrlSlider/StereoWidthCtrlSlider.h"/>
         </GROUP>
       </GROUP>
       <GROUP id="{F46E9D92-3A07-75C2-3273-B97B429663FA}" name="params"/>
@@ -77,16 +76,12 @@
     <VS2013 targetFolder="Builds/VisualStudio2013" vstFolder="c:\SDKs\VST3 SDK"
             vst3Folder="c:\SDKs\VST3 SDK">
       <CONFIGURATIONS>
-        <CONFIGURATION name="DebugLite" winWarningLevel="4" generateManifest="1" winArchitecture="x64"
-                       isDebug="1" optimisation="1" targetName="StereoWidthCtrlx64"
-                       postbuildCommand="xcopy &quot;$(TargetPath)&quot; &quot;Z:\VSTs\VSTs\Test\&quot;  /q /y"
-                       headerPath="..\.\Source\StereoWidthCtrl;" binaryPath=""/>
         <CONFIGURATION name="Debug" winWarningLevel="4" generateManifest="1" winArchitecture="x64"
                        isDebug="1" optimisation="1" targetName="StereoWidthCtrlx64"
                        postbuildCommand="xcopy &quot;$(TargetPath)&quot; &quot;Z:\VSTs\VSTs\Test\&quot;  /q /y"
                        headerPath="..\.\Source\StereoWidthCtrl;" binaryPath=""/>
-        <CONFIGURATION name="DebugNoAudio" winWarningLevel="4" generateManifest="1"
-                       winArchitecture="x64" isDebug="1" optimisation="1" targetName="StereoWidthCtrlx64"
+        <CONFIGURATION name="DebugLite" winWarningLevel="4" generateManifest="1" winArchitecture="x64"
+                       isDebug="1" optimisation="1" targetName="StereoWidthCtrlx64"
                        postbuildCommand="xcopy &quot;$(TargetPath)&quot; &quot;Z:\VSTs\VSTs\Test\&quot;  /q /y"
                        headerPath="..\.\Source\StereoWidthCtrl;" binaryPath=""/>
         <CONFIGURATION name="DebugLive" winWarningLevel="4" generateManifest="1" winArchitecture="x64"
@@ -99,24 +94,58 @@
                        headerPath="..\.\Source\StereoWidthCtrl;"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
-        <MODULEPATH id="juce_core" path="../JUCEMain/modules"/>
-        <MODULEPATH id="juce_events" path="../JUCEMain/modules"/>
-        <MODULEPATH id="juce_graphics" path="../JUCEMain/modules"/>
-        <MODULEPATH id="juce_data_structures" path="../JUCEMain/modules"/>
-        <MODULEPATH id="juce_gui_basics" path="../JUCEMain/modules"/>
-        <MODULEPATH id="juce_gui_extra" path="../JUCEMain/modules"/>
-        <MODULEPATH id="juce_audio_basics" path="../JUCEMain/modules"/>
-        <MODULEPATH id="juce_audio_processors" path="../JUCEMain/modules"/>
-        <MODULEPATH id="juce_audio_plugin_client" path="../JUCEMain/modules"/>
-        <MODULEPATH id="juce_audio_utils" path="../JUCEMain/modules"/>
-        <MODULEPATH id="juce_audio_formats" path="../JUCEMain/modules"/>
-        <MODULEPATH id="juce_audio_devices" path="../JUCEMain/modules"/>
-        <MODULEPATH id="juce_box2d" path="../JUCEMain/modules"/>
-        <MODULEPATH id="juce_cryptography" path="../JUCEMain/modules"/>
-        <MODULEPATH id="juce_opengl" path="../JUCEMain/modules"/>
-        <MODULEPATH id="juce_video" path="../JUCEMain/modules"/>
+        <MODULEPATH id="juce_core" path="../JUCE/modules"/>
+        <MODULEPATH id="juce_events" path="../JUCE/modules"/>
+        <MODULEPATH id="juce_graphics" path="../JUCE/modules"/>
+        <MODULEPATH id="juce_data_structures" path="../JUCE/modules"/>
+        <MODULEPATH id="juce_gui_basics" path="../JUCE/modules"/>
+        <MODULEPATH id="juce_gui_extra" path="../JUCE/modules"/>
+        <MODULEPATH id="juce_audio_basics" path="../JUCE/modules"/>
+        <MODULEPATH id="juce_audio_processors" path="../JUCE/modules"/>
+        <MODULEPATH id="juce_audio_plugin_client" path="../JUCE/modules"/>
+        <MODULEPATH id="juce_audio_utils" path="../JUCE/modules"/>
+        <MODULEPATH id="juce_audio_formats" path="../JUCE/modules"/>
+        <MODULEPATH id="juce_audio_devices" path="../JUCE/modules"/>
+        <MODULEPATH id="juce_box2d" path="../JUCE/modules"/>
+        <MODULEPATH id="juce_cryptography" path="../JUCE/modules"/>
+        <MODULEPATH id="juce_opengl" path="../JUCE/modules"/>
+        <MODULEPATH id="juce_video" path="../JUCE/modules"/>
       </MODULEPATHS>
     </VS2013>
+    <VS2015 targetFolder="Builds/VisualStudio2015" vstFolder="">
+      <CONFIGURATIONS>
+        <CONFIGURATION name="Debug" winWarningLevel="4" generateManifest="1" winArchitecture="x64"
+                       isDebug="1" optimisation="1" targetName="StereoWidthCtrlx64"
+                       headerPath="..\.\Source\StereoWidthCtrl;" postbuildCommand="xcopy &quot;$(TargetPath)&quot; &quot;Z:\VSTs\VSTs\Test\&quot;  /q /y"/>
+        <CONFIGURATION name="DebugLite" winWarningLevel="4" generateManifest="1" winArchitecture="x64"
+                       isDebug="1" optimisation="1" targetName="StereoWidthCtrlx64"
+                       headerPath="..\.\Source\StereoWidthCtrl;" postbuildCommand="xcopy &quot;$(TargetPath)&quot; &quot;Z:\VSTs\VSTs\Test\&quot;  /q /y"/>
+        <CONFIGURATION name="DebugLive" winWarningLevel="4" generateManifest="1" winArchitecture="x64"
+                       isDebug="1" optimisation="1" targetName="StereoWidthCtrlx64"
+                       headerPath="..\.\Source\StereoWidthCtrl;" postbuildCommand="xcopy &quot;$(TargetPath)&quot; &quot;Z:\VSTs\VSTs\Test\&quot;  /q /y"/>
+        <CONFIGURATION name="Release" winWarningLevel="4" generateManifest="1" winArchitecture="x64"
+                       isDebug="0" optimisation="3" targetName="StereoWidthCtrlx64"
+                       headerPath="..\.\Source\StereoWidthCtrl;" postbuildCommand="xcopy &quot;$(TargetPath)&quot; &quot;Z:\VSTs\VSTs\Test\&quot;  /q /y"/>
+      </CONFIGURATIONS>
+      <MODULEPATHS>
+        <MODULEPATH id="juce_video" path="../JUCE/modules"/>
+        <MODULEPATH id="juce_opengl" path="../JUCE/modules"/>
+        <MODULEPATH id="juce_gui_extra" path="../JUCE/modules"/>
+        <MODULEPATH id="juce_gui_basics" path="../JUCE/modules"/>
+        <MODULEPATH id="juce_graphics" path="../JUCE/modules"/>
+        <MODULEPATH id="juce_events" path="../JUCE/modules"/>
+        <MODULEPATH id="juce_data_structures" path="../JUCE/modules"/>
+        <MODULEPATH id="juce_cryptography" path="../JUCE/modules"/>
+        <MODULEPATH id="juce_core" path="../JUCE/modules"/>
+        <MODULEPATH id="juce_box2d" path="../JUCE/modules"/>
+        <MODULEPATH id="juce_audio_utils" path="../JUCE/modules"/>
+        <MODULEPATH id="juce_audio_processors" path="../JUCE/modules"/>
+        <MODULEPATH id="juce_audio_plugin_client" path="../JUCE/modules"/>
+        <MODULEPATH id="juce_audio_formats" path="../JUCE/modules"/>
+        <MODULEPATH id="juce_audio_devices" path="../JUCE/modules"/>
+        <MODULEPATH id="juce_audio_basics" path="../JUCE/modules"/>
+      </MODULEPATHS>
+    </VS2015>
   </EXPORTFORMATS>
   <MODULES>
     <MODULE id="juce_audio_basics" showAllCode="1" useLocalCopy="0"/>

@@ -129,6 +129,17 @@ namespace juce
 
 		return static_cast<float>(minValue + normalized * (maxValue - minValue));
 	}
+
+	float ZenParamUtils::convertValueToDecibels(const float& gain)
+	{
+		return static_cast<float>(Decibels::gainToDecibels(gain, 0.0f));
+	}
+
+	float ZenParamUtils::convertDecibelstoValue(const float& gain)
+	{
+		return static_cast<float>(Decibels::decibelsToGain(gain, -96.0f));
+	}
+
 }
 #if 0
 /*************************************************

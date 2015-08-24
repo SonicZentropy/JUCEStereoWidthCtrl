@@ -47,7 +47,9 @@ namespace juce
 
 		static float normalizeValueLinear(const double& value, const double& minValue, const double& maxValue);
 		static float denormalizeValueLinear(const float& normalized, const double& minValue, const double& maxValue);
-		private:
+		static float convertValueToDecibels(const float& gain);
+		static float convertDecibelstoValue(const float& gain);
+	private:
 
 	};
 }

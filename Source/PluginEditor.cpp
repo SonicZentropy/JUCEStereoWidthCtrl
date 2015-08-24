@@ -34,7 +34,8 @@ StereoWidthCtrlAudioProcessorEditor::StereoWidthCtrlAudioProcessorEditor(StereoW
 	StereoWidthCtrlAudioProcessor* audioProc = getProcessor();
 
 	// #TODO: Create AssociatedParameter class for holding reference to control within param, set it inside the Associated Slider's constructor
-	addAndMakeVisible(stereoWidthSldCtrl = new AssociatedSlider("Width Factor Slider", audioProc->stereoWidthParam));
+	// #TODO: Add setValue in Slider Constructor from Param or maybe post-setRange
+	addAndMakeVisible(stereoWidthSldCtrl = new StereoWidthCtrlSlider("Width Factor Slider", audioProc->stereoWidthParam));
 	stereoWidthSldCtrl->setTooltip(TRANS("Stereo Width"));
 	stereoWidthSldCtrl->setRange(0, 1, 0.05);
 	stereoWidthSldCtrl->setSliderStyle(Slider::LinearHorizontal);
@@ -185,89 +186,95 @@ void StereoWidthCtrlAudioProcessorEditor::associatedSliderValueChanged(Associate
 			param->setValueNotifyingHost(valueNorm);
 			DBG("audioGainParam is now: " + static_cast<String>(param->getValue()));
 		}
-		catch(...)
+		catch (...)
 		{
 			DBG("Access Violation Exception Caught In PluginEditor.cpp sliderValueChanged ");
 		}
 	}
-
 }
 
 void StereoWidthCtrlAudioProcessorEditor::buttonClicked(Button* buttonThatWasClicked)
 {
-	if (buttonThatWasClicked == bypassBtnCtrl)
+	StereoWidthCtrlAudioProcessor* audioProc = getProcessor();
+	 	if (buttonThatWasClicked == bypassBtnCtrl)
+	 	{
+	 		//if (AudioProcessorParameter* param = getParameterFromComponent(buttonThatWasClicked))
+	 		if (AudioProcessorParameter* param = audioProc->masterBypassParam)
+	 		{
+	 			DBG("Changing buttonClicked");
+	 			param->setValue(static_cast<float>(bypassBtnCtrl->getToggleState()));
+	 			DBG("Button->getToggleState = " + String(bypassBtnCtrl->getToggleState()) + " and ourProc Bypass = " + String(param->getValue()));
+	 		}
+	 	}
+		else if (buttonThatWasClicked == muteBtnCtrl)
+	if (buttonThatWasClicked == muteBtnCtrl)
 	{
-		if (AudioProcessorParameter* param = getParameterFromComponent(buttonThatWasClicked))
-		{
-			DBG("Changing buttonClicked");
-			param->setValue(static_cast<float>(bypassBtnCtrl->getToggleState()));
-			DBG("Button->getToggleState = " + String(bypassBtnCtrl->getToggleState()) + " and ourProc Bypass = " + String(param->getValue()));
-		}
-	}
-	else if (buttonThatWasClicked == muteBtnCtrl)
-	{
-		if (AudioProcessorParameter* param = getParameterFromComponent(buttonThatWasClicked))
+		//if (AudioProcessorParameter* param = getParameterFromComponent(buttonThatWasClicked))
+		if (AudioProcessorParameter* param = audioProc->muteAudioParam)
 		{
 			DBG("Changing muteButton");
 			param->setValue(static_cast<float>(muteBtnCtrl->getToggleState()));
 		}
 	}
-	else if (buttonThatWasClicked == lockGainBtnCtrl)
-	{
-		if (AudioProcessorParameter* param = getParameterFromComponent(buttonThatWasClicked))
-		{
-			DBG("Changing Lock Gain");
-			param->setValue(static_cast<float>(lockGainBtnCtrl->getToggleState()));
-			if (lockGainBtnCtrl->getToggleState())
-			{
-				gainSldCtrl->setRange(-96, 0, 0.1);
-				gainSldCtrl->setValue(std::min(0.0f, static_cast<float>(gainSldCtrl->getValue())));
-				gainSldCtrl->repaint();
-				param->setValue(Decibels::decibelsToGain(static_cast<float>(gainSldCtrl->getValue())));
-				//StereoWidthCtrlAudioProcessor* ourProcessor = getProcessor();
-
-				getProcessor()->RequestUIUpdate();
-			}
-			else
-			{
-				gainSldCtrl->setRange(-96, 12, 0.1);
-				gainSldCtrl->repaint();
-				getProcessor()->RequestUIUpdate();
-			}
-		}
-	}
-	else if (buttonThatWasClicked == invertLeftBtnCtrl)
-	{
-		if (AudioProcessorParameter* param = getParameterFromComponent(buttonThatWasClicked))
-		{
-			DBG("Before Inverting Left is : " + String(StereoWidthCtrlAudioProcessor::InvertLeft));
-			param->setValue(static_cast<float>(invertLeftBtnCtrl->getToggleStateValue().getValue()));
-			DBG("Inverted is: " + String(param->getValue()) + " From toggle : " + String(static_cast<float>(invertLeftBtnCtrl->getToggleStateValue().getValue())));
-		}
-	}
-	else if (buttonThatWasClicked == invertRightBtnCtrl)
-	{
-		if (AudioProcessorParameter* param = getParameterFromComponent(buttonThatWasClicked))
-		{
-			DBG("Before Inverting Right is : " + String(StereoWidthCtrlAudioProcessor::InvertRight));
-			param->setValue(static_cast<float>(invertRightBtnCtrl->getToggleStateValue().getValue()));
-
-			DBG("Inverted is: " + String(param->getValue()) + " From toggle : " + String(static_cast<float>(invertRightBtnCtrl->getToggleStateValue().getValue())));
-		}
-	}
+	 	else if (buttonThatWasClicked == lockGainBtnCtrl)
+	 	{
+	 		if (AudioProcessorParameter* param = audioProc->lockGainParam)
+	 		{
+	 			DBG("Changing Lock Gain");
+	 			param->setValue(static_cast<float>(lockGainBtnCtrl->getToggleState()));
+	 			if (lockGainBtnCtrl->getToggleState())
+	 			{
+	 				gainSldCtrl->setRange(-96, 0, 0.1);
+	 				gainSldCtrl->setValue(std::min(0.0f, static_cast<float>(gainSldCtrl->getValue())));
+	 				gainSldCtrl->repaint();
+	 				param->setValue(Decibels::decibelsToGain(static_cast<float>(gainSldCtrl->getValue())));
+	 				//StereoWidthCtrlAudioProcessor* ourProcessor = getProcessor();
+	 
+	 				getProcessor()->RequestUIUpdate();
+	 			}
+	 			else
+	 			{
+	 				gainSldCtrl->setRange(-96, 12, 0.1);
+	 				gainSldCtrl->repaint();
+	 				getProcessor()->RequestUIUpdate();
+	 			}
+	 		}
+	 	}
+	 	else if (buttonThatWasClicked == invertLeftBtnCtrl)
+	 	{
+	 		if (AudioProcessorParameter* param = audioProc->invertLeftParam)
+	 		{
+	 			DBG("Before Inverting Left is : " + String(param->getValue()));
+	 			param->setValue(static_cast<float>(invertLeftBtnCtrl->getToggleStateValue().getValue()));
+	 			DBG("Inverted is: " + String(param->getValue()) + " From toggle : " + String(static_cast<float>(invertLeftBtnCtrl->getToggleStateValue().getValue())));
+	 		}
+	 	}
+	 	else if (buttonThatWasClicked == invertRightBtnCtrl)
+	 	{
+	 		if (AudioProcessorParameter* param = audioProc->invertRightParam )
+	 		{
+				DBG("Before Inverting Right is : " + String(param->getValue()));
+	 			param->setValue(static_cast<float>(invertRightBtnCtrl->getToggleStateValue().getValue()));
+	 
+	 			DBG("Inverted is: " + String(param->getValue()) + " From toggle : " + String(static_cast<float>(invertRightBtnCtrl->getToggleStateValue().getValue())));
+	 		}
+	 	}
 }
 
 void StereoWidthCtrlAudioProcessorEditor::timerCallback()
 {
 	StereoWidthCtrlAudioProcessor* ourProcessor = getProcessor();
-	//exchange data between UI Elements and the Plugin (ourProcessor)
+	// 	//exchange data between UI Elements and the Plugin (ourProcessor)
 	if (ourProcessor->needsUIUpdate())
 	{
+		DBG("In editor->timeCallback");
 		muteBtnCtrl->setToggleState(1.0f == ourProcessor->muteAudioParam->getValue(), sendNotification);
 		DBG("Past muteBtn");
+		DBG("In timerCallback before bypass");
 		bypassBtnCtrl->setToggleState(1.0f == ourProcessor->masterBypassParam->getValue(), sendNotification);
 		DBG("Past bypassBtn");
 		DBG("Changing Width SliderValue from proc: " + String(ourProcessor->stereoWidthParam->getValue()) + " to WidthSld/2: " + static_cast<String>(stereoWidthSldCtrl->getValue() / 2.0f));
+		// #TODO: Change this from using ourProcessor to using internal reference, get rid of the *2.0
 		stereoWidthSldCtrl->setValue(ourProcessor->stereoWidthParam->getValue() * 2.0f, sendNotification);
 
 		DBG("Changing gainSldCtrl Value: " + String(gainSldCtrl->getValue()) + " to audioGainParam: " + String(ourProcessor->audioGainParam->getValue()) );
@@ -277,34 +284,24 @@ void StereoWidthCtrlAudioProcessorEditor::timerCallback()
 	}
 }
 
-AudioProcessorParameter* StereoWidthCtrlAudioProcessorEditor::getParameterFromComponent(const Component* comp) const
-{
-	//#TODO: Finish Ctrls conversion -- this method should eventually be pared down/eliminated
-	// #TODO: This should enable automation to update GUI effectively
-	if (comp == gainSldCtrl)
-	{
-		DBG("Returning gainSldCtrl");
-		return getProcessor()->audioGainParam;
-	}
-	else if (comp == stereoWidthSldCtrl)
-	{
-		return getProcessor()->stereoWidthParam;
-	}
-
-	//throw std::invalid_argument("Unrecognized Component");
-	DBG("SHOULD NEVER SEE THIS - Editor::getParameterFromComponent");
-	return nullptr;
-}
-
-// AudioProcessorParameter* StereoWidthCtrlAudioProcessorEditor::getParameterFromComponent(const Slider* slider) const
-// {
-// 	if (slider == gainSldCtrl)
+//AudioProcessorParameter* StereoWidthCtrlAudioProcessorEditor::getParameterFromComponent(const Component* comp) const
+//{
+//#TODO: Finish Ctrls conversion -- this method should eventually be pared down/eliminated
+// #TODO: This should enable automation to update GUI effectively
+// 	if (comp == gainSldCtrl)
 // 	{
+// 		DBG("Returning gainSldCtrl");
 // 		return getProcessor()->audioGainParam;
 // 	}
+// 	else if (comp == stereoWidthSldCtrl)
+// 	{
+// 		return getProcessor()->stereoWidthParam;
+// 	}
+// 
+// 	//throw std::invalid_argument("Unrecognized Component");
+// 	DBG("SHOULD NEVER SEE THIS - Editor::getParameterFromComponent");
 // 	return nullptr;
-// }
-
+//}
 
 //END==============================================================================
 
