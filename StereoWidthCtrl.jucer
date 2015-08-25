@@ -50,7 +50,12 @@
         <FILE id="ufjEtz" name="ZenUtils.h" compile="0" resource="0" file="Source/zen_utils/ZenUtils.h"/>
       </GROUP>
       <GROUP id="{104AE82E-1250-F11B-35E4-B191404D7D4A}" name="components">
-        <GROUP id="{9BCE696A-216F-6923-111B-B1345868F3EF}" name="VolumeInDBCtrl"/>
+        <GROUP id="{9BCE696A-216F-6923-111B-B1345868F3EF}" name="GainCtrlSlider">
+          <FILE id="NXXCcc" name="GainCtrlSlider.cpp" compile="1" resource="0"
+                file="Source/components/GainCtrlSlider/GainCtrlSlider.cpp"/>
+          <FILE id="KyLtl1" name="GainCtrlSlider.h" compile="0" resource="0"
+                file="Source/components/GainCtrlSlider/GainCtrlSlider.h"/>
+        </GROUP>
         <GROUP id="{58E798AF-47E0-CABC-7804-1D45D9E3FCBD}" name="StereoWidthCtrlSlider">
           <FILE id="rPCu8U" name="StereoWidthCtrlSlider.cpp" compile="1" resource="0"
                 file="Source/components/StereoWidthCtrlSlider/StereoWidthCtrlSlider.cpp"/>

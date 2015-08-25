@@ -20,8 +20,8 @@
     <Filter Include="StereoWidthCtrl\Source\components">
       <UniqueIdentifier>{212289F6-B89F-2BEF-149D-C9B5C4B2ED48}</UniqueIdentifier>
     </Filter>
-    <Filter Include="StereoWidthCtrl\Source\components\VolumeInDBCtrl">
-      <UniqueIdentifier>{7DDF1E92-825B-06F5-CE2E-EF5A9D26F8C2}</UniqueIdentifier>
+    <Filter Include="StereoWidthCtrl\Source\components\GainCtrlSlider">
+      <UniqueIdentifier>{063B5B73-E8E7-17EA-444B-4B16C98D1F50}</UniqueIdentifier>
     </Filter>
     <Filter Include="StereoWidthCtrl\Source\components\StereoWidthCtrlSlider">
       <UniqueIdentifier>{FE43B306-4051-1D53-1B27-219013548ABD}</UniqueIdentifier>
@@ -384,6 +384,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\zen_utils\ZenUtils.cpp">
       <Filter>StereoWidthCtrl\Source\zen_utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\components\GainCtrlSlider\GainCtrlSlider.cpp">
+      <Filter>StereoWidthCtrl\Source\components\GainCtrlSlider</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\components\StereoWidthCtrlSlider\StereoWidthCtrlSlider.cpp">
       <Filter>StereoWidthCtrl\Source\components\StereoWidthCtrlSlider</Filter>
@@ -1709,6 +1712,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\zen_utils\ZenUtils.h">
       <Filter>StereoWidthCtrl\Source\zen_utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\components\GainCtrlSlider\GainCtrlSlider.h">
+      <Filter>StereoWidthCtrl\Source\components\GainCtrlSlider</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\components\StereoWidthCtrlSlider\StereoWidthCtrlSlider.h">
       <Filter>StereoWidthCtrl\Source\components\StereoWidthCtrlSlider</Filter>

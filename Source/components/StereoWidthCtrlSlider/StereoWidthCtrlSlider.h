@@ -26,7 +26,6 @@
 //#define noexcept throw()
 
 #include "juce_core/maths/juce_NormalisableRange.h"
-//#include "../../JUCEMain/modules/juce_core/maths/juce_NormalisableRange.h"
 #include "../../zen_utils/components/AssociatedSlider.h"
 
 
@@ -50,17 +49,10 @@ public:
 	/// <param name="text">The text from GUI.</param>
 	/// <returns>Normalized value representing GUI text.</returns>
 	double getValueFromText(const String& text) override;
-
-
-
-	//Parms
-//	void setWidth(const float& width);
-
 	
 private:
 //	float stereoWidthValue, sumGain, diffGain;
-//	NormalisableRange<float> normRange;
-
+	NormalisableRange<float> normRange;
 
 };
 

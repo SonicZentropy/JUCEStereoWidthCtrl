@@ -13,25 +13,27 @@
 #define noexcept throw()
 #endif
 
+
 StereoWidthCtrlSlider::StereoWidthCtrlSlider()
 {
 	DBG("SHOULD NEVER CALL THIS StereoWidthCtrlSlider.cpp CONSTRUCTOR");
 }
 
 
-StereoWidthCtrlSlider::StereoWidthCtrlSlider(const String& componentName) : AssociatedSlider(componentName)
+StereoWidthCtrlSlider::StereoWidthCtrlSlider(const String& componentName) 
+	: AssociatedSlider(componentName)
 {
-
+	DBG("SHOULD NEVER CALL THIS StereoWidthCtrlSlider.cpp CONSTRUCTOR");
 }
 
 StereoWidthCtrlSlider::StereoWidthCtrlSlider(const String& componentName, AudioProcessorParameter* associatedParam)
-: AssociatedSlider(componentName, associatedParam)
+	: AssociatedSlider(componentName, associatedParam)
 {
 	setValue(associatedParam->getValue());
 }
 
 StereoWidthCtrlSlider::StereoWidthCtrlSlider(const String& componentName, AudioProcessorParameter* associatedParam, const String& desiredUnitLabel)
-: AssociatedSlider(componentName, associatedParam, desiredUnitLabel)
+	: AssociatedSlider(componentName, associatedParam, desiredUnitLabel)
 {
 	this->setTextValueSuffix(desiredUnitLabel);
 }

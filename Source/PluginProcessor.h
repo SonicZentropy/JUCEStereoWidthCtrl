@@ -6,7 +6,7 @@
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "zen_utils/juce_zen_utils.h"
 #include "components/StereoWidthCtrlSlider/StereoWidthCtrlSlider.h"
-#include "components/VolumeInDBCtrl/VolumeInDBCtrl.h"
+#include "components/GainCtrlSlider/GainCtrlSlider.h"
 #include "BufferSampleProcesses.h"
 
 /// <summary> Handles main VST processing via reactions to automation

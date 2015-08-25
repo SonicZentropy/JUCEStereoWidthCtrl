@@ -32,10 +32,21 @@ StereoWidthCtrlAudioProcessorEditor::StereoWidthCtrlAudioProcessorEditor(StereoW
 	// #TODO: Add setValue in Slider Constructor from Param or maybe post-setRange
 	addAndMakeVisible(stereoWidthSldCtrl = new StereoWidthCtrlSlider("Width Factor Slider", audioProc->stereoWidthParam, "%"));
 	stereoWidthSldCtrl->setTooltip(TRANS("Stereo Width"));
-	stereoWidthSldCtrl->setRange(0, 1, 0.05);
+	stereoWidthSldCtrl->setRange(0, 1, 0.005);
 	stereoWidthSldCtrl->setSliderStyle(Slider::LinearHorizontal);
 	stereoWidthSldCtrl->setTextBoxStyle(Slider::TextBoxLeft, false, 80, 20);
 	stereoWidthSldCtrl->addListener(this);
+
+	addAndMakeVisible(gainSldCtrl = new GainCtrlSlider("Gain Knob", audioProc->audioGainParam));
+	//gainSldCtrl->setRange(-96, 12, 0.1);
+	gainSldCtrl->setRange(0.0, 1.0, 0.01);
+	gainSldCtrl->setSliderStyle(Slider::LinearVertical);
+	gainSldCtrl->setTextBoxStyle(Slider::TextBoxBelow, false, 80, 20);
+	gainSldCtrl->setColour(Slider::backgroundColourId, Colour(0x00868181));
+	gainSldCtrl->setColour(Slider::trackColourId, Colour(0x7fffffff));
+	gainSldCtrl->setColour(Slider::rotarySliderFillColourId, Colour(0x7fbcbcff));
+	gainSldCtrl->setColour(Slider::rotarySliderOutlineColourId, Colour(0x66ffffff));
+	gainSldCtrl->addListener(this);
 	
 
 	addAndMakeVisible(bypassBtnCtrl = new TextButton("Bypass Button"));
@@ -43,8 +54,7 @@ StereoWidthCtrlAudioProcessorEditor::StereoWidthCtrlAudioProcessorEditor(StereoW
 	bypassBtnCtrl->addListener(this);
 	bypassBtnCtrl->setColour(TextButton::buttonColourId, Colour(0xffe2e2e2));
 
-	addAndMakeVisible(widthLabel = new Label("Width Label",
-											TRANS("Stereo Width Factor:")));
+	addAndMakeVisible(widthLabel = new Label("Width Label", TRANS("Stereo Width Factor:")));
 	widthLabel->setFont(Font(15.00f, Font::plain));
 	widthLabel->setJustificationType(Justification::centredLeft);
 	widthLabel->setEditable(false, false, false);
@@ -56,17 +66,6 @@ StereoWidthCtrlAudioProcessorEditor::StereoWidthCtrlAudioProcessorEditor(StereoW
 	muteBtnCtrl->setButtonText(TRANS("Mute"));
 	muteBtnCtrl->addListener(this);
 	muteBtnCtrl->setColour(TextButton::buttonColourId, Colour(0xffe2e2e2));
-
-	addAndMakeVisible(gainSldCtrl = new AssociatedSlider("Gain Knob", audioProc->audioGainParam));
-	//gainSldCtrl->setRange(-96, 12, 0.1);
-	gainSldCtrl->setRange(0.0, 1.0, 0.01);
-	gainSldCtrl->setSliderStyle(Slider::LinearVertical);
-	gainSldCtrl->setTextBoxStyle(Slider::TextBoxBelow, false, 80, 20);
-	gainSldCtrl->setColour(Slider::backgroundColourId, Colour(0x00868181));
-	gainSldCtrl->setColour(Slider::trackColourId, Colour(0x7fffffff));
-	gainSldCtrl->setColour(Slider::rotarySliderFillColourId, Colour(0x7fbcbcff));
-	gainSldCtrl->setColour(Slider::rotarySliderOutlineColourId, Colour(0x66ffffff));
-	gainSldCtrl->addListener(this);
 
 	addAndMakeVisible(lockGainBtnCtrl = new TextButton("Lock Gain"));
 	lockGainBtnCtrl->setButtonText(TRANS("Lock Gain to 0db"));
@@ -96,7 +95,7 @@ StereoWidthCtrlAudioProcessorEditor::StereoWidthCtrlAudioProcessorEditor(StereoW
 
 	// #TODO: Change these to use getDefaultValue from param
 	gainSldCtrl->setDoubleClickReturnValue(true, 0.0f);
-	stereoWidthSldCtrl->setDoubleClickReturnValue(true, 1.0f);
+	stereoWidthSldCtrl->setDoubleClickReturnValue(true, 0.5f);
 
 	// GUI Size 
 	setSize(375, 500);
@@ -164,7 +163,7 @@ void StereoWidthCtrlAudioProcessorEditor::associatedSliderValueChanged(Associate
 	AudioProcessorParameter* param = sliderThatWasMoved->getAssociatedParameter();
 	if (sliderThatWasMoved == stereoWidthSldCtrl)
 	{
-		DBG("Changing Width SliderValue from: " + String(param->getValue()) + " to: " + static_cast<String>(stereoWidthSldCtrl->getValue() / 2.0f));
+		DBG("Changing Width SliderValue from: " + String(param->getValue()) + " to: " + static_cast<String>(stereoWidthSldCtrl->getValue() ));
 		// #TODO: Restructure stereoWidthSldCtrl to get rid of the 2.0f manipulation, just move the 2.0f into getTextFromValue
 		param->setValueNotifyingHost(static_cast<float>(stereoWidthSldCtrl->getValue()));
 	}
@@ -270,9 +269,9 @@ void StereoWidthCtrlAudioProcessorEditor::timerCallback()
 		DBG("In timerCallback before bypass");
 		bypassBtnCtrl->setToggleState(1.0f == ourProcessor->masterBypassParam->getValue(), sendNotification);
 		DBG("Past bypassBtn");
-		DBG("Changing Width SliderValue from proc: " + String(ourProcessor->stereoWidthParam->getValue()) + " to WidthSld/2: " + static_cast<String>(stereoWidthSldCtrl->getValue() / 2.0f));
-		// #TODO: Change this from using ourProcessor to using internal reference, get rid of the *2.0
-		stereoWidthSldCtrl->setValue(ourProcessor->stereoWidthParam->getValue() * 2.0f, sendNotification);
+		DBG("Changing Width SliderValue from proc: " + String(ourProcessor->stereoWidthParam->getValue()) + " to WidthSld/2: " + static_cast<String>(stereoWidthSldCtrl->getValue() ));
+		
+		stereoWidthSldCtrl->setValue(ourProcessor->stereoWidthParam->getValue() , sendNotification);
 
 		DBG("Changing gainSldCtrl Value: " + String(gainSldCtrl->getValue()) + " to audioGainParam: " + String(ourProcessor->audioGainParam->getValue()) );
 		gainSldCtrl->setValue(Decibels::gainToDecibels(ourProcessor->audioGainParam->getValue()), sendNotification);

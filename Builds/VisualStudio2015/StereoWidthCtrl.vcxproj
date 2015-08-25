@@ -256,6 +256,7 @@
     <ClCompile Include="..\..\Source\zen_utils\components\AssociatedSlider.cpp"/>
     <ClCompile Include="..\..\Source\zen_utils\ZenParamUtils.cpp"/>
     <ClCompile Include="..\..\Source\zen_utils\ZenUtils.cpp"/>
+    <ClCompile Include="..\..\Source\components\GainCtrlSlider\GainCtrlSlider.cpp"/>
     <ClCompile Include="..\..\Source\components\StereoWidthCtrlSlider\StereoWidthCtrlSlider.cpp"/>
     <ClCompile Include="..\..\Source\PluginProcessor.cpp"/>
     <ClCompile Include="..\..\Source\PluginEditor.cpp"/>
@@ -1427,6 +1428,7 @@
     <ClInclude Include="..\..\Source\zen_utils\juce_zen_utils.h"/>
     <ClInclude Include="..\..\Source\zen_utils\ZenParamUtils.h"/>
     <ClInclude Include="..\..\Source\zen_utils\ZenUtils.h"/>
+    <ClInclude Include="..\..\Source\components\GainCtrlSlider\GainCtrlSlider.h"/>
     <ClInclude Include="..\..\Source\components\StereoWidthCtrlSlider\StereoWidthCtrlSlider.h"/>
     <ClInclude Include="..\..\Source\PluginProcessor.h"/>
     <ClInclude Include="..\..\Source\PluginEditor.h"/>

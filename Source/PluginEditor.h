@@ -64,7 +64,7 @@ private:
  	ScopedPointer<TextButton> bypassBtnCtrl;
  	ScopedPointer<Label> widthLabel;
  	ScopedPointer<TextButton> muteBtnCtrl;
- 	ScopedPointer<AssociatedSlider> gainSldCtrl;
+ 	ScopedPointer<GainCtrlSlider> gainSldCtrl;
  	ScopedPointer<TextButton> lockGainBtnCtrl;
  	ScopedPointer<ToggleButton> invertLeftBtnCtrl;
  	ScopedPointer<ToggleButton> invertRightBtnCtrl;
