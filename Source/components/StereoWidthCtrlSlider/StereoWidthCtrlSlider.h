@@ -40,13 +40,12 @@ public:
 	StereoWidthCtrlSlider(const String& componentName, AudioProcessorParameter* associatedParam, const String& desiredUnitLabel);
 	~StereoWidthCtrlSlider();
 
-	String getTextFromValue(double value);
+	String getTextFromValue(double value) override;
 
 	//Parms
 //	void setWidth(const float& width);
-//	float getWidth(void) { return stereoWidthValue; };
 
-
+	
 private:
 	float stereoWidthValue, sumGain, diffGain;
 	NormalisableRange<float> normRange;

@@ -21,7 +21,7 @@ public:
     ~StereoWidthCtrlAudioProcessor();
 
 	//==============================================================================
-	void processBlock(AudioSampleBuffer&, MidiBuffer&) override;
+	void processBlock(AudioSampleBuffer& audioSampleBuffer, MidiBuffer& midiBuffer) override;
 
 	//==============================================================================
 	void getStateInformation(MemoryBlock& destData) override;

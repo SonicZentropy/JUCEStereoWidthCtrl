@@ -35,7 +35,7 @@ StereoWidthCtrlAudioProcessorEditorRef::StereoWidthCtrlAudioProcessorEditorRef (
     : AudioProcessorEditor(ownerFilter)
 {
     //[Constructor_pre] You can add your own custom stuff here..
-	//TODO Check GainSlider from introjucer
+	//TODO: Check GainSlider from introjucer
     //[/Constructor_pre]
 
     addAndMakeVisible (stereoWidthSldCtrl = new Slider ("Width Factor Slider"));

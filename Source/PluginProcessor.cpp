@@ -46,6 +46,15 @@ StereoWidthCtrlAudioProcessor::~StereoWidthCtrlAudioProcessor()
 
 //==============================================================================
 
+/**
+* Method:    processBlock
+* FullName:  StereoWidthCtrlAudioProcessor::processBlock
+* Access:    public 
+* Qualifier:
+* @param     AudioSampleBuffer & buffer
+* @param     MidiBuffer & midiMessages
+* @return    void
+*/
 void StereoWidthCtrlAudioProcessor::processBlock(AudioSampleBuffer& buffer, MidiBuffer& midiMessages)
 {
 	/*
@@ -119,7 +128,7 @@ void StereoWidthCtrlAudioProcessor::processBlock(AudioSampleBuffer& buffer, Midi
 //==============================================================================
 void StereoWidthCtrlAudioProcessor::getStateInformation(MemoryBlock& destData)
 {
-	// #TODO: Implement State Information
+	// TODO: Implement State Information
 	// You should use this method to store your parameters in the memory block.
 	// You could do that either as raw data, or use the XML or ValueTree classes
 	// as intermediaries to make it easy to save and load complex data.

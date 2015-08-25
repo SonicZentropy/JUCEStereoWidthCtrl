@@ -22,25 +22,26 @@
 
 using namespace juce;
 
-// #TODO: Change PluginEditor in IntroJucer to not be GUI managed.  Make dummy managed version to snag code
+// TODO: Change PluginEditor in IntroJucer to not be GUI managed.  Make dummy managed version to snag code
 
 //==============================================================================
 StereoWidthCtrlAudioProcessorEditor::StereoWidthCtrlAudioProcessorEditor(StereoWidthCtrlAudioProcessor& ownerFilter)
 	: AudioProcessorEditor(ownerFilter)
 {
-	//TODO Check GainSlider from introjucer 
+	//TODO: Check GainSlider from introjucer 
 
 	//Audio Processor reference
 	StereoWidthCtrlAudioProcessor* audioProc = getProcessor();
-
-	// #TODO: Create AssociatedParameter class for holding reference to control within param, set it inside the Associated Slider's constructor
-	// #TODO: Add setValue in Slider Constructor from Param or maybe post-setRange
+	
+	// TODO: Create AssociatedParameter class for holding reference to control within param, set it inside the Associated Slider's constructor
+	// TODO: Add setValue in Slider Constructor from Param or maybe post-setRange
 	addAndMakeVisible(stereoWidthSldCtrl = new StereoWidthCtrlSlider("Width Factor Slider", audioProc->stereoWidthParam));
 	stereoWidthSldCtrl->setTooltip(TRANS("Stereo Width"));
 	stereoWidthSldCtrl->setRange(0, 1, 0.05);
 	stereoWidthSldCtrl->setSliderStyle(Slider::LinearHorizontal);
 	stereoWidthSldCtrl->setTextBoxStyle(Slider::TextBoxLeft, false, 80, 20);
 	stereoWidthSldCtrl->addListener(this);
+	
 
 	addAndMakeVisible(bypassBtnCtrl = new TextButton("Bypass Button"));
 	bypassBtnCtrl->setButtonText(TRANS("Bypass"));
@@ -98,7 +99,7 @@ StereoWidthCtrlAudioProcessorEditor::StereoWidthCtrlAudioProcessorEditor(StereoW
 	invertLabel->setColour(TextEditor::textColourId, Colours::black);
 	invertLabel->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
 
-	// #TODO: Change these to use getDefaultValue from param
+	// TODO: Change these to use getDefaultValue from param
 	gainSldCtrl->setDoubleClickReturnValue(true, 0.0f);
 	stereoWidthSldCtrl->setDoubleClickReturnValue(true, 1.0f);
 
@@ -168,18 +169,18 @@ void StereoWidthCtrlAudioProcessorEditor::associatedSliderValueChanged(Associate
 	if (sliderThatWasMoved == stereoWidthSldCtrl)
 	{
 		DBG("Changing Width SliderValue from: " + String(param->getValue()) + " to: " + static_cast<String>(stereoWidthSldCtrl->getValue() / 2.0f));
-		// #TODO: Restructure stereoWidthSldCtrl to get rid of the 2.0f manipulation, just move the 2.0f into getTextFromValue
+		// TODO: Restructure stereoWidthSldCtrl to get rid of the 2.0f manipulation, just move the 2.0f into getTextFromValue
 		param->setValueNotifyingHost(static_cast<float>(stereoWidthSldCtrl->getValue()));
 	}
 	else if (sliderThatWasMoved == gainSldCtrl)
 	{
-		// #TODO: change gain automation to set 0dB = 0.75 and skew it logarithmically
-		// #BUG: getAssociatedParam not properly set
+		// TODO: change gain automation to set 0dB = 0.75 and skew it logarithmically
+		// BUG: getAssociatedParam not properly set
 		try
 		{
 			//param = static_cast<AssociatedSlider*>(sliderThatWasMoved)->getAssociatedParameter();
 			DBG("Gain slider value changing from: " + String(param->getValue()) + " to: " + static_cast<String>(sliderThatWasMoved->getValue()));
-			//#TODO: Restructure to get rid of this decibels->gain conversion, move it into getTextFromValue only
+			//TODO: Restructure to get rid of this decibels->gain conversion, move it into getTextFromValue only
 			float valueDenormal = static_cast<float>(sliderThatWasMoved->getValue());
 			float valueNorm = Decibels::decibelsToGain(valueDenormal, -96.0f);
 
@@ -274,7 +275,7 @@ void StereoWidthCtrlAudioProcessorEditor::timerCallback()
 		bypassBtnCtrl->setToggleState(1.0f == ourProcessor->masterBypassParam->getValue(), sendNotification);
 		DBG("Past bypassBtn");
 		DBG("Changing Width SliderValue from proc: " + String(ourProcessor->stereoWidthParam->getValue()) + " to WidthSld/2: " + static_cast<String>(stereoWidthSldCtrl->getValue() / 2.0f));
-		// #TODO: Change this from using ourProcessor to using internal reference, get rid of the *2.0
+		// TODO: Change this from using ourProcessor to using internal reference, get rid of the *2.0
 		stereoWidthSldCtrl->setValue(ourProcessor->stereoWidthParam->getValue() * 2.0f, sendNotification);
 
 		DBG("Changing gainSldCtrl Value: " + String(gainSldCtrl->getValue()) + " to audioGainParam: " + String(ourProcessor->audioGainParam->getValue()) );
@@ -286,8 +287,8 @@ void StereoWidthCtrlAudioProcessorEditor::timerCallback()
 
 //AudioProcessorParameter* StereoWidthCtrlAudioProcessorEditor::getParameterFromComponent(const Component* comp) const
 //{
-//#TODO: Finish Ctrls conversion -- this method should eventually be pared down/eliminated
-// #TODO: This should enable automation to update GUI effectively
+//TODO: Finish Ctrls conversion -- this method should eventually be pared down/eliminated
+// TODO: This should enable automation to update GUI effectively
 // 	if (comp == gainSldCtrl)
 // 	{
 // 		DBG("Returning gainSldCtrl");
