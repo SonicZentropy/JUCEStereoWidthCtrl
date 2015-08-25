@@ -10,15 +10,17 @@
 
 #include "BufferSampleProcesses.h"
 #include <algorithm>
+#include "../JuceLibraryCode/JuceHeader.h"
 
-void BufferSampleProcesses::processStereoWidth(float* LeftSample, float* RightSample, const float& widthValue)
+
+void BufferSampleProcesses::processStereoWidth(float* LeftSample, float* RightSample, const float& widthIn)
 {
-	float calculationWidth = widthValue * 2.0f;
-	float temp;
+	float width = widthIn * 2;
 	
-	temp = 1 / std::max(1 + calculationWidth, 2.0f);
-	float sumGain = temp;  ///sumGain is gain coefficient for Mid
-	float diffGain = calculationWidth * temp;  ///diffGain is gain coefficient for Side 
+	float balancedCoeff = 1 / std::max(1 + widthIn , 2.0f);
+	
+	float sumGain = balancedCoeff;  ///sumGain is gain coefficient for Mid
+	float diffGain = width * balancedCoeff;  ///diffGain is gain coefficient for Side 
 
 	float mid = sumGain * (*LeftSample + *RightSample);
 	float side = diffGain * (*RightSample - *LeftSample);

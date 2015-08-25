@@ -29,6 +29,7 @@ StereoWidthCtrlAudioProcessor::StereoWidthCtrlAudioProcessor()
  	addParameter(lockGainParam = new BoolParameter(0.0f, "LockGain"));
  	addParameter(invertLeftParam = new BoolParameter(0.0f, "InvertLeft"));
  	addParameter(invertRightParam = new BoolParameter(0.0f, "InvertRight"));
+	debugPrintTimer = 0;
 
 	//widthControl = new StereoWidthCtrlSlider("StereoWidthCtrlSlider", stereoWidthParam);
 	
@@ -75,6 +76,13 @@ void StereoWidthCtrlAudioProcessor::processBlock(AudioSampleBuffer& buffer, Midi
 			//Stereo Width Process
 			for (long i = 0; i < buffer.getNumSamples(); i++)
 			{
+				if (++debugPrintTimer >= 1000)
+				{
+					DBG("Incoming Width is: " + String(stereoWidthParam->getValue()));
+					debugPrintTimer = 0;
+				}
+					
+
 				BufferSampleProcesses::processStereoWidth(&leftData[i], &rightData[i], stereoWidthParam->getValue());
 			}
 		}

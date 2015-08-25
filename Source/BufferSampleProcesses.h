@@ -11,6 +11,7 @@
 #ifndef BUFFER_SAMPLE_PROCESSES_H_INCLUDED
 #define BUFFER_SAMPLE_PROCESSES_H_INCLUDED
 
+
 class BufferSampleProcesses
 {
 public:
@@ -19,6 +20,6 @@ public:
 
 	static void processGain(float* LeftSample, float* RightSample, const float& gainValue);
 private:
-
+	
 };
 #endif  // BUFFER_SAMPLE_PROCESSES_H_INCLUDED

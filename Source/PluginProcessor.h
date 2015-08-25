@@ -85,6 +85,7 @@ private:
 	//ScopedPointer<StereoWidthCtrlSlider> widthControl;
 //	VolumeInDBCtrl gainControl;
 	bool UIUpdateFlag;
+	int debugPrintTimer;
 };
 
 
