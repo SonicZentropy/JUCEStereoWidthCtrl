@@ -19,7 +19,7 @@ AssociatedButton::AssociatedButton() : Button("GLITCHASSOCIATEDBUTTONCONSTRUCTOR
 	DBG("SHOULD NEVER CALL THIS AssociatedButton CONSTRUCTOR");
 }
 
-// TODO: Move this out of gain-specific and convert to generic derived Button that contains normalization methods
+// #TODO: Move this out of gain-specific and convert to generic derived Button that contains normalization methods
 // No reason to ever use this constructor, technically
 AssociatedButton::AssociatedButton(const String& componentName) : Button(componentName)
 {
@@ -38,7 +38,7 @@ AssociatedButton::AssociatedButton(const String& componentName, AudioProcessorPa
 }
 
 // Override Button::getTextFromValue to force value to -inf display
-// TODO: Move this getTextFromValue out of AssociatedButton
+// #TODO: Move this getTextFromValue out of AssociatedButton
 /*String AssociatedButton::getTextFromValue(double value)
 {
 

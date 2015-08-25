@@ -17,6 +17,7 @@
 #ifndef STEREOWIDTHCTRL_H_INCLUDED
 #define STEREOWIDTHCTRL_H_INCLUDED
 
+//#TODO: Fix VS version stuff
 //#if defined (_MSC_VER) && _MSC_VER > 1600
 //#define _ALLOW_KEYWORD_MACROS 1 // (to stop VC2012 complaining)
 //#endif

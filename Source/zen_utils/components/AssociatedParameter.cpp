@@ -13,7 +13,7 @@
 
 #include "AssociatedParameter.h"
 
-// TODO: Move this out of gain-specific and convert to generic derived Slider that contains normalization methods
+// #TODO: Move this out of gain-specific and convert to generic derived Slider that contains normalization methods
 // No reason to ever use this constructor, technically
 AssociatedParameter::AssociatedParameter()
 {

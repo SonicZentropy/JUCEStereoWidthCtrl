@@ -19,7 +19,7 @@ AssociatedSlider::AssociatedSlider()
 	DBG("SHOULD NEVER CALL THIS AssociatedSlider.cpp CONSTRUCTOR");
 }
 
-// TODO: Move this out of gain-specific and convert to generic derived Slider that contains normalization methods
+// #TODO: Move this out of gain-specific and convert to generic derived Slider that contains normalization methods
 // No reason to ever use this constructor, technically
 AssociatedSlider::AssociatedSlider(const String& componentName) : Slider(componentName)
 {
@@ -38,7 +38,7 @@ AssociatedSlider::AssociatedSlider(const String& componentName, AudioProcessorPa
 }
 
 // Override Slider::getTextFromValue to force value to -inf display
-// TODO: Move this getTextFromValue out of AssociatedSlider into GainSlider
+// #TODO: Move this getTextFromValue out of AssociatedSlider into GainSlider
 /*String AssociatedSlider::getTextFromValue(double value)
 {
 

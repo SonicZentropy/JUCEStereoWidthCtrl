@@ -14,7 +14,7 @@
 
 #ifndef ASSOCIATED_SLIDER_H_INCLUDED
 #define ASSOCIATED_SLIDER_H_INCLUDED
-// TODO: Convert this to new superclass that only adds the param pointers
+// #TODO: Convert this to new superclass that only adds the param pointers
 
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "AssociatedParameter.h"
