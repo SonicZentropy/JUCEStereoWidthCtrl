@@ -41,15 +41,25 @@ public:
 	StereoWidthCtrlSlider(const String& componentName, AudioProcessorParameter* associatedParam, const String& desiredUnitLabel);
 	~StereoWidthCtrlSlider();
 
+	/// <summary>Returns GUI Text from Value, appending unit.</summary>
+	/// <param name="value">Value to be converted to GUI Text</param>
+	/// <returns>The text string representing the GUI</returns>
 	String getTextFromValue(double value) override;
+
+	/// <summary>Return normalized 0-1.0 value from GUI text</summary>
+	/// <param name="text">The text from GUI.</param>
+	/// <returns>Normalized value representing GUI text.</returns>
+	double getValueFromText(const String& text) override;
+
+
 
 	//Parms
 //	void setWidth(const float& width);
 
 	
 private:
-	float stereoWidthValue, sumGain, diffGain;
-	NormalisableRange<float> normRange;
+//	float stereoWidthValue, sumGain, diffGain;
+//	NormalisableRange<float> normRange;
 
 
 };

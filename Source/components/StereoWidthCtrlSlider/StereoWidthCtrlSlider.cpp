@@ -33,7 +33,7 @@ StereoWidthCtrlSlider::StereoWidthCtrlSlider(const String& componentName, AudioP
 StereoWidthCtrlSlider::StereoWidthCtrlSlider(const String& componentName, AudioProcessorParameter* associatedParam, const String& desiredUnitLabel)
 : AssociatedSlider(componentName, associatedParam, desiredUnitLabel)
 {
-
+	this->setTextValueSuffix(desiredUnitLabel);
 }
 
 
@@ -43,19 +43,18 @@ StereoWidthCtrlSlider::~StereoWidthCtrlSlider()
 	
 }
 
-/**
-* Method:    getTextFromValue
-* FullName:  StereoWidthCtrlSlider::getTextFromValue
-* Access:    public 
-* Qualifier:
-* @param     double value
-* @return    String
-*/
 String StereoWidthCtrlSlider::getTextFromValue(double value)
 {
-	return String(value * 200.0f);
+	
+	return String( String(value * 200.0f) + this->getTextValueSuffix());
 }
 
+double StereoWidthCtrlSlider::getValueFromText(const String& text)
+{
+	double parsedValue = text.getDoubleValue();
+	parsedValue /= 200.0f;
+	return parsedValue;
+}
 
 // void StereoWidthCtrlSlider::setWidth(const float& width)
 // {

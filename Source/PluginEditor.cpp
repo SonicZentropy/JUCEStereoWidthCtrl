@@ -30,7 +30,7 @@ StereoWidthCtrlAudioProcessorEditor::StereoWidthCtrlAudioProcessorEditor(StereoW
 	StereoWidthCtrlAudioProcessor* audioProc = getProcessor();
 	
 	// #TODO: Add setValue in Slider Constructor from Param or maybe post-setRange
-	addAndMakeVisible(stereoWidthSldCtrl = new StereoWidthCtrlSlider("Width Factor Slider", audioProc->stereoWidthParam));
+	addAndMakeVisible(stereoWidthSldCtrl = new StereoWidthCtrlSlider("Width Factor Slider", audioProc->stereoWidthParam, "%"));
 	stereoWidthSldCtrl->setTooltip(TRANS("Stereo Width"));
 	stereoWidthSldCtrl->setRange(0, 1, 0.05);
 	stereoWidthSldCtrl->setSliderStyle(Slider::LinearHorizontal);
@@ -101,6 +101,7 @@ StereoWidthCtrlAudioProcessorEditor::StereoWidthCtrlAudioProcessorEditor(StereoW
 	// GUI Size 
 	setSize(375, 500);
 
+	// TODO: CURRENT FIX GAIN SCALING
 	getProcessor()->RequestUIUpdate(); //UI Update must be performed every time a new editor is constructed
 	startTimer(200); // Start timer poll with 200ms rate
 	bypassBtnCtrl->setClickingTogglesState(true);
