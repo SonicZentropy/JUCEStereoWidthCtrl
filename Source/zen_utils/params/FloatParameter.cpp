@@ -40,11 +40,13 @@ namespace juce
 
 	float FloatParameter::getValue() const
 	{
+		DBG("Entered method: FloatParameter:getValue()");
 		return value;
 	}
 
 	void FloatParameter::setValue(float newValue)
 	{
+		DBG("Entered method: FloatParameter:setValue(newValue)");
 		value = newValue;
 	}
 

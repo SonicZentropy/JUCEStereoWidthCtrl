@@ -159,18 +159,40 @@ void StereoWidthCtrlAudioProcessorEditor::resized()
 /// <param name="sliderThatWasMoved"> The slider that was moved.</param>
 void StereoWidthCtrlAudioProcessorEditor::sliderValueChanged(Slider* sliderThatWasMoved)
 {
+	DBG("Entered method: StereoWidthCtrlAudioProcessorEditor:sliderValueChanged(sliderThatWasMoved)");
 	try
 	{
-		associatedSliderValueChanged(static_cast<AssociatedSlider*>(sliderThatWasMoved));
+		//associatedSliderValueChanged(static_cast<AssociatedSlider*>(sliderThatWasMoved));
+		AudioProcessorParameter* param = static_cast<AssociatedSlider*>(sliderThatWasMoved)->getAssociatedParameter();
+		if (sliderThatWasMoved == stereoWidthSldCtrl)
+		{
+			DBG("Changing Width SliderValue from: " + String(param->getValue()) + " to: " + static_cast<String>(stereoWidthSldCtrl->getValue()));
+			param->setValueNotifyingHost(static_cast<float>(stereoWidthSldCtrl->getValue()));
+		} else if (sliderThatWasMoved == gainSldCtrl)
+		{
+			try
+			{
+				DBG("Gain slider value changing from: " + String(param->getValue()) + " to: " + static_cast<String>(sliderThatWasMoved->getValue()));
+				param->setValueNotifyingHost(static_cast<float>(gainSldCtrl->getValue()));
+				DBG("audioGainParam is now: " + static_cast<String>(param->getValue()));
+			}
+			catch (...)
+			{
+				DBG("Access Violation Exception Caught In PluginEditor.cpp::sliderValueChanged ");
+			}
+		}
 	}
 	catch (std::exception& e)
 	{
 		DBG("Casting >" + sliderThatWasMoved->getName() +"< to AssociatedSlider* Failed: " + String(e.what()));
 	}
+	
+
 }
 
 void StereoWidthCtrlAudioProcessorEditor::associatedSliderValueChanged(AssociatedSlider* sliderThatWasMoved)
 {
+	DBG("Entered method: StereoWidthCtrlAudioProcessorEditor:associatedSliderValueChanged(sliderThatWasMoved)");
 	AudioProcessorParameter* param = sliderThatWasMoved->getAssociatedParameter();
 	if (sliderThatWasMoved == stereoWidthSldCtrl)
 	{
@@ -197,8 +219,10 @@ void StereoWidthCtrlAudioProcessorEditor::associatedSliderValueChanged(Associate
 	
 }*/
 
+
 void StereoWidthCtrlAudioProcessorEditor::buttonClicked(Button* buttonThatWasClicked)
 {
+	DBG("Entered method: StereoWidthCtrlAudioProcessorEditor:buttonClicked(buttonThatWasClicked)");
 	/*try
 	{
 		associatedButtonValueChanged(static_cast<AssociatedButton*>(buttonThatWasClicked));
@@ -274,6 +298,7 @@ void StereoWidthCtrlAudioProcessorEditor::buttonClicked(Button* buttonThatWasCli
 	 	}
 }
 
+/// <summary>This method is called automatically every 200ms to update GUI if required</summary>
 void StereoWidthCtrlAudioProcessorEditor::timerCallback()
 {
 	StereoWidthCtrlAudioProcessor* ourProcessor = getProcessor();
@@ -295,24 +320,8 @@ void StereoWidthCtrlAudioProcessorEditor::timerCallback()
 	}
 }
 
-//AudioProcessorParameter* StereoWidthCtrlAudioProcessorEditor::getParameterFromComponent(const Component* comp) const
-//{
 
 
-// 	if (comp == gainSldCtrl)
-// 	{
-// 		DBG("Returning gainSldCtrl");
-// 		return getProcessor()->audioGainParam;
-// 	}
-// 	else if (comp == stereoWidthSldCtrl)
-// 	{
-// 		return getProcessor()->stereoWidthParam;
-// 	}
-// 
-// 	//throw std::invalid_argument("Unrecognized Component");
-// 	DBG("SHOULD NEVER SEE THIS - Editor::getParameterFromComponent");
-// 	return nullptr;
-//}
 
 //END==============================================================================
 

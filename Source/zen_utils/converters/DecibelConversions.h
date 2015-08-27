@@ -18,7 +18,7 @@
 
 //==============================================================================
 /**
-This class contains some helpful static methods for dealing with decibel values.
+This class contains methods for converting decibel values.
 */
 class DecibelConversions
 {
