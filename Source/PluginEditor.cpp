@@ -18,16 +18,25 @@
 */
 #include "PluginEditor.h"
 #include <exception>
+#include "zen_utils/components/AssociatedButton.h"
 
 
 using namespace juce;
 
 //==============================================================================
 StereoWidthCtrlAudioProcessorEditor::StereoWidthCtrlAudioProcessorEditor(StereoWidthCtrlAudioProcessor& ownerFilter)
-	: AudioProcessorEditor(ownerFilter)
+	: AudioProcessorEditor(ownerFilter), processor(&ownerFilter)
 {
 	//Audio Processor reference
 	StereoWidthCtrlAudioProcessor* audioProc = getProcessor();
+	
+	addAndMakeVisible (testSlider = new Slider ("Test Slider"));
+    testSlider->setTooltip (TRANS("Test"));
+    testSlider->setRange (0, 10, 0);
+    testSlider->setSliderStyle (Slider::LinearHorizontal);
+    testSlider->setTextBoxStyle (Slider::TextBoxLeft, false, 80, 20);
+    testSlider->addListener (this);	
+	
 	
 	// #TODO: Add setValue in Slider Constructor from Param or maybe post-setRange
 	addAndMakeVisible(stereoWidthSldCtrl = new StereoWidthCtrlSlider("Width Factor Slider", audioProc->stereoWidthParam, "%"));
@@ -36,10 +45,11 @@ StereoWidthCtrlAudioProcessorEditor::StereoWidthCtrlAudioProcessorEditor(StereoW
 	stereoWidthSldCtrl->setSliderStyle(Slider::LinearHorizontal);
 	stereoWidthSldCtrl->setTextBoxStyle(Slider::TextBoxLeft, false, 80, 20);
 	stereoWidthSldCtrl->addListener(this);
-
-	addAndMakeVisible(gainSldCtrl = new GainCtrlSlider("Gain Knob", audioProc->audioGainParam));
+	
+	addAndMakeVisible(gainSldCtrl = new GainCtrlSlider("Gain Knob", audioProc->audioGainParam, "dB", 12.0));
 	//gainSldCtrl->setRange(-96, 12, 0.1);
-	gainSldCtrl->setRange(0.0, 1.0, 0.01);
+	gainSldCtrl->setRange(0.0, 1.0, 0.0);
+	gainSldCtrl->setSkewFactorFromMidPoint(0.05f);
 	gainSldCtrl->setSliderStyle(Slider::LinearVertical);
 	gainSldCtrl->setTextBoxStyle(Slider::TextBoxBelow, false, 80, 20);
 	gainSldCtrl->setColour(Slider::backgroundColourId, Colour(0x00868181));
@@ -94,8 +104,9 @@ StereoWidthCtrlAudioProcessorEditor::StereoWidthCtrlAudioProcessorEditor(StereoW
 	invertLabel->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
 
 	// #TODO: Change these to use getDefaultValue from param
-	gainSldCtrl->setDoubleClickReturnValue(true, 0.0f);
+	gainSldCtrl->setDoubleClickReturnValue(true, 0.251189f); //0.251189f is 0 gain with this range
 	stereoWidthSldCtrl->setDoubleClickReturnValue(true, 0.5f);
+	//LogParam* logParam = processor->getLogParam()
 
 	// GUI Size 
 	setSize(375, 500);
@@ -164,22 +175,14 @@ void StereoWidthCtrlAudioProcessorEditor::associatedSliderValueChanged(Associate
 	if (sliderThatWasMoved == stereoWidthSldCtrl)
 	{
 		DBG("Changing Width SliderValue from: " + String(param->getValue()) + " to: " + static_cast<String>(stereoWidthSldCtrl->getValue() ));
-		// #TODO: Restructure stereoWidthSldCtrl to get rid of the 2.0f manipulation, just move the 2.0f into getTextFromValue
 		param->setValueNotifyingHost(static_cast<float>(stereoWidthSldCtrl->getValue()));
 	}
 	else if (sliderThatWasMoved == gainSldCtrl)
 	{
-		// #TODO: change gain automation to set 0dB = 0.75 and skew it logarithmically
-		// #BUG: getAssociatedParam not properly set
 		try
 		{
-			//param = static_cast<AssociatedSlider*>(sliderThatWasMoved)->getAssociatedParameter();
 			DBG("Gain slider value changing from: " + String(param->getValue()) + " to: " + static_cast<String>(sliderThatWasMoved->getValue()));
-			//#TODO: Restructure to get rid of this decibels->gain conversion, move it into getTextFromValue only
-			float valueDenormal = static_cast<float>(sliderThatWasMoved->getValue());
-			float valueNorm = Decibels::decibelsToGain(valueDenormal, -96.0f);
-
-			param->setValueNotifyingHost(valueNorm);
+			param->setValueNotifyingHost( static_cast<float>(gainSldCtrl->getValue()) );
 			DBG("audioGainParam is now: " + static_cast<String>(param->getValue()));
 		}
 		catch (...)
@@ -189,8 +192,22 @@ void StereoWidthCtrlAudioProcessorEditor::associatedSliderValueChanged(Associate
 	}
 }
 
+/*void StereoWidthCtrlAudioProcessorEditor::associatedButtonValueChanged(AssociatedButton buttonThatWasClicked)
+{
+	
+}*/
+
 void StereoWidthCtrlAudioProcessorEditor::buttonClicked(Button* buttonThatWasClicked)
 {
+	/*try
+	{
+		associatedButtonValueChanged(static_cast<AssociatedButton*>(buttonThatWasClicked));
+	}
+	catch (std::exception& e)
+	{
+		DBG("Casting >" + buttonThatWasClicked->getName() + "< to AssociatedButton* Failed: " + String(e.what()));
+	}*/
+
 	StereoWidthCtrlAudioProcessor* audioProc = getProcessor();
 	 	if (buttonThatWasClicked == bypassBtnCtrl)
 	 	{
@@ -220,8 +237,8 @@ void StereoWidthCtrlAudioProcessorEditor::buttonClicked(Button* buttonThatWasCli
 	 			param->setValue(static_cast<float>(lockGainBtnCtrl->getToggleState()));
 	 			if (lockGainBtnCtrl->getToggleState())
 	 			{
-	 				gainSldCtrl->setRange(-96, 0, 0.1);
-	 				gainSldCtrl->setValue(std::min(0.0f, static_cast<float>(gainSldCtrl->getValue())));
+	 				//gainSldCtrl->setRange(-96, 0, 0.1);
+	 				gainSldCtrl->setValue(std::min(0.251189f, static_cast<float>(gainSldCtrl->getValue())));
 	 				gainSldCtrl->repaint();
 	 				param->setValue(Decibels::decibelsToGain(static_cast<float>(gainSldCtrl->getValue())));
 	 				//StereoWidthCtrlAudioProcessor* ourProcessor = getProcessor();
@@ -260,22 +277,20 @@ void StereoWidthCtrlAudioProcessorEditor::buttonClicked(Button* buttonThatWasCli
 void StereoWidthCtrlAudioProcessorEditor::timerCallback()
 {
 	StereoWidthCtrlAudioProcessor* ourProcessor = getProcessor();
-	// 	//exchange data between UI Elements and the Plugin (ourProcessor)
+	//exchange data between UI Elements and the Plugin (ourProcessor)
 	if (ourProcessor->needsUIUpdate())
 	{
 		DBG("In editor->timeCallback");
 		muteBtnCtrl->setToggleState(1.0f == ourProcessor->muteAudioParam->getValue(), sendNotification);
-		DBG("Past muteBtn");
-		DBG("In timerCallback before bypass");
 		bypassBtnCtrl->setToggleState(1.0f == ourProcessor->masterBypassParam->getValue(), sendNotification);
-		DBG("Past bypassBtn");
-		DBG("Changing Width SliderValue from proc: " + String(ourProcessor->stereoWidthParam->getValue()) + " to WidthSld/2: " + static_cast<String>(stereoWidthSldCtrl->getValue() ));
-		
+
+		DBG("Changing Width SliderValue from proc: " + String(ourProcessor->stereoWidthParam->getValue()) + " to WidthSld/2: " + static_cast<String>(stereoWidthSldCtrl->getValue() ));	
 		stereoWidthSldCtrl->setValue(ourProcessor->stereoWidthParam->getValue() , sendNotification);
 
 		DBG("Changing gainSldCtrl Value: " + String(gainSldCtrl->getValue()) + " to audioGainParam: " + String(ourProcessor->audioGainParam->getValue()) );
 		gainSldCtrl->setValue(Decibels::gainToDecibels(ourProcessor->audioGainParam->getValue()), sendNotification);
 		DBG("gainSldCtrl value set (converted gain to Decibels) : " + String(gainSldCtrl->getValue()));
+		
 		ourProcessor->ClearUIUpdateFlag();
 	}
 }

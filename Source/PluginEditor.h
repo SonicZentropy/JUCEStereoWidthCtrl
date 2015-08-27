@@ -52,10 +52,12 @@ public:
 	void sliderValueChanged(Slider* sliderThatWasMoved) override;
 	void associatedSliderValueChanged(AssociatedSlider* sliderThatWasMoved);
 	void buttonClicked(Button* buttonThatWasClicked) override;
+	//ScopedPointer<GainCtrlSlider> getGainSldCtrl() { return gainSldCtrl; };
 
 
 private:
 
+	AudioProcessor* processor;
 	//AudioProcessorParameter* getParameterFromComponent(const Component*) const;
 	// //AudioProcessorParameter* getParameterFromComponent(const Slider*) const;
 
@@ -69,7 +71,8 @@ private:
  	ScopedPointer<ToggleButton> invertLeftBtnCtrl;
  	ScopedPointer<ToggleButton> invertRightBtnCtrl;
  	ScopedPointer<Label> invertLabel;
-
+	Slider* testSlider;
+	
 
 	//==============================================================================
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (StereoWidthCtrlAudioProcessorEditor)

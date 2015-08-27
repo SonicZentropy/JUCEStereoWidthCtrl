@@ -11,6 +11,9 @@
 #include "BufferSampleProcesses.h"
 #include <algorithm>
 #include "../JuceLibraryCode/JuceHeader.h"
+//#include "zen_utils/converters/DecibelConversions.h"
+#include "zen_utils/juce_zen_utils.h"
+
 
 
 void BufferSampleProcesses::processStereoWidth(float* LeftSample, float* RightSample, const float& widthIn)
@@ -29,9 +32,15 @@ void BufferSampleProcesses::processStereoWidth(float* LeftSample, float* RightSa
 	return;
 }
 
-void BufferSampleProcesses::processGain(float* LeftSample, float* RightSample, const float& gainValue)
+void BufferSampleProcesses::processGain(float* LeftSample, float* RightSample, const float& gainValue, const float& maximumDecibelsFromRange)
 {
 	//DBG("In Volume Clock Process gain is : " + String(audioGain));
-	*LeftSample = *LeftSample * gainValue;
-	*RightSample = *RightSample * gainValue;
+
+	// convert value to decibels from range, then convert decibels to gain without range
+	//float decibels = DecibelConversions::gainToDecibelRange<float>(gainValue, 12.0, -96.0);
+	//float testDec = Decibels::decibelsToGain<float>(gainValue, -96.0);
+	//float TESTrawGain = DecibelConversions::decibelsToGain<float>(gainValue, -96.0);
+	float rawGain = DecibelConversions::decibelRangeGainToRawDecibelGain<float>(gainValue, maximumDecibelsFromRange, -96.0);
+	*LeftSample = *LeftSample * rawGain;
+	*RightSample = *RightSample * rawGain;
 }

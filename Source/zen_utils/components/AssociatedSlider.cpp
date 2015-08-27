@@ -14,16 +14,16 @@
 
 #include "AssociatedSlider.h"
 
+// No reason to ever use this constructor, technically
 AssociatedSlider::AssociatedSlider()
 {
-	DBG("SHOULD NEVER CALL THIS AssociatedSlider.cpp CONSTRUCTOR");
+	DBG("Should never call this constructor at all (AssociatedSlider)");
 }
 
-// #TODO: Move this out of gain-specific and convert to generic derived Slider that contains normalization methods
 // No reason to ever use this constructor, technically
 AssociatedSlider::AssociatedSlider(const String& componentName) : Slider(componentName)
 {
-	DBG("You done goofed, should never call this constructor at all (AssociatedSlider)");
+	DBG("Should never call this constructor at all (AssociatedSlider)");
 }
 
 AssociatedSlider::AssociatedSlider(const String& componentName, AudioProcessorParameter* associatedParam)
@@ -36,15 +36,3 @@ AssociatedSlider::AssociatedSlider(const String& componentName, AudioProcessorPa
 : Slider(componentName), AssociatedParameter(associatedParam), unitLabel(desiredUnitLabel)
 {
 }
-
-// Override Slider::getTextFromValue to force value to -inf display
-// #TODO: Move this getTextFromValue out of AssociatedSlider into GainSlider
-/*String AssociatedSlider::getTextFromValue(double value)
-{
-
-	if (value <= -95.0f) return String("-inf");
-	if (getNumDecimalPlacesToDisplay() > 0)
-		return String(value, getNumDecimalPlacesToDisplay()) + " " + getTextValueSuffix();
-
-	return String(roundToInt(value)) + " " + getTextValueSuffix();
-}*/

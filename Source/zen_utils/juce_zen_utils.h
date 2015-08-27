@@ -11,5 +11,6 @@
 #include "params/FloatParameter.h"
 #include "params/BoolParameter.h"
 #include "components/AssociatedSlider.h"
+#include "converters/DecibelConversions.h"
 
 #endif   // JUCE_ZEN_UTILS_H_INCLUDED

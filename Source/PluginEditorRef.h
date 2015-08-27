@@ -82,6 +82,7 @@ private:
     ScopedPointer<ToggleButton> invertLeftBtnCtrl;
     ScopedPointer<ToggleButton> invertRightBtnCtrl;
     ScopedPointer<Label> invertLabel;
+    ScopedPointer<Slider> testSlider;
 
 
     //==============================================================================

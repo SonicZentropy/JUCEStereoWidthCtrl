@@ -18,7 +18,7 @@ public:
 
 	static void processStereoWidth(float* LeftSample, float* RightSample, const float& widthValue);
 
-	static void processGain(float* LeftSample, float* RightSample, const float& gainValue);
+	static void processGain(float* LeftSample, float* RightSample, const float& gainValue, const float& maximumDecibelsFromRange);
 private:
 	
 };

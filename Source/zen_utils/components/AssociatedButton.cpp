@@ -14,16 +14,16 @@
 
 #include "AssociatedButton.h"
 
+// No reason to ever use this constructor, technically
 AssociatedButton::AssociatedButton() : Button("GLITCHASSOCIATEDBUTTONCONSTRUCTOR")
 {
-	DBG("SHOULD NEVER CALL THIS AssociatedButton CONSTRUCTOR");
+	DBG("Should never call this constructor at all (AssociatedButton)");
 }
 
-// #TODO: Move this out of gain-specific and convert to generic derived Button that contains normalization methods
 // No reason to ever use this constructor, technically
 AssociatedButton::AssociatedButton(const String& componentName) : Button(componentName)
 {
-	DBG("You done goofed, should never call this constructor at all (AssociatedButton)");
+	DBG("Should never call this constructor at all (AssociatedButton)");
 }
 
 AssociatedButton::AssociatedButton(const String& componentName, AudioProcessorParameter* associatedParam)
@@ -36,15 +36,3 @@ AssociatedButton::AssociatedButton(const String& componentName, AudioProcessorPa
 : Button(componentName), AssociatedParameter(associatedParam), unitLabel(desiredUnitLabel)
 {
 }
-
-// Override Button::getTextFromValue to force value to -inf display
-// #TODO: Move this getTextFromValue out of AssociatedButton
-/*String AssociatedButton::getTextFromValue(double value)
-{
-
-	if (value <= -95.0f) return String("-inf");
-	if (getNumDecimalPlacesToDisplay() > 0)
-		return String(value, getNumDecimalPlacesToDisplay()) + " " + getTextValueSuffix();
-
-	return String(roundToInt(value)) + " " + getTextValueSuffix();
-}*/

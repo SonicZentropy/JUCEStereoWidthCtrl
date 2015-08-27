@@ -8,6 +8,8 @@
   ==============================================================================
 */
 
+#pragma warning(disable:4702) // Get rid of warnings about unreachable code from the throws
+
 #include "StereoWidthCtrlSlider.h"
 #ifndef noexcept
 #define noexcept throw()
@@ -16,14 +18,14 @@
 
 StereoWidthCtrlSlider::StereoWidthCtrlSlider()
 {
-	DBG("SHOULD NEVER CALL THIS StereoWidthCtrlSlider.cpp CONSTRUCTOR");
+	throw std::logic_error("Invalid usage of StereoWidthCtrlSlider Constructor, should never call it with no parameters");
 }
 
 
 StereoWidthCtrlSlider::StereoWidthCtrlSlider(const String& componentName) 
 	: AssociatedSlider(componentName)
 {
-	DBG("SHOULD NEVER CALL THIS StereoWidthCtrlSlider.cpp CONSTRUCTOR");
+	throw std::logic_error("Invalid usage of StereoWidthCtrlSlider Constructor, should never call it with only one parameter");
 }
 
 StereoWidthCtrlSlider::StereoWidthCtrlSlider(const String& componentName, AudioProcessorParameter* associatedParam)

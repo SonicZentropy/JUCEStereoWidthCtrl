@@ -13,7 +13,10 @@
 ==============================================================================
 */
 
-/*Here's some functions for manipulating parameters. Use the inverse functions in 'getParameter' and 'setParameterNotifyingHost' and the non-inverse in 'setParamer'. The warp functions, borrowed from JUCE's slider class allow you to set a value you wish to be represented by 0.5 - useful for frequency control for example.The intStep functions allow integers to be represented and the Bool is self explanatory.Hope these help.*/
+/*Here's some functions for manipulating parameters. Use the inverse functions in 'getParameter' and 'setParameterNotifyingHost' 
+//and the non-inverse in 'setParamer'. The warp functions, borrowed from JUCE's slider class allow you to set a value you wish 
+//to be represented by 0.5 - useful for frequency control for example.The intStep functions allow integers to be represented 
+//and the Bool is self explanatory.Hope these help.*/
 
 
 #include "ZenParamUtils.h"

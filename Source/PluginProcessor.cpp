@@ -25,7 +25,7 @@ StereoWidthCtrlAudioProcessor::StereoWidthCtrlAudioProcessor()
  	addParameter(masterBypassParam = new BoolParameter(0.0f, "MasterBypass"));
  	addParameter(stereoWidthParam = new FloatParameter(0.5f, "StereoWidth"));
  	addParameter(muteAudioParam = new BoolParameter(0.0f, "MuteAudio"));
- 	addParameter(audioGainParam = new FloatParameter(1.0f, "AudioGain"));
+ 	addParameter(audioGainParam = new FloatParameter(0.251189f, "AudioGain")); //0.251189f is 0 gain with this range
  	addParameter(lockGainParam = new BoolParameter(0.0f, "LockGain"));
  	addParameter(invertLeftParam = new BoolParameter(0.0f, "InvertLeft"));
  	addParameter(invertRightParam = new BoolParameter(0.0f, "InvertRight"));
@@ -76,11 +76,11 @@ void StereoWidthCtrlAudioProcessor::processBlock(AudioSampleBuffer& buffer, Midi
 			//Stereo Width Process
 			for (long i = 0; i < buffer.getNumSamples(); i++)
 			{
-				if (++debugPrintTimer >= 1000)
+/*				if (++debugPrintTimer >= 1000)
 				{
 						DBG("Incoming Width is: " + String(stereoWidthParam->getValue()));
 						debugPrintTimer = 0;
-				}
+				}*/
 
 				BufferSampleProcesses::processStereoWidth(&leftData[i], &rightData[i], stereoWidthParam->getValue());
 			}
@@ -100,7 +100,7 @@ void StereoWidthCtrlAudioProcessor::processBlock(AudioSampleBuffer& buffer, Midi
 		}
 	
 		// Handle Gain
-		if (audioGainParam->getValue() != 1.0f && !muteAudioParam->getValue())
+		if (audioGainParam->getValue() != 0.251189f && !muteAudioParam->getValue()) // 0.251189f is value for gain = 0.0db in set range -96->12
 		{
 			//gainControl.setGain(audioGainParam->getValue());
 			for (long i = 0; i < buffer.getNumSamples(); i++)
@@ -111,7 +111,8 @@ void StereoWidthCtrlAudioProcessor::processBlock(AudioSampleBuffer& buffer, Midi
 					//DBG("Incoming Gain is: " + String(audioGainParam->getValue()));
 					debugPrintTimer = 0;
 				}
-				BufferSampleProcesses::processGain(&leftData[i], &rightData[i], audioGainParam->getValue());
+				
+				BufferSampleProcesses::processGain(&leftData[i], &rightData[i], audioGainParam->getValue(), 12.0);
 
 			}
 		}
@@ -298,7 +299,7 @@ bool StereoWidthCtrlAudioProcessor::hasEditor() const
 
 AudioProcessorEditor* StereoWidthCtrlAudioProcessor::createEditor()
 {
-    return new StereoWidthCtrlAudioProcessorEditor (*this);
+	return new StereoWidthCtrlAudioProcessorEditor(*this);
 }
 
 //==============================================================================

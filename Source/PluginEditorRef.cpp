@@ -35,7 +35,7 @@ StereoWidthCtrlAudioProcessorEditorRef::StereoWidthCtrlAudioProcessorEditorRef (
     : AudioProcessorEditor(ownerFilter)
 {
     //[Constructor_pre] You can add your own custom stuff here..
-	
+
     //[/Constructor_pre]
 
     addAndMakeVisible (stereoWidthSldCtrl = new Slider ("Width Factor Slider"));
@@ -100,6 +100,13 @@ StereoWidthCtrlAudioProcessorEditorRef::StereoWidthCtrlAudioProcessorEditorRef (
     invertLabel->setColour (TextEditor::textColourId, Colours::black);
     invertLabel->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
 
+    addAndMakeVisible (testSlider = new Slider ("Test Slider"));
+    testSlider->setTooltip (TRANS("Test"));
+    testSlider->setRange (0, 10, 0);
+    testSlider->setSliderStyle (Slider::LinearHorizontal);
+    testSlider->setTextBoxStyle (Slider::TextBoxLeft, false, 80, 20);
+    testSlider->addListener (this);
+
 
     //[UserPreSize]
 
@@ -138,6 +145,7 @@ StereoWidthCtrlAudioProcessorEditorRef::~StereoWidthCtrlAudioProcessorEditorRef(
     invertLeftBtnCtrl = nullptr;
     invertRightBtnCtrl = nullptr;
     invertLabel = nullptr;
+    testSlider = nullptr;
 
 
     //[Destructor]. You can add your own custom destruction code here..
@@ -170,6 +178,7 @@ void StereoWidthCtrlAudioProcessorEditorRef::resized()
     invertLeftBtnCtrl->setBounds (33, 118, 25, 20);
     invertRightBtnCtrl->setBounds (71, 118, 25, 20);
     invertLabel->setBounds (12, 80, 100, 32);
+    testSlider->setBounds (16, 152, 150, 24);
     //[UserResized] Add your own custom resize handling here..
     //[/UserResized]
 }
@@ -203,6 +212,11 @@ void StereoWidthCtrlAudioProcessorEditorRef::sliderValueChanged (Slider* sliderT
 			DBG("audioGainParam is now: " + static_cast<String>(param->getValue()));
 		}
         //[/UserSliderCode_gainSldCtrl]
+    }
+    else if (sliderThatWasMoved == testSlider)
+    {
+        //[UserSliderCode_testSlider] -- add your slider handling code here..
+        //[/UserSliderCode_testSlider]
     }
 
     //[UsersliderValueChanged_Post]
@@ -393,6 +407,10 @@ BEGIN_JUCER_METADATA
          edTextCol="ff000000" edBkgCol="0" labelText="Invert Phase&#10;L       R"
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
          fontname="Default font" fontsize="15" bold="0" italic="0" justification="20"/>
+  <SLIDER name="Test Slider" id="581c25c704b4db1e" memberName="testSlider"
+          virtualName="" explicitFocusOrder="0" pos="16 152 150 24" tooltip="Test"
+          min="0" max="10" int="0" style="LinearHorizontal" textBoxPos="TextBoxLeft"
+          textBoxEditable="1" textBoxWidth="80" textBoxHeight="20" skewFactor="1"/>
 </JUCER_COMPONENT>
 
 END_JUCER_METADATA
