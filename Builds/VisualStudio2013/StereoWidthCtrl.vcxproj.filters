@@ -328,9 +328,6 @@
     <ClCompile Include="..\..\Source\BufferSampleProcesses.cpp">
       <Filter>StereoWidthCtrl\Source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\zen_utils\converters\DecibelConversions.cpp">
-      <Filter>StereoWidthCtrl\Source\zen_utils\converters</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Source\zen_utils\params\BoolParameter.cpp">
       <Filter>StereoWidthCtrl\Source\zen_utils\params</Filter>
     </ClCompile>

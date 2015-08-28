@@ -249,7 +249,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Source\BufferSampleProcesses.cpp"/>
-    <ClCompile Include="..\..\Source\zen_utils\converters\DecibelConversions.cpp"/>
     <ClCompile Include="..\..\Source\zen_utils\params\BoolParameter.cpp"/>
     <ClCompile Include="..\..\Source\zen_utils\params\FloatParameter.cpp"/>
     <ClCompile Include="..\..\Source\zen_utils\components\AssociatedButton.cpp"/>

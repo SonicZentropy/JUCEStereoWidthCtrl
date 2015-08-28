@@ -19,8 +19,6 @@
             file="Source/BufferSampleProcesses.h"/>
       <GROUP id="{C15EF325-0C33-9861-75F1-2FF0D6A7218E}" name="zen_utils">
         <GROUP id="{46D925AD-FBD5-9858-D14F-D9E85CFD8E0E}" name="converters">
-          <FILE id="NuNhx2" name="DecibelConversions.cpp" compile="1" resource="0"
-                file="Source/zen_utils/converters/DecibelConversions.cpp"/>
           <FILE id="f7YYl9" name="DecibelConversions.h" compile="0" resource="0"
                 file="Source/zen_utils/converters/DecibelConversions.h"/>
         </GROUP>
