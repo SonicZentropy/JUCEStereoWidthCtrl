@@ -15,25 +15,18 @@
 #ifndef ASSOCIATED_BUTTON_H_INCLUDED
 #define ASSOCIATED_BUTTON_H_INCLUDED
 #include "../JuceLibraryCode/JuceHeader.h"
-// #TODO: Convert this to new superclass that only adds the param pointers
 
-#include "../JuceLibraryCode/JuceHeader.h"
-#include "AssociatedParameter.h"
 
-class AssociatedButton : public Button, public AssociatedParameter
+
+class AssociatedButton : public Button
 {
 public:
 
-	AssociatedButton();
-	explicit AssociatedButton(const String& componentName);
 	AssociatedButton(const String& componentName, AudioProcessorParameter* associatedParam);
 	AssociatedButton(const String& componentName, AudioProcessorParameter* associatedParam, const String& desiredUnitLabel);
 
-
-
-	//	String getTextFromValue(double value) override;
 private:
-	//	AudioProcessorParameter* associatedParameter;
+	AudioProcessorParameter* associatedParameter;
 	String unitLabel;
 };
 #endif  // ASSOCIATED_BUTTON_H_INCLUDED

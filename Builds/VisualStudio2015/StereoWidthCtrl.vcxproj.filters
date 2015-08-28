@@ -324,9 +324,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\Source\BufferSampleProcesses.cpp">
-      <Filter>StereoWidthCtrl\Source</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Source\zen_utils\converters\DecibelConversions.cpp">
       <Filter>StereoWidthCtrl\Source\zen_utils\converters</Filter>
     </ClCompile>
@@ -337,9 +334,6 @@
       <Filter>StereoWidthCtrl\Source\zen_utils\params</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\zen_utils\components\AssociatedButton.cpp">
-      <Filter>StereoWidthCtrl\Source\zen_utils\components</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\zen_utils\components\AssociatedParameter.cpp">
       <Filter>StereoWidthCtrl\Source\zen_utils\components</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\zen_utils\components\AssociatedSlider.cpp">
@@ -356,15 +350,6 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\components\StereoWidthCtrlSlider\StereoWidthCtrlSlider.cpp">
       <Filter>StereoWidthCtrl\Source\components\StereoWidthCtrlSlider</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\PluginProcessor.cpp">
-      <Filter>StereoWidthCtrl\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\PluginEditor.cpp">
-      <Filter>StereoWidthCtrl\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\PluginEditorRef.cpp">
-      <Filter>StereoWidthCtrl\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\JUCE\modules\juce_audio_basics\buffers\juce_AudioDataConverters.cpp">
       <Filter>Juce Modules\juce_audio_basics\buffers</Filter>
@@ -1497,11 +1482,20 @@
     <ClCompile Include="..\..\..\JUCE\modules\PluginParameters\PluginParameters.cpp">
       <Filter>Juce Library Code</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\BufferSampleProcesses.cpp">
+      <Filter>StereoWidthCtrl\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\PluginEditor.cpp">
+      <Filter>StereoWidthCtrl\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\PluginEditorRef.cpp">
+      <Filter>StereoWidthCtrl\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\PluginProcessor.cpp">
+      <Filter>StereoWidthCtrl\Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\Source\BufferSampleProcesses.h">
-      <Filter>StereoWidthCtrl\Source</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Source\zen_utils\converters\DecibelConversions.h">
       <Filter>StereoWidthCtrl\Source\zen_utils\converters</Filter>
     </ClInclude>
@@ -1512,9 +1506,6 @@
       <Filter>StereoWidthCtrl\Source\zen_utils\params</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\zen_utils\components\AssociatedButton.h">
-      <Filter>StereoWidthCtrl\Source\zen_utils\components</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\zen_utils\components\AssociatedParameter.h">
       <Filter>StereoWidthCtrl\Source\zen_utils\components</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\zen_utils\components\AssociatedSlider.h">
@@ -1534,15 +1525,6 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\components\StereoWidthCtrlSlider\StereoWidthCtrlSlider.h">
       <Filter>StereoWidthCtrl\Source\components\StereoWidthCtrlSlider</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\PluginProcessor.h">
-      <Filter>StereoWidthCtrl\Source</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\PluginEditor.h">
-      <Filter>StereoWidthCtrl\Source</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\PluginEditorRef.h">
-      <Filter>StereoWidthCtrl\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\JUCE\modules\juce_audio_basics\buffers\juce_AudioDataConverters.h">
       <Filter>Juce Modules\juce_audio_basics\buffers</Filter>
@@ -2855,6 +2837,18 @@
     <ClInclude Include="..\..\JuceLibraryCode\JuceHeader.h">
       <Filter>Juce Library Code</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\PluginProcessor.h">
+      <Filter>StereoWidthCtrl\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\BufferSampleProcesses.h">
+      <Filter>StereoWidthCtrl\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\PluginEditor.h">
+      <Filter>StereoWidthCtrl\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\PluginEditorRef.h">
+      <Filter>StereoWidthCtrl\Source</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\JUCE\modules\juce_audio_basics\juce_module_info">
@@ -2899,6 +2893,7 @@
     <None Include="..\..\..\JUCE\modules\juce_audio_plugin_client\RTAS\juce_RTAS_WinResources.rsr">
       <Filter>Juce Library Code</Filter>
     </None>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include=".\resources.rc">

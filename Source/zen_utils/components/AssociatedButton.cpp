@@ -14,25 +14,13 @@
 
 #include "AssociatedButton.h"
 
-// No reason to ever use this constructor, technically
-AssociatedButton::AssociatedButton() : Button("GLITCHASSOCIATEDBUTTONCONSTRUCTOR")
-{
-	DBG("Should never call this constructor at all (AssociatedButton)");
-}
-
-// No reason to ever use this constructor, technically
-AssociatedButton::AssociatedButton(const String& componentName) : Button(componentName)
-{
-	DBG("Should never call this constructor at all (AssociatedButton)");
-}
-
 AssociatedButton::AssociatedButton(const String& componentName, AudioProcessorParameter* associatedParam)
-: Button(componentName), AssociatedParameter(associatedParam)
+: Button(componentName), associatedParameter(associatedParam)
 {
 	
 }
 
 AssociatedButton::AssociatedButton(const String& componentName, AudioProcessorParameter* associatedParam, const String& desiredUnitLabel) 
-: Button(componentName), AssociatedParameter(associatedParam), unitLabel(desiredUnitLabel)
+: Button(componentName), associatedParameter(associatedParam), unitLabel(desiredUnitLabel)
 {
 }

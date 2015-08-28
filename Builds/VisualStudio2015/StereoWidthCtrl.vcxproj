@@ -180,6 +180,7 @@
       <WarningLevel>Level4</WarningLevel>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <BrowseInformation>true</BrowseInformation>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -197,6 +198,7 @@
     <Bscmake>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <OutputFile>$(IntDir)\StereoWidthCtrlx64.bsc</OutputFile>
+      <PreserveSbr>true</PreserveSbr>
     </Bscmake>
     <PostBuildEvent>
       <Command>xcopy "$(TargetPath)" "Z:\VSTs\VSTs\Test\"  /q /y</Command>
@@ -253,7 +255,6 @@
     <ClCompile Include="..\..\Source\zen_utils\params\BoolParameter.cpp" />
     <ClCompile Include="..\..\Source\zen_utils\params\FloatParameter.cpp" />
     <ClCompile Include="..\..\Source\zen_utils\components\AssociatedButton.cpp" />
-    <ClCompile Include="..\..\Source\zen_utils\components\AssociatedParameter.cpp" />
     <ClCompile Include="..\..\Source\zen_utils\components\AssociatedSlider.cpp" />
     <ClCompile Include="..\..\Source\zen_utils\ZenParamUtils.cpp" />
     <ClCompile Include="..\..\Source\zen_utils\ZenUtils.cpp" />
@@ -1368,7 +1369,6 @@
     <ClInclude Include="..\..\Source\zen_utils\params\BoolParameter.h" />
     <ClInclude Include="..\..\Source\zen_utils\params\FloatParameter.h" />
     <ClInclude Include="..\..\Source\zen_utils\components\AssociatedButton.h" />
-    <ClInclude Include="..\..\Source\zen_utils\components\AssociatedParameter.h" />
     <ClInclude Include="..\..\Source\zen_utils\components\AssociatedSlider.h" />
     <ClInclude Include="..\..\Source\zen_utils\juce_zen_utils.h" />
     <ClInclude Include="..\..\Source\zen_utils\ZenParamUtils.h" />
@@ -1831,6 +1831,7 @@
     <None Include="..\..\..\JUCE\modules\juce_gui_extra\juce_module_info" />
     <None Include="..\..\..\JUCE\modules\PluginParameters\juce_module_info" />
     <None Include="..\..\..\JUCE\modules\juce_audio_plugin_client\RTAS\juce_RTAS_WinResources.rsr" />
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include=".\resources.rc" />

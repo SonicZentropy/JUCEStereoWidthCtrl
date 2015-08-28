@@ -14,32 +14,22 @@
 
 #include "AssociatedSlider.h"
 
-// No reason to ever use this constructor, technically
-AssociatedSlider::AssociatedSlider()
-{
-	DBG("Should never call this constructor at all (AssociatedSlider)");
-}
 
-// No reason to ever use this constructor, technically
-AssociatedSlider::AssociatedSlider(const String& componentName) : Slider(componentName)
-{
-	DBG("Should never call this constructor at all (AssociatedSlider)");
-}
 
 AssociatedSlider::AssociatedSlider(const String& componentName, AudioProcessorParameter* associatedParam)
-: Slider(componentName), AssociatedParameter(associatedParam)
+: Slider(componentName), associatedParameter(associatedParam)
 {
 	
 }
 
 AssociatedSlider::AssociatedSlider(const String& componentName, AudioProcessorParameter* associatedParam, const String& desiredUnitLabel) 
-: Slider(componentName), AssociatedParameter(associatedParam), unitLabel(desiredUnitLabel)
+: Slider(componentName), associatedParameter(associatedParam), unitLabel(desiredUnitLabel)
 {
 }
 
 void AssociatedSlider::setGUIValueNotifyingHost(const float& newValue)
 {
-	jassert(getAssociatedParameter()->getProcessor() != nullptr && getAssociatedParameter()->getParameterIndex() >= 0);
+	jassert(associatedParameter->getProcessor() != nullptr && associatedParameter->getParameterIndex() >= 0);
 
-	return getAssociatedParameter()->getProcessor()->setParameterNotifyingHost(getAssociatedParameter()->getParameterIndex(), newValue);
+	return associatedParameter->getProcessor()->setParameterNotifyingHost(associatedParameter->getParameterIndex(), newValue);
 }
