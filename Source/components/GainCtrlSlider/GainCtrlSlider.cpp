@@ -75,6 +75,15 @@ double GainCtrlSlider::getValueFromText(const String& text)
 	DBG("NormRange setValue: " + text);
 	float rawValue = text.getFloatValue();
 	float gainFromDecibels = DecibelConversions::decibelRangeToGain<float>(rawValue, maximumDecibelsInRange, -96.0);
+
+	//TEST
+	DBG("Value entered (in Decibels) raw is: " + String(text.getFloatValue()));
+	DBG("Value (in gain) after decibelRangeToGain is: " + String(gainFromDecibels));
+	DBG("Value (in gain) without range scaling via decibelToGain is: " + String(DecibelConversions::decibelsToGain<float>(rawValue, -96.0f)));
+	DBG("We need the gain value after range to be rescaled to 0-1.0 properly, such that a typed value of '0' returns 0.5 and a typed value of 12 returns 1.0");
+	// /TEST
+
+
 	return gainFromDecibels;
 }
 

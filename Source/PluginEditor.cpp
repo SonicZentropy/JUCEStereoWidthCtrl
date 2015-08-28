@@ -173,7 +173,8 @@ void StereoWidthCtrlAudioProcessorEditor::sliderValueChanged(Slider* sliderThatW
 			try
 			{
 				DBG("Gain slider value changing from: " + String(param->getValue()) + " to: " + static_cast<String>(sliderThatWasMoved->getValue()));
-				param->setValueNotifyingHost(static_cast<float>(gainSldCtrl->getValue()));
+				//param->setValueNotifyingHost(static_cast<float>(gainSldCtrl->getValue()));
+				dynamic_cast<AssociatedSlider*>(param)->setGUIValueNotifyingHost(static_cast<float>(gainSldCtrl->getValue()));
 				DBG("audioGainParam is now: " + static_cast<String>(param->getValue()));
 			}
 			catch (...)

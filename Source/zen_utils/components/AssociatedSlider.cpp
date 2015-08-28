@@ -36,3 +36,10 @@ AssociatedSlider::AssociatedSlider(const String& componentName, AudioProcessorPa
 : Slider(componentName), AssociatedParameter(associatedParam), unitLabel(desiredUnitLabel)
 {
 }
+
+void AssociatedSlider::setGUIValueNotifyingHost(const float& newValue)
+{
+	jassert(getAssociatedParameter()->getProcessor() != nullptr && getAssociatedParameter()->getParameterIndex() >= 0);
+
+	return getAssociatedParameter()->getProcessor()->setParameterNotifyingHost(getAssociatedParameter()->getParameterIndex(), newValue);
+}

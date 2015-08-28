@@ -138,6 +138,14 @@ void StereoWidthCtrlAudioProcessor::processBlock(AudioSampleBuffer& buffer, Midi
 }
 
 //==============================================================================
+void StereoWidthCtrlAudioProcessor::setParameterNotifyingHost(const int parameterIndex,
+	const float newValue)
+{
+	DBG("IN SETPARAM");
+	setParameter(parameterIndex, newValue);
+	sendParamChangeMessageToListeners(parameterIndex, newValue);
+}
+
 
 //==============================================================================
 void StereoWidthCtrlAudioProcessor::getStateInformation(MemoryBlock& destData)

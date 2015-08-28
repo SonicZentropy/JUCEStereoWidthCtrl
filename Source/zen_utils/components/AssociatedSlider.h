@@ -29,6 +29,7 @@ public:
 	AssociatedSlider(const String& componentName, AudioProcessorParameter* associatedParam, const String& desiredUnitLabel);
 
 	
+	void setGUIValueNotifyingHost(const float& newValue);
 	
 //	String getTextFromValue(double value) override;
 private:

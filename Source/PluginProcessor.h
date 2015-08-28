@@ -25,7 +25,7 @@ public:
 
 	//==============================================================================
 	void processBlock(AudioSampleBuffer& audioSampleBuffer, MidiBuffer& midiBuffer) override;
-
+	void setParameterNotifyingHost(const int parameterIndex, const float newValue);
 	//==============================================================================
 	void getStateInformation(MemoryBlock& destData) override;
 	void setStateInformation(const void* data, int sizeInBytes) override;
