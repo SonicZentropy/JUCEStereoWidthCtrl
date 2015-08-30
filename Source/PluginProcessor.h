@@ -83,9 +83,9 @@ public:
 	void ClearUIUpdateFlag() { UIUpdateFlag = false; };
 
 	//TEST STUFF
-	ScopedPointer<Slider> testSlider;
-	float floatVar;
-	float logVar;
+	//ScopedPointer<Slider> testSlider;
+	//float floatVar;
+	//float logVar;
 	
 	
 private:

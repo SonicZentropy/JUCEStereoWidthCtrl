@@ -1,4 +1,5 @@
 /*
+/*
   ==============================================================================
 
   This is an automatically generated GUI class created by the Introjucer!
@@ -15,7 +16,7 @@
   Copyright (c) 2015 - ROLI Ltd.
 
   ==============================================================================
-*/
+#1#
 
 #ifndef __JUCE_HEADER_D4563669377CDB84__
 #define __JUCE_HEADER_D4563669377CDB84__
@@ -38,7 +39,7 @@
                                                                     //[Comments]
 // THIS IS A REFERENCE CLASS ONLY FOR REFERENCING INTROJUCER-GENERATED GUI CODE, IT SHOULD NEVER BE ACTIVELY INCLUDED
                                                                     //[/Comments]
-*/
+#1#
 class StereoWidthCtrlAudioProcessorEditorRef  : public AudioProcessorEditor,
                                                 public Timer,
                                                 public SliderListener,
@@ -94,3 +95,4 @@ private:
 //[/EndFile]
 
 #endif   // __JUCE_HEADER_D4563669377CDB84__
+*/

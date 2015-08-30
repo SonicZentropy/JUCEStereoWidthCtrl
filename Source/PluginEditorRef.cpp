@@ -1,4 +1,5 @@
 /*
+/*
   ==============================================================================
 
   This is an automatically generated GUI class created by the Introjucer!
@@ -15,7 +16,7 @@
   Copyright (c) 2015 - ROLI Ltd.
 
   ==============================================================================
-*/
+#1#
 
 //[Headers] You can add your own extra header files here...
 #if 0
@@ -414,10 +415,11 @@ BEGIN_JUCER_METADATA
 </JUCER_COMPONENT>
 
 END_JUCER_METADATA
-*/
+#1#
 #endif
 
 
 //[EndFile] You can add extra defines here...
 #endif
 //[/EndFile]
+*/

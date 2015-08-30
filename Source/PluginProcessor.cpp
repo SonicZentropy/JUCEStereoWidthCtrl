@@ -284,7 +284,7 @@ void StereoWidthCtrlAudioProcessor::prepareToPlay (double inSampleRate, int samp
     // Use this method as the place to do any pre-playback
     // initialisation that you need..
 	//sampleRate = inSampleRate;
-	samplesPerBlock = samplesPerBlock;
+	//samplesPerBlock = samplesPerBlock;
 }
 
 
