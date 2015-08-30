@@ -238,3 +238,4 @@ FakesAssemblies/
 /StereoWidthCtrl.jucer.bak
 /Builds/VisualStudio2015/StereoWidthCtrl_solution_suppressions.cfg
 /Builds/VisualStudio2015/StereoWidthCtrl_project_suppressions.cfg
+*.cppcheck
