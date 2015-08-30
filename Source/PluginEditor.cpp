@@ -7,7 +7,7 @@
   the "//[xyz]" and "//[/xyz]" sections will be retained when the file is loaded
   and re-saved.
 
-  Created with Introjucer version: 3.2.0
+  Created with Introjucer version: 3.2.0 
 
   ------------------------------------------------------------------------------
 
@@ -171,10 +171,10 @@ void StereoWidthCtrlAudioProcessorEditor::sliderValueChanged(Slider* sliderThatW
 		} else if (sliderThatWasMoved == gainSldCtrl)
 		{
 			try
-			{
+			{   
 				DBG("Gain slider value changing from: " + String(param->getValue()) + " to: " + static_cast<String>(sliderThatWasMoved->getValue()));
-				//param->setValueNotifyingHost(static_cast<float>(gainSldCtrl->getValue()));
-				dynamic_cast<AssociatedSlider*>(param)->setGUIValueNotifyingHost(static_cast<float>(gainSldCtrl->getValue()));
+				param->setValueNotifyingHost(static_cast<float>(gainSldCtrl->getValue()));
+				//dynamic_cast<AssociatedSlider*>(param)->setGUIValueNotifyingHost(static_cast<float>(gainSldCtrl->getValue()));
 				DBG("audioGainParam is now: " + static_cast<String>(param->getValue()));
 			}
 			catch (...)
@@ -187,8 +187,6 @@ void StereoWidthCtrlAudioProcessorEditor::sliderValueChanged(Slider* sliderThatW
 	{
 		DBG("Casting >" + sliderThatWasMoved->getName() +"< to AssociatedSlider* Failed: " + String(e.what()));
 	}
-	
-
 }
 
 void StereoWidthCtrlAudioProcessorEditor::associatedSliderValueChanged(AssociatedSlider* sliderThatWasMoved)

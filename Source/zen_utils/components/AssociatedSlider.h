@@ -28,6 +28,8 @@ public:
 	AssociatedSlider(const String& componentName, AudioProcessorParameter* associatedParam);	
 	AssociatedSlider(const String& componentName, AudioProcessorParameter* associatedParam, const String& desiredUnitLabel);
 
+	AudioProcessorParameter* getAssociatedParameter() { return associatedParameter; };
+	void setAssociatedParameter(AudioProcessorParameter* assocParam) { associatedParameter = assocParam; };
 	
 	void setGUIValueNotifyingHost(const float& newValue);
 	

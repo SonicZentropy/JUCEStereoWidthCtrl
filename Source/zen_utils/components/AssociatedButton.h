@@ -25,6 +25,8 @@ public:
 	AssociatedButton(const String& componentName, AudioProcessorParameter* associatedParam);
 	AssociatedButton(const String& componentName, AudioProcessorParameter* associatedParam, const String& desiredUnitLabel);
 
+	AudioProcessorParameter* getAssociatedParameter() { return associatedParameter; };
+
 private:
 	AudioProcessorParameter* associatedParameter;
 	String unitLabel;

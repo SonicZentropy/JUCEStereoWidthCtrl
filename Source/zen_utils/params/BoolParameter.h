@@ -16,8 +16,8 @@ namespace juce
 		BoolParameter(float defaultParameterValue, const String& paramName, const String& desiredUnitsLabel);
 		~BoolParameter();
 
-		bool BoolParameter::convertFloatToBoolean(const float& inFloat) const;
-		float BoolParameter::convertBooleanToFloat(const bool& inBool) const;
+		bool convertFloatToBoolean(const float& inFloat) const;
+		float convertBooleanToFloat(const bool& inBool) const;
 
 		virtual float getValue() const override;
 		bool getBooleanValue() const;

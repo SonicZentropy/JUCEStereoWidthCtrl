@@ -13,8 +13,11 @@
 #include "../JuceLibraryCode/JuceHeader.h"
 //#include "zen_utils/converters/DecibelConversions.h"
 #include "zen_utils/juce_zen_utils.h"
+//#include <ctime>
+//#include "boost/date_time/posix_time/posix_time.hpp"
+//#include <boost/date_time/microsec_time_clock.hpp>
 
-
+//using namespace boost::posix_time;
 
 void BufferSampleProcesses::processStereoWidth(float* LeftSample, float* RightSample, const float& widthIn)
 {
@@ -32,7 +35,7 @@ void BufferSampleProcesses::processStereoWidth(float* LeftSample, float* RightSa
 	return;
 }
 
-void BufferSampleProcesses::processGain(float* LeftSample, float* RightSample, const float& gainValue, const float& maximumDecibelsFromRange)
+void BufferSampleProcesses::processGain(float* LeftSample, float* RightSample, const float& gainValue, clock_t* inTime)
 {
 	//DBG("In Volume Clock Process gain is : " + String(audioGain));
 
@@ -40,7 +43,22 @@ void BufferSampleProcesses::processGain(float* LeftSample, float* RightSample, c
 	//float decibels = DecibelConversions::gainToDecibelRange<float>(gainValue, 12.0, -96.0);
 	//float testDec = Decibels::decibelsToGain<float>(gainValue, -96.0);
 	//float TESTrawGain = DecibelConversions::decibelsToGain<float>(gainValue, -96.0);
-	float rawGain = DecibelConversions::decibelRangeGainToRawDecibelGain<float>(gainValue, maximumDecibelsFromRange, -96.0);
+	//float rawGain = DecibelConversions::decibelRangeGainToRawDecibelGain<float>(gainValue, maximumDecibelsFromRange, -96.0);
+
+	bool shouldPrint = false;
+	if ( ( (clock() - *inTime ) / CLOCKS_PER_SEC) > 1.0)
+	{
+		shouldPrint = true;
+		*inTime = clock();
+	}
+	 
+	if (shouldPrint) DBG("Raw value being processed: " + String(gainValue));
+	float valueInDecibels = DecibelConversions::mapNormalizedValueToDecibels<float>(gainValue, 0.0, 1.0, 0.5, -96.0, 12.0, 0.0);
+	if (shouldPrint) DBG("Raw value converted to decibels to be processed: " + String(valueInDecibels));
+	float decibelsToRawGain = DecibelConversions::decibelsToGain<float>(valueInDecibels, -96.0f);
+	if (shouldPrint) DBG("Decibels converted to raw gain which will be used by each sample: " + String(decibelsToRawGain));
+	float rawGain = decibelsToRawGain;
+	
 	*LeftSample = *LeftSample * rawGain;
 	*RightSample = *RightSample * rawGain;
 }

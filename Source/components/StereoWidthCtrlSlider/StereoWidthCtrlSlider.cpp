@@ -16,17 +16,17 @@
 #endif
 
 
-StereoWidthCtrlSlider::StereoWidthCtrlSlider()
+/*StereoWidthCtrlSlider::StereoWidthCtrlSlider()
 {
 	throw std::logic_error("Invalid usage of StereoWidthCtrlSlider Constructor, should never call it with no parameters");
 }
 
 
 StereoWidthCtrlSlider::StereoWidthCtrlSlider(const String& componentName) 
-	: AssociatedSlider(componentName)
+	//: AssociatedSlider(componentName)
 {
 	throw std::logic_error("Invalid usage of StereoWidthCtrlSlider Constructor, should never call it with only one parameter");
-}
+}*/
 
 StereoWidthCtrlSlider::StereoWidthCtrlSlider(const String& componentName, AudioProcessorParameter* associatedParam)
 	: AssociatedSlider(componentName, associatedParam)

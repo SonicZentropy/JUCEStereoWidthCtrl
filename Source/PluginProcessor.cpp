@@ -17,6 +17,7 @@
 
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
+#include <ctime>
 
 using namespace juce;
 //==============================================================================
@@ -31,6 +32,7 @@ StereoWidthCtrlAudioProcessor::StereoWidthCtrlAudioProcessor()
  	addParameter(invertLeftParam = new BoolParameter(0.0f, "InvertLeft"));
  	addParameter(invertRightParam = new BoolParameter(0.0f, "InvertRight"));
 	debugPrintTimer = 0;
+	startTime = clock();
 
 	//widthControl = new StereoWidthCtrlSlider("StereoWidthCtrlSlider", stereoWidthParam);
 	
@@ -113,7 +115,7 @@ void StereoWidthCtrlAudioProcessor::processBlock(AudioSampleBuffer& buffer, Midi
 					debugPrintTimer = 0;
 				}
 				
-				BufferSampleProcesses::processGain(&leftData[i], &rightData[i], audioGainParam->getValue(), 12.0);
+				BufferSampleProcesses::processGain(&leftData[i], &rightData[i], audioGainParam->getValue(), &startTime);
 
 			}
 		}

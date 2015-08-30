@@ -1,23 +1,49 @@
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2015
-Project("{A129F93C-CB06-BAD3-1CD9-84A36384FD3C}") = "StereoWidthCtrl", "StereoWidthCtrl.vcxproj", "{ADB9E2CC-033F-7A3F-2DA0-E2FE19D3448D}"
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "StereoWidthCtrl", "StereoWidthCtrl.vcxproj", "{ADB9E2CC-033F-7A3F-2DA0-E2FE19D3448D}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Testbed", "..\..\..\..\Testbed\Testbed\Testbed.vcxproj", "{B2349D2D-3E08-4A02-8031-C738B5131251}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
 		DebugLite|x64 = DebugLite|x64
+		DebugLite|x86 = DebugLite|x86
 		DebugLive|x64 = DebugLive|x64
+		DebugLive|x86 = DebugLive|x86
 		Release|x64 = Release|x64
+		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{ADB9E2CC-033F-7A3F-2DA0-E2FE19D3448D}.Debug|x64.ActiveCfg = Debug|x64
 		{ADB9E2CC-033F-7A3F-2DA0-E2FE19D3448D}.Debug|x64.Build.0 = Debug|x64
+		{ADB9E2CC-033F-7A3F-2DA0-E2FE19D3448D}.Debug|x86.ActiveCfg = Debug|x64
 		{ADB9E2CC-033F-7A3F-2DA0-E2FE19D3448D}.DebugLite|x64.ActiveCfg = DebugLite|x64
 		{ADB9E2CC-033F-7A3F-2DA0-E2FE19D3448D}.DebugLite|x64.Build.0 = DebugLite|x64
+		{ADB9E2CC-033F-7A3F-2DA0-E2FE19D3448D}.DebugLite|x86.ActiveCfg = DebugLite|x64
 		{ADB9E2CC-033F-7A3F-2DA0-E2FE19D3448D}.DebugLive|x64.ActiveCfg = DebugLive|x64
 		{ADB9E2CC-033F-7A3F-2DA0-E2FE19D3448D}.DebugLive|x64.Build.0 = DebugLive|x64
+		{ADB9E2CC-033F-7A3F-2DA0-E2FE19D3448D}.DebugLive|x86.ActiveCfg = DebugLive|x64
 		{ADB9E2CC-033F-7A3F-2DA0-E2FE19D3448D}.Release|x64.ActiveCfg = Release|x64
 		{ADB9E2CC-033F-7A3F-2DA0-E2FE19D3448D}.Release|x64.Build.0 = Release|x64
+		{ADB9E2CC-033F-7A3F-2DA0-E2FE19D3448D}.Release|x86.ActiveCfg = Release|x64
+		{B2349D2D-3E08-4A02-8031-C738B5131251}.Debug|x64.ActiveCfg = Debug|x64
+		{B2349D2D-3E08-4A02-8031-C738B5131251}.Debug|x64.Build.0 = Debug|x64
+		{B2349D2D-3E08-4A02-8031-C738B5131251}.Debug|x86.ActiveCfg = Debug|Win32
+		{B2349D2D-3E08-4A02-8031-C738B5131251}.Debug|x86.Build.0 = Debug|Win32
+		{B2349D2D-3E08-4A02-8031-C738B5131251}.DebugLite|x64.ActiveCfg = Debug|x64
+		{B2349D2D-3E08-4A02-8031-C738B5131251}.DebugLite|x86.ActiveCfg = Debug|Win32
+		{B2349D2D-3E08-4A02-8031-C738B5131251}.DebugLite|x86.Build.0 = Debug|Win32
+		{B2349D2D-3E08-4A02-8031-C738B5131251}.DebugLive|x64.ActiveCfg = Debug|x64
+		{B2349D2D-3E08-4A02-8031-C738B5131251}.DebugLive|x86.ActiveCfg = Debug|Win32
+		{B2349D2D-3E08-4A02-8031-C738B5131251}.DebugLive|x86.Build.0 = Debug|Win32
+		{B2349D2D-3E08-4A02-8031-C738B5131251}.Release|x64.ActiveCfg = Release|x64
+		{B2349D2D-3E08-4A02-8031-C738B5131251}.Release|x64.Build.0 = Release|x64
+		{B2349D2D-3E08-4A02-8031-C738B5131251}.Release|x86.ActiveCfg = Release|Win32
+		{B2349D2D-3E08-4A02-8031-C738B5131251}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
