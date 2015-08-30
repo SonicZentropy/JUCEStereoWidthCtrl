@@ -7,6 +7,7 @@
 *.userosscache
 *.sln.docstates
 *.filtergraph
+*.cfg
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
@@ -235,3 +236,5 @@ FakesAssemblies/
 /doxygen/docs/latex/refman.tex
 /doxygen/StereoWidthCtrl.doxyfile
 /StereoWidthCtrl.jucer.bak
+/Builds/VisualStudio2015/StereoWidthCtrl_solution_suppressions.cfg
+/Builds/VisualStudio2015/StereoWidthCtrl_project_suppressions.cfg
