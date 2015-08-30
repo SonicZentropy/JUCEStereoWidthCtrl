@@ -1,5 +1,5 @@
 #include "GainCtrlSlider.h"
-#include "../../zen_utils/juce_zen_utils.h"
+#include "../../zen_utils/Zen_Utils.h"
 
 #include "../../zen_utils/converters/DecibelConversions.h"
 #include <sstream>

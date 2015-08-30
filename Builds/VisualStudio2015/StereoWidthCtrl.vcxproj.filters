@@ -1494,6 +1494,9 @@
     <ClCompile Include="..\..\..\JUCE\modules\PluginParameters\PluginParameters.cpp">
       <Filter>Juce Library Code</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\zen_utils\ZenDebug.cpp">
+      <Filter>StereoWidthCtrl\Source\zen_utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Source\BufferSampleProcesses.h">
@@ -1516,9 +1519,6 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\zen_utils\components\AssociatedSlider.h">
       <Filter>StereoWidthCtrl\Source\zen_utils\components</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\zen_utils\juce_zen_utils.h">
-      <Filter>StereoWidthCtrl\Source\zen_utils</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\zen_utils\ZenParamUtils.h">
       <Filter>StereoWidthCtrl\Source\zen_utils</Filter>
@@ -2851,6 +2851,12 @@
     </ClInclude>
     <ClInclude Include="..\..\JuceLibraryCode\JuceHeader.h">
       <Filter>Juce Library Code</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\zen_utils\ZenDebug.h">
+      <Filter>StereoWidthCtrl\Source\zen_utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\zen_utils\Zen_Utils.h">
+      <Filter>StereoWidthCtrl\Source\zen_utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -17,7 +17,8 @@
 
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
-#include <ctime>
+#include "zen_utils/Zen_Utils.h"
+
 
 using namespace juce;
 //==============================================================================
@@ -32,7 +33,7 @@ StereoWidthCtrlAudioProcessor::StereoWidthCtrlAudioProcessor()
  	addParameter(invertLeftParam = new BoolParameter(0.0f, "InvertLeft"));
  	addParameter(invertRightParam = new BoolParameter(0.0f, "InvertRight"));
 	debugPrintTimer = 0;
-	startTime = clock();
+
 
 	//widthControl = new StereoWidthCtrlSlider("StereoWidthCtrlSlider", stereoWidthParam);
 	
@@ -79,11 +80,7 @@ void StereoWidthCtrlAudioProcessor::processBlock(AudioSampleBuffer& buffer, Midi
 			//Stereo Width Process
 			for (long i = 0; i < buffer.getNumSamples(); i++)
 			{
-/*				if (++debugPrintTimer >= 1000)
-				{
-						DBG("Incoming Width is: " + String(stereoWidthParam->getValue()));
-						debugPrintTimer = 0;
-				}*/
+
 
 				BufferSampleProcesses::processStereoWidth(&leftData[i], &rightData[i], stereoWidthParam->getValue());
 			}
@@ -109,13 +106,8 @@ void StereoWidthCtrlAudioProcessor::processBlock(AudioSampleBuffer& buffer, Midi
 			for (long i = 0; i < buffer.getNumSamples(); i++)
 			{
 				//gainControl.processBufferSample(&leftData[i], &rightData[i]);
-				if (++debugPrintTimer >= 1000)
-				{
-					//DBG("Incoming Gain is: " + String(audioGainParam->getValue()));
-					debugPrintTimer = 0;
-				}
 				
-				BufferSampleProcesses::processGain(&leftData[i], &rightData[i], audioGainParam->getValue(), &startTime);
+				BufferSampleProcesses::processGain(&leftData[i], &rightData[i], audioGainParam->getValue());
 
 			}
 		}

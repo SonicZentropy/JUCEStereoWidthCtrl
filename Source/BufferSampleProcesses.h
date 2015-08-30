@@ -18,8 +18,9 @@ public:
 
 	static void processStereoWidth(float* LeftSample, float* RightSample, const float& widthValue);
 
-	static void processGain(float* LeftSample, float* RightSample, const float& gainValue, clock_t* inTime);
+	static void processGain(float* LeftSample, float* RightSample, const float& gainValue);
 private:
-	
+	static clock_t inTime;
+	static bool shouldPrint;
 };
 #endif  // BUFFER_SAMPLE_PROCESSES_H_INCLUDED

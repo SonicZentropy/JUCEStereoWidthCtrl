@@ -49,7 +49,8 @@ StereoWidthCtrlAudioProcessorEditor::StereoWidthCtrlAudioProcessorEditor(StereoW
 	addAndMakeVisible(gainSldCtrl = new GainCtrlSlider("Gain Knob", audioProc->audioGainParam, "dB", 12.0));
 	//gainSldCtrl->setRange(-96, 12, 0.1);
 	gainSldCtrl->setRange(0.0, 1.0, 0.0);
-	gainSldCtrl->setSkewFactorFromMidPoint(0.05f);
+	gainSldCtrl->setSkewFactor(0.5);
+	//gainSldCtrl->setSkewFactorFromMidPoint(0.05f);
 	gainSldCtrl->setSliderStyle(Slider::LinearVertical);
 	gainSldCtrl->setTextBoxStyle(Slider::TextBoxBelow, false, 80, 20);
 	gainSldCtrl->setColour(Slider::backgroundColourId, Colour(0x00868181));

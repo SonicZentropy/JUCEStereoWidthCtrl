@@ -5,13 +5,9 @@
 
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "JuceHeader.h"
-#include "zen_utils/juce_zen_utils.h"
 #include "components/StereoWidthCtrlSlider/StereoWidthCtrlSlider.h"
 #include "components/GainCtrlSlider/GainCtrlSlider.h"
 #include "BufferSampleProcesses.h"
-//#include "PluginParameters.h"
-//#include "PluginEditor.h"
-#include <ctime>
 
 /// <summary> Handles main VST processing via reactions to automation
 /// 		  (which calls the .setParameter() method) as well as GUI handling from PluginEditor.cpp</summary>
@@ -100,7 +96,7 @@ private:
 //	VolumeInDBCtrl gainControl;
 	bool UIUpdateFlag;
 	int debugPrintTimer;
-	clock_t startTime;
+
 };
 
 

@@ -117,6 +117,9 @@
     <PostBuildEvent>
       <Command>xcopy "$(TargetPath)" "Z:\VSTs\VSTs\Test\"  /q /y</Command>
     </PostBuildEvent>
+    <BuildLog>
+      <Path>$(SolutionDir)$(Platform)\$(MSBuildProjectName).log</Path>
+    </BuildLog>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugLite|x64'">
     <Midl>
@@ -273,6 +276,9 @@
     <PostBuildEvent>
       <Command>xcopy "$(TargetPath)" "Z:\VSTs\VSTs\Test\"  /q /y</Command>
     </PostBuildEvent>
+    <BuildLog>
+      <Path>$(SolutionDir)$(Platform)\$(MSBuildProjectName).log</Path>
+    </BuildLog>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Source\BufferSampleProcesses.cpp" />
@@ -281,6 +287,7 @@
     <ClCompile Include="..\..\Source\zen_utils\components\AssociatedButton.cpp" />
     <ClCompile Include="..\..\Source\zen_utils\components\AssociatedParameter.cpp" />
     <ClCompile Include="..\..\Source\zen_utils\components\AssociatedSlider.cpp" />
+    <ClCompile Include="..\..\Source\zen_utils\ZenDebug.cpp" />
     <ClCompile Include="..\..\Source\zen_utils\ZenParamUtils.cpp" />
     <ClCompile Include="..\..\Source\zen_utils\ZenUtils.cpp" />
     <ClCompile Include="..\..\Source\components\GainCtrlSlider\GainCtrlSlider.cpp" />
@@ -1399,7 +1406,8 @@
     <ClInclude Include="..\..\Source\zen_utils\components\AssociatedButton.h" />
     <ClInclude Include="..\..\Source\zen_utils\components\AssociatedParameter.h" />
     <ClInclude Include="..\..\Source\zen_utils\components\AssociatedSlider.h" />
-    <ClInclude Include="..\..\Source\zen_utils\juce_zen_utils.h" />
+    <ClInclude Include="..\..\Source\zen_utils\Zen_Utils.h" />
+    <ClInclude Include="..\..\Source\zen_utils\ZenDebug.h" />
     <ClInclude Include="..\..\Source\zen_utils\ZenParamUtils.h" />
     <ClInclude Include="..\..\Source\zen_utils\ZenUtils.h" />
     <ClInclude Include="..\..\Source\components\GainCtrlSlider\GainCtrlSlider.h" />
