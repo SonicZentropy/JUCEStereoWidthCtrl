@@ -31,9 +31,6 @@ GainCtrlSlider::GainCtrlSlider(const String& componentName, AudioProcessorParame
 /// <returns>String representing the input value in decibelsFS + Unit label</returns>
 String GainCtrlSlider::getTextFromValue(double value)
 {
-	DBG("NormRange getValue: " + String(value));
-	
-
 	float decibelsFromGain = static_cast<float>(DecibelConversions::mapNormalizedValueToDecibels<float>(static_cast<float>(value), 0.0, 1.0, 0.5, -96, 12, 0.0));
 	if (decibelsFromGain <= -96.0f)
 	{

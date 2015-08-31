@@ -107,7 +107,7 @@ StereoWidthCtrlAudioProcessorEditor::StereoWidthCtrlAudioProcessorEditor(StereoW
 	lockGainBtnCtrl->setClickingTogglesState(true);
 	invertLeftBtnCtrl->setClickingTogglesState(true);
 	invertRightBtnCtrl->setClickingTogglesState(true);
-	gainSldCtrl->setAssociatedParameter(getProcessor()->audioGainParam);
+	gainSldCtrl->setAssociatedParameter(getProcessor()->audioGainParam); //WRONG
 //	DBG("Just set associated Parameter: " + String(getProcessor()->audioGainParam->getName(20)));
 }
 
@@ -172,7 +172,7 @@ void StereoWidthCtrlAudioProcessorEditor::sliderValueChanged(Slider* sliderThatW
 	}
 	catch (std::exception& e)
 	{
-		DBG("Casting >" + sliderThatWasMoved->getName() +"< to AssociatedSlider* Failed: " + String(e.what()));
+		DBG("Casting >" + sliderThatWasMoved->getName() +"< to AssociatedSlider* failed: " + String(e.what()));
 	}
 }
 
@@ -181,11 +181,14 @@ void StereoWidthCtrlAudioProcessorEditor::sliderValueChanged(Slider* sliderThatW
 void StereoWidthCtrlAudioProcessorEditor::buttonClicked(Button* buttonThatWasClicked)
 {
 	DBG("Entered method: StereoWidthCtrlAudioProcessorEditor:buttonClicked(buttonThatWasClicked)");
+	DBG("Button Clicked: " + String(buttonThatWasClicked->getName()));
+	DBG("Compare: " + buttonThatWasClicked->getName() + " to " + lockGainBtnCtrl->getName());
 
 	StereoWidthCtrlAudioProcessor* audioProc = getProcessor();
 
 	if (buttonThatWasClicked == bypassBtnCtrl)
 	{
+		DBG("Bypass clicked");
 	 	if (AudioProcessorParameter* param = audioProc->masterBypassParam)
 	 	{
 //	 		DBG("Changing buttonClicked");
@@ -194,8 +197,8 @@ void StereoWidthCtrlAudioProcessorEditor::buttonClicked(Button* buttonThatWasCli
 	 	}
 	}
 	else if (buttonThatWasClicked == muteBtnCtrl)
-	if (buttonThatWasClicked == muteBtnCtrl)
 	{
+		DBG("Mute button clicked");
 		if (AudioProcessorParameter* param = audioProc->muteAudioParam)
 		{
 	//		DBG("Changing muteButton param From: " + String(param->getValue()) + " To: " + String(muteBtnCtrl->getToggleState()));
@@ -203,34 +206,41 @@ void StereoWidthCtrlAudioProcessorEditor::buttonClicked(Button* buttonThatWasCli
 	//		DBG("Changed muteButton param To: " + String(param->getValue()));
 		}
 	}
-	 	else if (buttonThatWasClicked == lockGainBtnCtrl)
+	else if (buttonThatWasClicked == lockGainBtnCtrl)
+	{
+		DBG("Lock gain button clicked");
+	 	if (AudioProcessorParameter* param = audioProc->lockGainParam)
 	 	{
-	 		if (AudioProcessorParameter* param = audioProc->lockGainParam)
-	 		{
-	 			DBG("Changing Lock Gain");
+	 		DBG("Changing Lock Gain");
 	 			
-	 			if (lockGainBtnCtrl->getToggleState())
-	 			{
-					// #TODO: THIS IS ALL FUCKED UP
-					//throw std::logic_error("NO In lockGain button clicked");
-	 				gainSldCtrl->setValue(std::min(0.5f, static_cast<float>(gainSldCtrl->getValue())));
-	 				gainSldCtrl->repaint();
-	 				param->setValueNotifyingHost(static_cast<float>(gainSldCtrl->getValue())); 
+	 		if (lockGainBtnCtrl->getToggleState())
+	 		{
+				// #TODO: THIS IS ALL FUCKED UP
+				//throw std::logic_error("NO In lockGain button clicked");
+				DBG("gainSldCtrl->getValue() is: " + String(static_cast<float>(gainSldCtrl->getValue())));
+				float gainSldVal = static_cast<float>(gainSldCtrl->getValue());
+				float minVal = std::min(0.5f, gainSldVal);
+				DBG("Min value returns: " + String(minVal));
+	 			gainSldCtrl->setValue(minVal);
+				DBG("Gain is now: " + String(gainSldCtrl->getValue()));
+	 			gainSldCtrl->repaint();
+	 			param->setValueNotifyingHost(static_cast<float>(gainSldCtrl->getValue())); 
 	 				
-					//Pretty sure this is wrong
-	 			//	getProcessor()->RequestUIUpdate();
-	 			}
-	 			else
-	 			{
-					//throw std::logic_error("NO In lockGain button clicked");
-					//gainSldCtrl->setRange(-96, 12, 0.1);
-					param->setValueNotifyingHost(static_cast<float>(gainSldCtrl->getValue()));
-					gainSldCtrl->repaint();
-					//pretty sure this is wrong
-	 				getProcessor()->RequestUIUpdate();
-	 			}
+				//Pretty sure this is wrong
+	 		//	getProcessor()->RequestUIUpdate();
+	 		}
+	 		else
+	 		{
+				// #TODO: GET RID OF BOOL PARAMETER, GO BACK TO ALL FLOATS
+				//throw std::logic_error("NO In lockGain button clicked");
+				//gainSldCtrl->setRange(-96, 12, 0.1);
+				param->setValueNotifyingHost(static_cast<float>(gainSldCtrl->getValue()));
+				gainSldCtrl->repaint();
+				//pretty sure this is wrong
+	 			getProcessor()->RequestUIUpdate();
 	 		}
 	 	}
+	}
 	 	else if (buttonThatWasClicked == invertLeftBtnCtrl)
 	 	{
 	 		if (AudioProcessorParameter* param = audioProc->invertLeftParam)

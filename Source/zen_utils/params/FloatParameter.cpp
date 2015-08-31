@@ -43,7 +43,7 @@ float FloatParameter::getValue() const
 
 void FloatParameter::setValue(float newValue)
 {
-	DBG("Entered method: FloatParameter:setValue(newValue) with value: " + String(newValue));
+	//DBG("Entered method: FloatParameter:setValue(newValue) with value: " + String(newValue));
 	value = newValue;
 }
 
