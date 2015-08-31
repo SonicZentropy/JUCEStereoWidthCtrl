@@ -39,6 +39,7 @@ StereoWidthCtrlAudioProcessorEditor::StereoWidthCtrlAudioProcessorEditor(StereoW
 	
 	addAndMakeVisible(gainSldCtrl = new GainCtrlSlider("Gain Knob", audioProc->audioGainParam, "dB", 12.0));
 	gainSldCtrl->setRange(0.0, 1.0, 0.0);
+	// #TODO: Fix skew factor
 	gainSldCtrl->setSkewFactor(0.5);
 	gainSldCtrl->setSliderStyle(Slider::LinearVertical);
 	gainSldCtrl->setTextBoxStyle(Slider::TextBoxBelow, false, 80, 20);
@@ -93,9 +94,9 @@ StereoWidthCtrlAudioProcessorEditor::StereoWidthCtrlAudioProcessorEditor(StereoW
 	invertLabel->setColour(TextEditor::textColourId, Colours::black);
 	invertLabel->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
 
-	// #TODO: Change these to use getDefaultValue from param
-	gainSldCtrl->setDoubleClickReturnValue(true, 0.5f);
-	stereoWidthSldCtrl->setDoubleClickReturnValue(true, 0.5f);
+	//Set default double click reset values
+	gainSldCtrl->setDoubleClickReturnValue(true, gainSldCtrl->getAssociatedParameter()->getDefaultValue());
+	stereoWidthSldCtrl->setDoubleClickReturnValue(true, stereoWidthSldCtrl->getAssociatedParameter()->getDefaultValue());
 
 	// GUI Size 
 	setSize(375, 500);
@@ -148,21 +149,17 @@ void StereoWidthCtrlAudioProcessorEditor::resized()
 /// <param name="sliderThatWasMoved"> The slider that was moved.</param>
 void StereoWidthCtrlAudioProcessorEditor::sliderValueChanged(Slider* sliderThatWasMoved)
 {
-	//DBG("Entered method: StereoWidthCtrlAudioProcessorEditor:sliderValueChanged(sliderThatWasMoved)");
 	try
 	{
 		AudioProcessorParameter* param = static_cast<AssociatedSlider*>(sliderThatWasMoved)->getAssociatedParameter();
 		if (sliderThatWasMoved == stereoWidthSldCtrl)
 		{
-		//	DBG("Changing Width SliderValue from: " + String(param->getValue()) + " to: " + static_cast<String>(stereoWidthSldCtrl->getValue()));
 			param->setValueNotifyingHost(static_cast<float>(stereoWidthSldCtrl->getValue()));
 		} else if (sliderThatWasMoved == gainSldCtrl)
 		{
 			try
 			{   
-	//			DBG("Gain slider value changing from: " + String(param->getValue()) + " to: " + static_cast<String>(sliderThatWasMoved->getValue()));
 				param->setValueNotifyingHost(static_cast<float>(gainSldCtrl->getValue()));
-	//			DBG("audioGainParam is now: " + static_cast<String>(param->getValue()));
 			}
 			catch (...)
 			{
@@ -180,9 +177,9 @@ void StereoWidthCtrlAudioProcessorEditor::sliderValueChanged(Slider* sliderThatW
 
 void StereoWidthCtrlAudioProcessorEditor::buttonClicked(Button* buttonThatWasClicked)
 {
-	DBG("Entered method: StereoWidthCtrlAudioProcessorEditor:buttonClicked(buttonThatWasClicked)");
-	DBG("Button Clicked: " + String(buttonThatWasClicked->getName()));
-	DBG("Compare: " + buttonThatWasClicked->getName() + " to " + lockGainBtnCtrl->getName());
+	//DBG("Entered method: StereoWidthCtrlAudioProcessorEditor:buttonClicked(buttonThatWasClicked)");
+	//DBG("Button Clicked: " + String(buttonThatWasClicked->getName()));
+	//DBG("Compare: " + buttonThatWasClicked->getName() + " to " + lockGainBtnCtrl->getName());
 
 	StereoWidthCtrlAudioProcessor* audioProc = getProcessor();
 
@@ -207,57 +204,24 @@ void StereoWidthCtrlAudioProcessorEditor::buttonClicked(Button* buttonThatWasCli
 		}
 	}
 	else if (buttonThatWasClicked == lockGainBtnCtrl)
-	{
-		DBG("Lock gain button clicked");
-	 	if (AudioProcessorParameter* param = audioProc->lockGainParam)
+	{		
+	 	if (AudioProcessorParameter* lockParam = audioProc->lockGainParam)
 	 	{
-	 		DBG("Changing Lock Gain");
-	 			
-	 		if (lockGainBtnCtrl->getToggleState())
-	 		{
-				// #TODO: THIS IS ALL FUCKED UP
-				//throw std::logic_error("NO In lockGain button clicked");
-				DBG("gainSldCtrl->getValue() is: " + String(static_cast<float>(gainSldCtrl->getValue())));
-				float gainSldVal = static_cast<float>(gainSldCtrl->getValue());
-				float minVal = std::min(0.5f, gainSldVal);
-				DBG("Min value returns: " + String(minVal));
-	 			gainSldCtrl->setValue(minVal);
-				DBG("Gain is now: " + String(gainSldCtrl->getValue()));
-	 			gainSldCtrl->repaint();
-	 			param->setValueNotifyingHost(static_cast<float>(gainSldCtrl->getValue())); 
-	 				
-				//Pretty sure this is wrong
-	 		//	getProcessor()->RequestUIUpdate();
-	 		}
-	 		else
-	 		{
-				// #TODO: GET RID OF BOOL PARAMETER, GO BACK TO ALL FLOATS
-				//throw std::logic_error("NO In lockGain button clicked");
-				//gainSldCtrl->setRange(-96, 12, 0.1);
-				param->setValueNotifyingHost(static_cast<float>(gainSldCtrl->getValue()));
-				gainSldCtrl->repaint();
-				//pretty sure this is wrong
-	 			getProcessor()->RequestUIUpdate();
-	 		}
+			lockParam->setValueNotifyingHost(buttonThatWasClicked->getToggleState());
 	 	}
 	}
 	 	else if (buttonThatWasClicked == invertLeftBtnCtrl)
 	 	{
 	 		if (AudioProcessorParameter* param = audioProc->invertLeftParam)
 	 		{
-	 		//	DBG("Before Inverting Left is : " + String(param->getValue()));
 	 			param->setValueNotifyingHost(static_cast<float>(invertLeftBtnCtrl->getToggleStateValue().getValue()));
-	 		//	DBG("Inverted is: " + String(param->getValue()) + " From toggle : " + String(static_cast<float>(invertLeftBtnCtrl->getToggleStateValue().getValue())));
 	 		}
 	 	}
 	 	else if (buttonThatWasClicked == invertRightBtnCtrl)
 	 	{
 	 		if (AudioProcessorParameter* param = audioProc->invertRightParam )
 	 		{
-			//	DBG("Before Inverting Right is : " + String(param->getValue()));
 	 			param->setValueNotifyingHost(static_cast<float>(invertRightBtnCtrl->getToggleStateValue().getValue()));
-	 
-	 	//		DBG("Inverted is: " + String(param->getValue()) + " From toggle : " + String(static_cast<float>(invertRightBtnCtrl->getToggleStateValue().getValue())));
 	 		}
 	 	}
 }
@@ -269,17 +233,14 @@ void StereoWidthCtrlAudioProcessorEditor::timerCallback()
 	//exchange data between UI Elements and the Plugin (ourProcessor)
 	if (ourProcessor->needsUIUpdate())
 	{
-		// #TODO: THIS IS WRONG timerCallback()
-//		DBG("In editor->timeCallback");
-		muteBtnCtrl->setToggleState(1.0f == ourProcessor->muteAudioParam->getValue(), sendNotification);
-		bypassBtnCtrl->setToggleState(1.0f == ourProcessor->masterBypassParam->getValue(), sendNotification);
+		muteBtnCtrl->setToggleState(0.0f != ourProcessor->muteAudioParam->getValue(), sendNotification);
+		bypassBtnCtrl->setToggleState(0.0f != ourProcessor->masterBypassParam->getValue(), sendNotification);
+		lockGainBtnCtrl->setToggleState(0.0f != ourProcessor->lockGainParam->getValue(), sendNotification);
+		invertLeftBtnCtrl->setToggleState(0.0f != ourProcessor->lockGainParam->getValue(), sendNotification);
+		invertRightBtnCtrl->setToggleState(0.0f != ourProcessor->lockGainParam->getValue(), sendNotification);
 
-//		DBG("Changing Width SliderValue from proc: " + String(ourProcessor->stereoWidthParam->getValue()) + " to WidthSld/2: " + static_cast<String>(stereoWidthSldCtrl->getValue() ));	
 		stereoWidthSldCtrl->setValue(ourProcessor->stereoWidthParam->getValue() , sendNotification);
-
-//		DBG("Changing gainSldCtrl Value: " + String(gainSldCtrl->getValue()) + " to audioGainParam: " + String(ourProcessor->audioGainParam->getValue()) );
-		gainSldCtrl->setValue(Decibels::gainToDecibels(ourProcessor->audioGainParam->getValue()), sendNotification);
-//		DBG("gainSldCtrl value set (converted gain to Decibels) : " + String(gainSldCtrl->getValue()));
+		gainSldCtrl->setValue(ourProcessor->audioGainParam->getValue(), sendNotification);	
 		
 		ourProcessor->ClearUIUpdateFlag();
 	}

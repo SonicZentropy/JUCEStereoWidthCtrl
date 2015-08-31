@@ -48,6 +48,7 @@ StereoWidthCtrlAudioProcessor::~StereoWidthCtrlAudioProcessor()
 /// <param name="midiMessages">	[in,out] The MIDI messages. </param>
 void StereoWidthCtrlAudioProcessor::processBlock(AudioSampleBuffer& buffer, MidiBuffer& midiMessages)
 {
+	// #TODO: restructure so all processing happens in a single for loop instead of repeated
 	/*
 	// Assumes Stereo channels only
 	// Assumes Equal number of inputs and outputs
@@ -56,11 +57,17 @@ void StereoWidthCtrlAudioProcessor::processBlock(AudioSampleBuffer& buffer, Midi
 	{
 		float* leftData = buffer.getWritePointer(0);  //leftData references left channel now
 		float* rightData = buffer.getWritePointer(1); //right data references right channel now
-		
+		bool stereoWidthProcess = false, audioGainProcess = false, invertLeftProcess = false, invertRightProcess = false, lockGainProcess = false;
+		float stereoWidthValue, audioGainValue, invertLeftValue, invertRightValue, lockGainValue;
+		stereoWidthValue = stereoWidthParam->getValue();
+		audioGainValue = audioGainParam->getValue();
+		invertLeftValue = invertLeftParam->getValue();
+		invertRightValue = invertRightParam->getValue();
+		lockGainValue = lockGainParam->getValue();
+
 		//Handle Muting
 		if (muteAudioParam->getValue())  // MUTE ALL Audio
 		{
-
 			for (long i = 0; i < buffer.getNumSamples(); i++)
 			{
 				leftData[i] = 0.0f;
@@ -68,40 +75,74 @@ void StereoWidthCtrlAudioProcessor::processBlock(AudioSampleBuffer& buffer, Midi
 			}
 			return;
 		}		
-		else if (!muteAudioParam->getValue())
+		else // IF NOT BYPASSED AND NOT MUTED 
 		{
-			//Stereo Width Process
+			if (stereoWidthValue != stereoWidthParam->getDefaultValue())
+			{
+				stereoWidthProcess = true;
+			}
+			if (audioGainValue != audioGainParam->getDefaultValue())
+			{
+				audioGainProcess = true;
+			}
+			if (invertLeftValue != 0.0)
+			{
+				invertLeftProcess = true;
+			}
+			if (invertRightValue != 0.0)
+			{
+				invertRightProcess = true;
+			}
+			if (lockGainValue != 0.0 && audioGainValue > 0.5f)
+			{
+				lockGainProcess = true;
+				audioGainProcess = false;
+			}
+
 			for (long i = 0; i < buffer.getNumSamples(); i++)
 			{
-				BufferSampleProcesses::processStereoWidth(&leftData[i], &rightData[i], stereoWidthParam->getValue());
+				if (stereoWidthProcess)
+				{
+					BufferSampleProcesses::processStereoWidth(&leftData[i], &rightData[i], stereoWidthValue);
+				}
+				if(audioGainProcess)  //Don't process gain if it's default OR if gain's locked at 0db and gain value > 0db
+				{	
+					//Process gain
+					BufferSampleProcesses::processGain(&leftData[i], &rightData[i], audioGainValue);
+				}
+				// Handle polarity inversion
+				if (invertLeftProcess) leftData[i] *= -1;
+				if (invertRightProcess) rightData[i] *= -1;
+
 			}
 		}
-		else
-		{
-			throw std::logic_error("Logic Error In: StereoWidthCtrlAudioProcessor:processBlock()");
-		}
+		
 	
 		// Handle Gain
-		if (audioGainParam->getValue() != 0.5f) //0.5 = 0db Unity Gain
+		/*if (audioGainParam->getValue() != 0.5f) //0.5 = 0db Unity Gain
 		{
 			
-			for (long i = 0; i < buffer.getNumSamples(); i++)
+			if (lockGainParam->getValue() && audioGainParam->getValue() > 0.5f)
+			{
+			
+			}
+			else for (long i = 0; i < buffer.getNumSamples(); i++)
 			{
 				BufferSampleProcesses::processGain(&leftData[i], &rightData[i], audioGainParam->getValue());
 			}
-		}
+		}*/
 		// Handle polarity inversion
-		if (invertLeftParam->getValue() || invertRightParam->getValue())
+		/*if (invertLeftParam->getValue() || invertRightParam->getValue())
 		{
 			bool invertLeft=false, invertRight=false; //Loop optimization
 			if (invertLeftParam->getValue()) invertLeft = true;
-			if (invertLeftParam->getValue()) invertRight = true;
+			if (invertRightParam->getValue()) invertRight = true;
 			for (long i = 0; i < buffer.getNumSamples(); i++)
 			{
 				if (invertLeft) leftData[i] *= -1;
 				if (invertRight) rightData[i] *= -1;
 			}
-		}
+		}*/
 	}
 	
 }
