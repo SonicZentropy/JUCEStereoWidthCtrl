@@ -9,6 +9,7 @@ class BoolParameter : public AudioProcessorParameter
 	
 public:
 
+	BoolParameter();
 	BoolParameter(bool defaultParameterValue, const String& paramName);
 	BoolParameter(float defaultParameterValue, const String& paramName);
 	BoolParameter(bool defaultParameterValue, const String& paramName, const String& desiredUnitsLabel);
@@ -24,7 +25,7 @@ public:
 	virtual void setValue(float newValue) override;
 		
 	void setValue(bool newValue);
-		
+	void setValueFromFloat(const float& inFloat);
 	virtual float getDefaultValue() const override;
 	void setDefaultValue(float inValue);
 	void setDefaultValue(bool inValue);

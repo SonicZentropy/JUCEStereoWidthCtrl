@@ -17,24 +17,22 @@
 
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
-#include "zen_utils/Zen_Utils.h"
 #include "BufferSampleProcesses.h"
 
 
 //==============================================================================
 StereoWidthCtrlAudioProcessor::StereoWidthCtrlAudioProcessor()
 {
-	DBG("Entered method: StereoWidthCtrlAudioProcessor:StereoWidthCtrlAudioProcessor()");
+	//DBG("Entered method: StereoWidthCtrlAudioProcessor:StereoWidthCtrlAudioProcessor()");
  	addParameter(masterBypassParam = new BoolParameter(0.0f, "MasterBypass"));
  	addParameter(stereoWidthParam = new FloatParameter(0.5f, "StereoWidth"));
  	addParameter(muteAudioParam = new BoolParameter(0.0f, "MuteAudio"));
- 	addParameter(audioGainParam = new FloatParameter(0.251189f, "AudioGain")); //0.251189f is 0 gain with this range
+ 	addParameter(audioGainParam = new FloatParameter(0.5f, "AudioGain")); //0.5f is 0 gain with this range
  	addParameter(lockGainParam = new BoolParameter(0.0f, "LockGain"));
  	addParameter(invertLeftParam = new BoolParameter(0.0f, "InvertLeft"));
  	addParameter(invertRightParam = new BoolParameter(0.0f, "InvertRight"));
 
 	UIUpdateFlag = true; //flag UI for update
-
 }
 
 StereoWidthCtrlAudioProcessor::~StereoWidthCtrlAudioProcessor()

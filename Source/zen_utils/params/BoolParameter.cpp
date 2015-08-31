@@ -23,6 +23,11 @@
 
 #include "BoolParameter.h"
 
+BoolParameter::BoolParameter()
+{
+	//value = false;
+	//defaultValue = false;
+}
 	BoolParameter::BoolParameter(bool defaultParameterValue, const String& paramName)
 		: defaultValue(defaultParameterValue),
 		value(defaultParameterValue),
@@ -35,7 +40,7 @@
 		: name(paramName),
 		unitLabel("")
 	{
-		
+		setValueFromFloat(defaultParameterValue);
 		setDefaultValue(defaultParameterValue);
 	}
 
@@ -51,7 +56,7 @@
 		: name(paramName),
 		unitLabel(desiredUnitsLabel)
 	{
-	
+		setValueFromFloat(defaultParameterValue);
 		setDefaultValue(defaultParameterValue);
 	}
 
@@ -80,17 +85,23 @@
 	float BoolParameter::getValue() const
 	{
 		return convertBooleanToFloat(value);
+		//return value;
 	}
 
 	void BoolParameter::setValue(float newValue)
 	{
-		value = convertFloatToBoolean(newValue);
+		setValueFromFloat(newValue);
 
 	}
 	
 	void BoolParameter::setValue(bool newValue)
 	{
 		value = newValue;
+	}
+
+	void BoolParameter::setValueFromFloat(const float& inFloat)
+	{
+		value = convertFloatToBoolean(inFloat);
 	}
 	
 	void BoolParameter::setDefaultValue(float inFloat)

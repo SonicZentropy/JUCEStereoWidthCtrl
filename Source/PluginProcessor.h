@@ -4,6 +4,8 @@
 #define PLUGINPROCESSOR_H_INCLUDED
 
 #include "../JuceLibraryCode/JuceHeader.h"
+#include "zen_utils/params/FloatParameter.h"
+#include "zen_utils/params/BoolParameter.h"
 
 /// <summary> Handles main VST processing via reactions to automation
 /// 		  (which calls the .setParameter() method) as well as GUI handling from PluginEditor.cpp</summary>
@@ -63,36 +65,24 @@ public:
 	//==============================================================================
 
 	
-	//add boolean param derived class
-	AudioProcessorParameter* masterBypassParam;
- 	AudioProcessorParameter* stereoWidthParam;
- 	AudioProcessorParameter* muteAudioParam;
- 	AudioProcessorParameter* audioGainParam;
- 	AudioProcessorParameter* lockGainParam;
- 	AudioProcessorParameter* invertLeftParam;
- 	AudioProcessorParameter* invertRightParam;
-	//StereoWidthCtrlAudioProcessorEditor* guiEditor;
-	
-	
+	//DO NOT MAKE THESE SCOPED POINTERS B/C THEY'RE AUTO-MANAGED BY PROCESSOR LIST
+	BoolParameter* masterBypassParam;
+ 	FloatParameter* stereoWidthParam;
+ 	FloatParameter* audioGainParam;
+	BoolParameter* muteAudioParam;
+ 	BoolParameter* lockGainParam;
+ 	BoolParameter* invertLeftParam;
+ 	BoolParameter* invertRightParam;
 
 	bool needsUIUpdate() { return UIUpdateFlag; };
 	void RequestUIUpdate(){ UIUpdateFlag = true; };
 	void ClearUIUpdateFlag() { UIUpdateFlag = false; };
-
-	//TEST STUFF
-	//ScopedPointer<Slider> testSlider;
-	//float floatVar;
-	//float logVar;
-	
 	
 private:
-    //==============================================================================
-	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(StereoWidthCtrlAudioProcessor)
-	
-	//ScopedPointer<StereoWidthCtrlSlider> widthControl;
-//	VolumeInDBCtrl gainControl;
+
 	bool UIUpdateFlag;
-	int debugPrintTimer;
+	//==============================================================================
+	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(StereoWidthCtrlAudioProcessor)
 
 };
 

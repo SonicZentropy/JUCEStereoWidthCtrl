@@ -37,7 +37,7 @@ FloatParameter::~FloatParameter()
 
 float FloatParameter::getValue() const
 {
-	DBG("Entered method: FloatParameter:getValue()");
+//	DBG("Entered method: FloatParameter:getValue()");
 	return value;
 }
 

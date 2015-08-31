@@ -41,11 +41,11 @@ void BufferSampleProcesses::processGain(float* LeftSample, float* RightSample, c
 	*LeftSample = *LeftSample * rawGain;
 	*RightSample = *RightSample * rawGain;
 
-#ifdef DEBUG
+/*#ifdef DEBUG
 	shouldPrint = ZenDebug::isPrintTimerThresholdReached();
-	if (shouldPrint) DBG("Raw value being processed: " + String(gainValue));
+	if (shouldPrint) DBG("ZZZRaw value being processed: " + String(gainValue));
 	if (shouldPrint) DBG("Raw value converted to decibels to be processed: " + String(valueInDecibels));
 	if (shouldPrint) DBG("Decibels converted to raw gain which will be used by each sample: " + String(rawGain));
 	shouldPrint = false;
-#endif
+#endif*/
 }
