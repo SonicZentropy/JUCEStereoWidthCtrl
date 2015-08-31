@@ -48,7 +48,6 @@ StereoWidthCtrlAudioProcessor::~StereoWidthCtrlAudioProcessor()
 /// <param name="midiMessages">	[in,out] The MIDI messages. </param>
 void StereoWidthCtrlAudioProcessor::processBlock(AudioSampleBuffer& buffer, MidiBuffer& midiMessages)
 {
-	// #TODO: restructure so all processing happens in a single for loop instead of repeated
 	/*
 	// Assumes Stereo channels only
 	// Assumes Equal number of inputs and outputs
@@ -150,56 +149,71 @@ void StereoWidthCtrlAudioProcessor::processBlock(AudioSampleBuffer& buffer, Midi
 //==============================================================================
 void StereoWidthCtrlAudioProcessor::getStateInformation(MemoryBlock& destData)
 {
-	// #TODO: Implement State Information
 	// You should use this method to store your parameters in the memory block.
 	// You could do that either as raw data, or use the XML or ValueTree classes
 	// as intermediaries to make it easy to save and load complex data.
-	// 	XmlElement root("Root");
-	// 	XmlElement* el;
-	// 	el = root.createNewChildElement("Bypass");
-	// 	el->addTextElement(String(UserParams[MasterBypass]));
-	// 	el = root.createNewChildElement("StereoWidth");
-	// 	el->addTextElement(String(UserParams[StereoWidth]));
-	// 	el = root.createNewChildElement("MuteAudio");      // This shouldn't work? Was "Mute"
-	// 	el->addTextElement(String(UserParams[MuteAudio]));
-	// 	el = root.createNewChildElement("Gain");
-	// 	el->addTextElement(String(UserParams[AudioGain]));
-	// 	copyXmlToBinary(root, destData);
+	XmlElement root("Root");
+	XmlElement* el;
+	el = root.createNewChildElement("Bypass");
+	el->addTextElement(String(masterBypassParam->getValue()));
+	el = root.createNewChildElement("StereoWidth");
+	el->addTextElement(String(stereoWidthParam->getValue()));
+	el = root.createNewChildElement("MuteAudio");      // This shouldn't work? Was "Mute"
+	el->addTextElement(String(muteAudioParam->getValue()));
+	el = root.createNewChildElement("Gain");
+	el->addTextElement(String(audioGainParam->getValue()));
+	el = root.createNewChildElement("InvertLeft");
+	el->addTextElement(String(invertLeftParam->getValue()));
+	el = root.createNewChildElement("InvertRight");
+	el->addTextElement(String(invertRightParam->getValue()));
+	el = root.createNewChildElement("LockGain");
+	el->addTextElement(String(lockGainParam->getValue()));
+	copyXmlToBinary(root, destData);
 }
 
 void StereoWidthCtrlAudioProcessor::setStateInformation(const void* data, int sizeInBytes)
 {
 	// You should use this method to restore your parameters from this memory block,
 	// whose contents will have been created by the getStateInformation() call.
-	// 	XmlElement* pRoot = getXmlFromBinary(data, sizeInBytes);
-	// 	if (pRoot != nullptr)
-	// 	{
-	// 		forEachXmlChildElement((*pRoot), pChild)
-	// 		{
-	// 			if (pChild->hasTagName("Bypass"))
-	// 			{
-	// 				String text = pChild->getAllSubText();
-	// 				setParameter(MasterBypass, text.getFloatValue());
-	// 			}
-	// 			else if (pChild->hasTagName("StereoWidth"))
-	// 			{
-	// 				String text = pChild->getAllSubText();
-	// 				setParameter(StereoWidth, text.getFloatValue() / 2.0f);
-	// 			}
-	// 			else if (pChild->hasTagName("MuteAudio"))  //This shouldn't work?  Switch MuteAudio to Mute
-	// 			{
-	// 				String text = pChild->getAllSubText();
-	// 				setParameter(StereoWidth, text.getFloatValue());
-	// 			}
-	// 			else if (pChild->hasTagName("Gain"))
-	// 			{
-	// 				String text = pChild->getAllSubText();
-	// 				setParameter(StereoWidth, text.getFloatValue());
-	// 			}
-	// 		}
-	// 		delete pRoot;
-	// 		UIUpdateFlag = true;
-	//	}
+	XmlElement* pRoot = getXmlFromBinary(data, sizeInBytes);
+	if (pRoot != nullptr)
+	{
+		forEachXmlChildElement((*pRoot), pChild)
+		{
+			if (pChild->hasTagName("Bypass"))
+			{
+				String text = pChild->getAllSubText();
+				setParameter(masterBypassParam->getParameterIndex(), text.getFloatValue());
+			} else if (pChild->hasTagName("StereoWidth"))
+			{
+				String text = pChild->getAllSubText();
+				setParameter(stereoWidthParam->getParameterIndex(), text.getFloatValue() / 2.0f);
+			} else if (pChild->hasTagName("MuteAudio"))  //This shouldn't work?  Switch MuteAudio to Mute
+			{
+				String text = pChild->getAllSubText();
+				setParameter(muteAudioParam->getParameterIndex(), text.getFloatValue());
+			} else if (pChild->hasTagName("Gain"))
+			{
+				String text = pChild->getAllSubText();
+				setParameter(audioGainParam->getParameterIndex(), text.getFloatValue());
+			} else if (pChild->hasTagName("InvertLeft"))
+			{
+				String text = pChild->getAllSubText();
+				setParameter(invertLeftParam->getParameterIndex(), text.getFloatValue());
+			} else if (pChild->hasTagName("InvertRight"))
+			{
+				String text = pChild->getAllSubText();
+				setParameter(invertRightParam->getParameterIndex(), text.getFloatValue());
+			} else if (pChild->hasTagName("LockGain"))
+			{
+				String text = pChild->getAllSubText();
+				setParameter(lockGainParam->getParameterIndex(), text.getFloatValue());
+			}
+		}
+		delete pRoot;
+		UIUpdateFlag = true;
+	}
+	
 }
 
 //==============================================================================

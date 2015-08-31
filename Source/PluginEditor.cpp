@@ -39,7 +39,6 @@ StereoWidthCtrlAudioProcessorEditor::StereoWidthCtrlAudioProcessorEditor(StereoW
 	
 	addAndMakeVisible(gainSldCtrl = new GainCtrlSlider("Gain Knob", audioProc->audioGainParam, "dB", 12.0));
 	gainSldCtrl->setRange(0.0, 1.0, 0.0);
-	// #TODO: Fix skew factor
 	gainSldCtrl->setSkewFactor(0.5);
 	gainSldCtrl->setSliderStyle(Slider::LinearVertical);
 	gainSldCtrl->setTextBoxStyle(Slider::TextBoxBelow, false, 80, 20);
