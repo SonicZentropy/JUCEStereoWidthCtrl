@@ -102,14 +102,14 @@ StereoWidthCtrlAudioProcessorEditor::StereoWidthCtrlAudioProcessorEditor(StereoW
 	setSize(375, 500);
 
 	getProcessor()->RequestUIUpdate(); //UI Update must be performed every time a new editor is constructed
-	startTimer(200); // Start timer poll with 200ms rate
+	startTimer(20); // Start timer poll with 20ms rate
 	bypassBtnCtrl->setClickingTogglesState(true);
 	muteBtnCtrl->setClickingTogglesState(true);
 	lockGainBtnCtrl->setClickingTogglesState(true);
 	invertLeftBtnCtrl->setClickingTogglesState(true);
 	invertRightBtnCtrl->setClickingTogglesState(true);
 	gainSldCtrl->setAssociatedParameter(getProcessor()->audioGainParam); //WRONG
-//	DBG("Just set associated Parameter: " + String(getProcessor()->audioGainParam->getName(20)));
+
 }
 
 ///
@@ -222,6 +222,7 @@ void StereoWidthCtrlAudioProcessorEditor::buttonClicked(Button* buttonThatWasCli
 	 		if (AudioProcessorParameter* param = audioProc->invertRightParam )
 	 		{
 	 			param->setValueNotifyingHost(static_cast<float>(invertRightBtnCtrl->getToggleStateValue().getValue()));
+				
 	 		}
 	 	}
 }
@@ -231,18 +232,24 @@ void StereoWidthCtrlAudioProcessorEditor::timerCallback()
 {
 	StereoWidthCtrlAudioProcessor* ourProcessor = getProcessor();
 	//exchange data between UI Elements and the Plugin (ourProcessor)
-	if (ourProcessor->needsUIUpdate())
-	{
-		muteBtnCtrl->setToggleState(0.0f != ourProcessor->muteAudioParam->getValue(), sendNotification);
-		bypassBtnCtrl->setToggleState(0.0f != ourProcessor->masterBypassParam->getValue(), sendNotification);
-		lockGainBtnCtrl->setToggleState(0.0f != ourProcessor->lockGainParam->getValue(), sendNotification);
-		invertLeftBtnCtrl->setToggleState(0.0f != ourProcessor->lockGainParam->getValue(), sendNotification);
-		invertRightBtnCtrl->setToggleState(0.0f != ourProcessor->lockGainParam->getValue(), sendNotification);
 
-		stereoWidthSldCtrl->setValue(ourProcessor->stereoWidthParam->getValue() , sendNotification);
-		gainSldCtrl->setValue(ourProcessor->audioGainParam->getValue(), sendNotification);	
+	if (ourProcessor->muteAudioParam->needsUIUpdate())
+		muteBtnCtrl->setToggleState(0.0f != ourProcessor->muteAudioParam->getValue(), dontSendNotification);
+	if (ourProcessor->masterBypassParam->needsUIUpdate())
+		bypassBtnCtrl->setToggleState(0.0f != ourProcessor->masterBypassParam->getValue(), dontSendNotification);
+	if (ourProcessor->lockGainParam->needsUIUpdate()) 
+		lockGainBtnCtrl->setToggleState(0.0f != ourProcessor->lockGainParam->getValue(), dontSendNotification);
+	if (ourProcessor->invertLeftParam->needsUIUpdate()) 
+		invertLeftBtnCtrl->setToggleState(0.0f != ourProcessor->invertLeftParam->getValue(), dontSendNotification);
+	if (ourProcessor->invertRightParam->needsUIUpdate()) 
+		invertRightBtnCtrl->setToggleState(0.0f != ourProcessor->invertRightParam->getValue(), dontSendNotification);
+
 		
-		ourProcessor->ClearUIUpdateFlag();
-	}
+	if (ourProcessor->stereoWidthParam->needsUIUpdate())	
+		stereoWidthSldCtrl->setValue(ourProcessor->stereoWidthParam->getValue(), dontSendNotification);		
+	if (ourProcessor->audioGainParam->needsUIUpdate()) 
+		gainSldCtrl->setValue(ourProcessor->audioGainParam->getValue(), dontSendNotification);
+		
+	//ourProcessor->ClearUIUpdateFlag(); //Shouldn't be needed anymore since it's effectively not doing anything	
 }
 //END==============================================================================

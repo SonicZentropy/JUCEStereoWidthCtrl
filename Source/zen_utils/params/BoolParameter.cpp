@@ -91,12 +91,13 @@ BoolParameter::BoolParameter()
 	void BoolParameter::setValue(float newValue)
 	{
 		setValueFromFloat(newValue);
-
+		requestUIUpdate = true;
 	}
 	
 	void BoolParameter::setValue(bool newValue)
 	{
 		value = newValue;
+		requestUIUpdate = true;
 	}
 
 	void BoolParameter::setValueFromFloat(const float& inFloat)
@@ -137,5 +138,22 @@ BoolParameter::BoolParameter()
 	float BoolParameter::getValueForText(const String& text) const
 	{
 		return text.getFloatValue();
+	}
+
+	void BoolParameter::setValueNotifyingHost(float newValue)
+	{
+		AudioProcessor* processor = getProcessor();
+		// This method can't be used until the parameter has been attached to a processor!
+		jassert(processor != nullptr && getParameterIndex() >= 0);
+		processor->setParameterNotifyingHost(getParameterIndex(), newValue);
+		requestUIUpdate = false;  //set this to false because change came from GUI
+		return;
+	}
+
+	bool BoolParameter::needsUIUpdate()
+	{
+		bool updateSet = requestUIUpdate;
+		requestUIUpdate = false;
+		return updateSet;
 	}
 

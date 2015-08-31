@@ -45,6 +45,7 @@ void FloatParameter::setValue(float newValue)
 {
 	//DBG("Entered method: FloatParameter:setValue(newValue) with value: " + String(newValue));
 	value = newValue;
+	requestUIUpdate = true;
 }
 
 float FloatParameter::getDefaultValue() const
@@ -60,6 +61,23 @@ String FloatParameter::getName(int maximumStringLength) const
 String FloatParameter::getLabel() const
 {
 	return unitLabel;
+}
+
+void FloatParameter::setValueNotifyingHost(float newValue)
+{
+	AudioProcessor* processor = getProcessor();
+	// This method can't be used until the parameter has been attached to a processor!
+	jassert(processor != nullptr && getParameterIndex() >= 0);
+	processor->setParameterNotifyingHost(getParameterIndex(), newValue);
+	requestUIUpdate = false;  //set this to false because change came from GUI
+	return;
+}
+
+bool FloatParameter::needsUIUpdate()
+{
+	bool updateSet = requestUIUpdate;
+	requestUIUpdate = false;
+	return updateSet;
 }
 
 float FloatParameter::getValueForText(const String& text) const

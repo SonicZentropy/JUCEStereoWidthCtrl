@@ -38,12 +38,16 @@ public:
 	virtual String getName(int maximumStringLength) const override;
 	virtual float getValueForText(const String& text) const override;
 	virtual String getLabel() const override;
+	// ReSharper disable once CppHidingFunction
+	void setValueNotifyingHost(float newValue); //Juce's AudioProcessorParameter method is hidden on purpose, don't want to make it virutal in case of updates to Juce causing me to fail to re-set it to virtual
 
+	bool needsUIUpdate();
 	void setLabel(const String& inLabel);
 	
 
 private:
 	float defaultValue, value;
+	bool requestUIUpdate;
 	String name, unitLabel;
 };
 
