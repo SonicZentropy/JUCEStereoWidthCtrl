@@ -14,8 +14,6 @@
 #ifndef ZEN_UTILS_DEBUG_H_INCLUDED
 #define ZEN_UTILS_DEBUG_H_INCLUDED
 #include <ctime>
-//#include "../../JuceLibraryCode/JuceHeader.h"
-
 
 class ZenDebug
 {
@@ -32,13 +30,5 @@ private:
 	static int numSecondsBetweenDebugPrints;
 	
 };
-//#if JUCE_DEBUG || DOXYGEN
-/** Writes a string to the standard error stream.
-This is only compiled in a debug build.
-@see Logger::outputDebugString
-*/
-//#define TIMERDBG(dbgtext)              if (shouldPrint) DBG(dbgtext)
-//#else
-//#define TIMERDBG(dbgtext)
-//#endif
+
 #endif  // ZEN_UTILS_DEBUG_H_INCLUDED

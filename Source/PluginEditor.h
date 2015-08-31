@@ -17,9 +17,8 @@
 
 #include "JuceHeader.h"
 #include "PluginProcessor.h"
-#include "zen_utils/Zen_Utils.h"
-//#include "AssociatedSlider.h"
-//#include <exception>
+#include "components/StereoWidthCtrlSlider/StereoWidthCtrlSlider.h"
+#include "components/GainCtrlSlider/GainCtrlSlider.h"
 
 //==============================================================================
 
@@ -49,19 +48,16 @@ public:
 
 	void paint(Graphics& g) override;
 	void resized() override;
-	void sliderValueChanged(Slider* sliderThatWasMoved) override;
-	void associatedSliderValueChanged(AssociatedSlider* sliderThatWasMoved);
-	void buttonClicked(Button* buttonThatWasClicked) override;
-	//ScopedPointer<GainCtrlSlider> getGainSldCtrl() { return gainSldCtrl; };
 
+
+	void sliderValueChanged(Slider* sliderThatWasMoved) override;
+
+	void buttonClicked(Button* buttonThatWasClicked) override;
 
 private:
 
 	AudioProcessor* processor;
-	//AudioProcessorParameter* getParameterFromComponent(const Component*) const;
-	// //AudioProcessorParameter* getParameterFromComponent(const Slider*) const;
 
-	//==============================================================================
  	ScopedPointer<StereoWidthCtrlSlider> stereoWidthSldCtrl;
  	ScopedPointer<TextButton> bypassBtnCtrl;
  	ScopedPointer<Label> widthLabel;
@@ -71,9 +67,8 @@ private:
  	ScopedPointer<ToggleButton> invertLeftBtnCtrl;
  	ScopedPointer<ToggleButton> invertRightBtnCtrl;
  	ScopedPointer<Label> invertLabel;
-	Slider* testSlider;
 	
-
+	
 	//==============================================================================
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (StereoWidthCtrlAudioProcessorEditor)
 };

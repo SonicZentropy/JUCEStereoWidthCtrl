@@ -22,76 +22,53 @@
 #pragma warning (disable : 4100 )
 
 #include "FloatParameter.h"
-#include <math.h>
 
-//using namespace juce;
-namespace juce
+FloatParameter::FloatParameter(float defaultParameterValue, const String& paramName)
+	: defaultValue(defaultParameterValue),
+	value(defaultParameterValue),
+	name(paramName)
 {
-	FloatParameter::FloatParameter(float defaultParameterValue, const String& paramName)
-		: defaultValue(defaultParameterValue),
-		value(defaultParameterValue),
-		name(paramName)
-	{
-	}
-	FloatParameter::~FloatParameter()
-	{
-		
-	}
-
-	float FloatParameter::getValue() const
-	{
-//		DBG("Entered method: FloatParameter:getValue()");
-		return value;
-	}
-
-	void FloatParameter::setValue(float newValue)
-	{
-		DBG("Entered method: FloatParameter:setValue(newValue) with value: " + String(newValue));
-		value = newValue;
-	}
-
-	float FloatParameter::getDefaultValue() const
-	{
-		return defaultValue;
-	}
-
-	String FloatParameter::getName(int maximumStringLength) const
-	{
-		return name;
-	}
-
-	String FloatParameter::getLabel() const
-	{
-		return "dB";
-	}
-
-	float FloatParameter::getValueForText(const String& text) const
-	{
-		return text.getFloatValue();
-	}
-
-// 	bool FloatParameter::isMetaParameter() const
-// 	{
-// 		throw std::logic_error("The method or operation is not implemented.");
-// 	}
-// 
-// 	int FloatParameter::getNumSteps() const
-// 	{
-// 		throw std::logic_error("The method or operation is not implemented.");
-// 	}
-// 
-// 	bool FloatParameter::isAutomatable() const
-// 	{
-// 		throw std::logic_error("The method or operation is not implemented.");
-// 	}
-// 	bool FloatParameter::isOrientationInverted() const
-// 	{
-// 		throw std::logic_error("The method or operation is not implemented.");
-// 	}
-// 
-// 	String FloatParameter::getText(float value, int) const
-// 	{
-// 		throw std::logic_error("The method or operation is not implemented.");
-// 	}
-
 }
+
+FloatParameter::~FloatParameter()
+{
+		
+}
+
+float FloatParameter::getValue() const
+{
+	DBG("Entered method: FloatParameter:getValue()");
+	return value;
+}
+
+void FloatParameter::setValue(float newValue)
+{
+	DBG("Entered method: FloatParameter:setValue(newValue) with value: " + String(newValue));
+	value = newValue;
+}
+
+float FloatParameter::getDefaultValue() const
+{
+	return defaultValue;
+}
+
+String FloatParameter::getName(int maximumStringLength) const
+{
+	return name;
+}
+
+String FloatParameter::getLabel() const
+{
+	return unitLabel;
+}
+
+float FloatParameter::getValueForText(const String& text) const
+{
+	return text.getFloatValue();
+}
+
+void FloatParameter::setLabel(const String& inLabel)
+{
+	unitLabel = inLabel;
+}
+

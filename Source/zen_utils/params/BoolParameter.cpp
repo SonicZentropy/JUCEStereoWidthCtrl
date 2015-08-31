@@ -22,11 +22,7 @@
 #pragma warning (disable : 4100 )
 
 #include "BoolParameter.h"
-#include <math.h>
 
-//using namespace juce;
-namespace juce
-{
 	BoolParameter::BoolParameter(bool defaultParameterValue, const String& paramName)
 		: defaultValue(defaultParameterValue),
 		value(defaultParameterValue),
@@ -39,7 +35,7 @@ namespace juce
 		: name(paramName),
 		unitLabel("")
 	{
-		setValue(defaultParameterValue);
+		
 		setDefaultValue(defaultParameterValue);
 	}
 
@@ -55,7 +51,7 @@ namespace juce
 		: name(paramName),
 		unitLabel(desiredUnitsLabel)
 	{
-		setValue(defaultParameterValue);
+	
 		setDefaultValue(defaultParameterValue);
 	}
 
@@ -132,30 +128,3 @@ namespace juce
 		return text.getFloatValue();
 	}
 
-	
-
-// 	bool BoolParameter::isMetaParameter() const
-// 	{
-// 		throw std::logic_error("The method or operation is not implemented.");
-// 	}
-// 
-// 	int BoolParameter::getNumSteps() const
-// 	{
-// 		throw std::logic_error("The method or operation is not implemented.");
-// 	}
-// 
-// 	bool BoolParameter::isAutomatable() const
-// 	{
-// 		throw std::logic_error("The method or operation is not implemented.");
-// 	}
-// 	bool BoolParameter::isOrientationInverted() const
-// 	{
-// 		throw std::logic_error("The method or operation is not implemented.");
-// 	}
-// 
-// 	String BoolParameter::getText(bool value, int) const
-// 	{
-// 		throw std::logic_error("The method or operation is not implemented.");
-// 	}
-
-}

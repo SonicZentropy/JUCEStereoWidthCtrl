@@ -201,9 +201,6 @@
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <OutputFile>$(IntDir)\StereoWidthCtrlx64.bsc</OutputFile>
     </Bscmake>
-    <PostBuildEvent>
-      <Command>xcopy &quot;$(TargetPath)&quot; &quot;Z:\VSTs\VSTs\Test\&quot;  /q /y</Command>
-    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Midl>
@@ -1182,7 +1179,6 @@
     <ClCompile Include="..\..\..\JUCE\modules\juce_gui_extra\native\juce_win32_WebBrowserComponent.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\..\..\JUCE\modules\juce_audio_plugin_client\AAX\juce_AAX_Wrapper.cpp"/>
     <ClCompile Include="..\..\..\JUCE\modules\juce_audio_basics\juce_audio_basics.cpp"/>
     <ClCompile Include="..\..\..\JUCE\modules\juce_audio_processors\juce_audio_processors.cpp"/>
     <ClCompile Include="..\..\..\JUCE\modules\juce_core\juce_core.cpp"/>
@@ -1192,21 +1188,6 @@
     <ClCompile Include="..\..\..\JUCE\modules\juce_gui_basics\juce_gui_basics.cpp"/>
     <ClCompile Include="..\..\..\JUCE\modules\juce_gui_extra\juce_gui_extra.cpp"/>
     <ClCompile Include="..\..\..\JUCE\modules\juce_audio_plugin_client\utility\juce_PluginUtilities.cpp"/>
-    <ClCompile Include="..\..\..\JUCE\modules\juce_audio_plugin_client\RTAS\juce_RTAS_DigiCode1.cpp">
-      <CallingConvention>StdCall</CallingConvention>
-    </ClCompile>
-    <ClCompile Include="..\..\..\JUCE\modules\juce_audio_plugin_client\RTAS\juce_RTAS_DigiCode2.cpp">
-      <CallingConvention>StdCall</CallingConvention>
-    </ClCompile>
-    <ClCompile Include="..\..\..\JUCE\modules\juce_audio_plugin_client\RTAS\juce_RTAS_DigiCode3.cpp">
-      <CallingConvention>StdCall</CallingConvention>
-    </ClCompile>
-    <ClCompile Include="..\..\..\JUCE\modules\juce_audio_plugin_client\RTAS\juce_RTAS_WinUtilities.cpp">
-      <CallingConvention>StdCall</CallingConvention>
-    </ClCompile>
-    <ClCompile Include="..\..\..\JUCE\modules\juce_audio_plugin_client\RTAS\juce_RTAS_Wrapper.cpp">
-      <CallingConvention>StdCall</CallingConvention>
-    </ClCompile>
     <ClCompile Include="..\..\..\JUCE\modules\juce_audio_plugin_client\VST\juce_VST_Wrapper.cpp"/>
     <ClCompile Include="..\..\..\JUCE\modules\juce_audio_plugin_client\VST3\juce_VST3_Wrapper.cpp"/>
   </ItemGroup>
@@ -1249,7 +1230,6 @@
     <ClInclude Include="..\..\..\JUCE\modules\juce_audio_basics\sources\juce_ToneGeneratorAudioSource.h"/>
     <ClInclude Include="..\..\..\JUCE\modules\juce_audio_basics\synthesisers\juce_Synthesiser.h"/>
     <ClInclude Include="..\..\..\JUCE\modules\juce_audio_basics\juce_audio_basics.h"/>
-    <ClInclude Include="..\..\..\JUCE\modules\juce_audio_plugin_client\RTAS\juce_RTAS_DigiCode_Header.h"/>
     <ClInclude Include="..\..\..\JUCE\modules\juce_audio_plugin_client\utility\juce_CarbonVisibility.h"/>
     <ClInclude Include="..\..\..\JUCE\modules\juce_audio_plugin_client\utility\juce_CheckSettingMacros.h"/>
     <ClInclude Include="..\..\..\JUCE\modules\juce_audio_plugin_client\utility\juce_FakeMouseMoveGenerator.h"/>
@@ -1629,7 +1609,6 @@
     <None Include="..\..\..\JUCE\modules\juce_graphics\juce_module_info"/>
     <None Include="..\..\..\JUCE\modules\juce_gui_basics\juce_module_info"/>
     <None Include="..\..\..\JUCE\modules\juce_gui_extra\juce_module_info"/>
-    <None Include="..\..\..\JUCE\modules\juce_audio_plugin_client\RTAS\juce_RTAS_WinResources.rsr"/>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include=".\resources.rc"/>

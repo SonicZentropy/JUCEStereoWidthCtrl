@@ -15,13 +15,8 @@
 #ifndef DECIBEL_CONVERSIONS_H_INCLUDED
 #define DECIBEL_CONVERSIONS_H_INCLUDED
 
-#include <algorithm>
-#include <iostream>
-
-//==============================================================================
-/**
-This class contains methods for converting decibel values.
-*/
+/// <summary>Decibel Conversion Utilities</summary>
+/// <remarks>	Zentropy, 8/30/2015. </remarks>
 class DecibelConversions
 {
 public:
@@ -30,26 +25,24 @@ public:
 	/// <param name="decibels">		  Input value in decibels</param>
 	/// <param name="minusInfinityDb">Value below which 0 is always returned, represents bottom of decibel range</param>
 	/// <returns>A raw Gain value such that 0.0 gain = minusInfinityDb, 1.0 Gain = 0.0dB, and Gain > 1.0 is decibel increase</returns>
-	template <typename Type>
-	static Type decibelsToGain(const Type decibels,
-		const Type minusInfinityDb = (Type)defaultMinusInfinitydB)
+	template <typename Type>	
+	static Type decibelsToGain(const Type decibels,	const Type minusInfinityDb = static_cast<Type>(defaultMinusInfinitydB) )
 	{
-		return decibels > minusInfinityDb ? std::pow((Type) 10.0, decibels * (Type) 0.05)
-			: Type();
+		return decibels > minusInfinityDb ? std::pow(static_cast<Type>(10.0), decibels * static_cast<Type>(0.05) )  : Type();
 	}
 
-/*	A gain of 1.0 = 0 dB, and lower gains map onto negative decibel values.
-	If the gain is 0 (or negative), then the method will return the value
-	provided as minusInfinityDb.
-	*/
-	//	template <typename Type>
-	//static Type gainToDecibels(const Type gain,const Type minusInfinityDb = (Type)defaultMinusInfinitydB);
+
+
+	/// <summary>A gain of 1.0 = 0 dB, and lower gains map onto negative decibel values.
+	///	If the gain is 0 (or negative), then the method will return the value 
+	/// provided as minusInfinityDb.</summary>
+	/// <param name="gain">			  The gain.</param>
+	/// <param name="minusInfinityDb">The minus infinity database.</param>
+	/// <returns>A Type.</returns>
 	template <typename Type>
-	static Type gainToDecibels(const Type gain,
-		const Type minusInfinityDb = (Type)defaultMinusInfinitydB)
+	static Type gainToDecibels(const Type gain, const Type minusInfinityDb = static_cast<Type>(defaultMinusInfinitydB) )
 	{
-		return gain > Type() ? (Type)std::log10(gain) * (Type) 20.0
-			: minusInfinityDb;
+		return gain > Type() ? static_cast<Type>(std::log10(gain) * static_cast<Type>(20.0) ) : minusInfinityDb;
 	}
 
 	/// <summary>Converts input Decibel contained within specified range to a normalized 0-1 value</summary>
@@ -60,8 +53,7 @@ public:
 	template <typename Type>
 	static Type decibelRangeToGain(const Type decibels, const Type maximumDecibels, const Type minusInfinityDb)
 	{
-		return decibels > minusInfinityDb ? std::pow((Type) 10.0, (decibels - maximumDecibels) * (Type) 0.05)
-			: Type();
+		return decibels > minusInfinityDb ? std::pow(static_cast<Type>(10.0, (decibels - maximumDecibels) * static_cast<Type>(0.05) ) ) : Type();
 	}
 
 	/// <summary>INCORRECTConverts a normalized (0.0-1.0) gain value to decibels in a given range</summary>
@@ -73,7 +65,7 @@ public:
 	static Type gainToDecibelRange(const Type gain, const Type maximumDecibels, const Type minusInfinityDb)
 	{
 		throw std::logic_error("This method (DecibelConversions::gainToDecibelRange()  is INCORRECT as currently written because: Does not actually use a range.");
-		return gain > Type() ? ((Type)std::log10(gain) * (Type) 20.0) + (Type)maximumDecibels : minusInfinityDb;
+		//return gain > Type() ? (static_cast<Type>(std::log10(gain) * static_cast<Type>(20.0) + static_cast<Type>(maximumDecibels) ) ) : minusInfinityDb;
 	}
 
 	
@@ -162,161 +154,10 @@ public:
 	template <typename Type>
 	static Type decibelRangeGainToRawDecibelGain(const Type normGainValue, const Type maximumDecibels, const Type minusInfinityDb)
 	{
-		//return gain > Type() ? jmax(minusInfinityDb, ((Type)std::log10(gain) * (Type) 20.0) + (Type)maximumDecibels)
-		//	: minusInfinityDb;
-		long double decibels = DecibelConversions::gainToDecibelRange<Type>((Type)normGainValue, (Type)maximumDecibels, (Type)minusInfinityDb);
+		long double decibels = DecibelConversions::gainToDecibelRange<Type>(static_cast<Type>(normGainValue), static_cast<Type>(maximumDecibels), static_cast<Type>(minusInfinityDb));
 		return DecibelConversions::decibelsToGain<Type>(decibels, -96.0);
-		//return (Type) 10.0; DONE
-
+		
 	}
-
-
-	static long double logTest()
-	{		
-		return (20.0L * log10(0.5L)) + 12.0L;
-	}
-
-
-
-
-	/*static long double mapNormalizedValueToDecibels(const long double x)
-	{
-	// Given value between 0 and 1.0, map to decibels
-	if (x <= 0.5)
-	{
-	long double y;
-
-	y = x / 0.5;
-	y *= 96;
-	y -= 96;
-	return y;
-	}
-	else if (x > 0.5)
-	{
-	long double y = (x - 0.5);
-	y /= 0.5;
-	y *= 12;
-	return y;
-	}
-	else
-	{
-	std::cout << "SOMETHING TERRIBLE THIS WAY COMES" << std::endl;
-	return -1;
-	}
-	}*/
-
-	//DECIBELS TO GAIN linear normalized
-	/** Converts a decibel reading to a string, with the 'dB' suffix.
-	If the decibel value is lower than minusInfinityDb, the return value will
-	be "-INF dB".
-
-	cout << "**Using mapNormalizedValueToDecibels**" << endl;
-	long double mapped = DecibelConversions::mapNormalizedValueToDecibels(0.5);
-	cout << " input of 0.5 to decibel (expect 0.0): " << mapped << endl;
-
-	mapped = DecibelConversions::mapNormalizedValueToDecibels(0.0);
-	cout << " input of 0.0 to decibel (expect -96): " << mapped << endl;
-
-	mapped = DecibelConversions::mapNormalizedValueToDecibels(1.0);
-	cout << " input of 1.0 to decibel (expect 12.0): " << mapped << endl;
-
-	cout << "**Using mapDecibelsToProperNormal**" << endl;
-	mapped = DecibelConversions::mapDecibelsToProperNormal(0.0);
-	cout << " input of 0.0db to normal (expect 0.5): " << mapped << endl;
-
-	mapped = DecibelConversions::mapDecibelsToProperNormal(-96.0);
-	cout << " input of -96.0db to normal (expect 0.0): " << mapped << endl;
-
-	mapped = DecibelConversions::mapDecibelsToProperNormal(-95.99999999999L);
-	cout << " input of -95.99999999db to normal (expect 0.0): " << mapped << endl;
-
-	mapped = DecibelConversions::mapDecibelsToProperNormal(12.0);
-	cout << " input of 12.0db to normal (expect 1.0): " << mapped << endl;
-
-	mapped = DecibelConversions::mapDecibelsToProperNormal(11.99999999999L);
-	cout << " input of 11.99999db to normal (expect 1.0): " << mapped << endl;
-
-	/*
-	//OLD VERSION
-	static long double mapDecibelsToProperNormalizedValue(const long double y)
-	{
-	if (y < 0)
-	{
-	long double x;
-	x = y + 96;
-	x = x / 96;
-	x = x * 0.5;
-	return x;
-
-	} else if (y >= 0)
-	{
-	long double x;
-	x = (y / 12);
-	x = x* 0.5;
-	x = x + 0.5;
-	return x;
-	} else
-	{
-	std::cout << "SOMETHING TERRIBLE THIS WAY COMES" << std::endl;
-	return -1;
-	}
-	}*/
-
-
-	/*
-	//OLD VERSION
-	static long double mapNormalizedValueToDecibelGain(const long double x)
-	{
-	// Given value between 0 and 1.0, map to decibel gain between 0 and 3.98107
-	if (x <= 0.5)
-	{
-	long double y;
-
-	y = x / 0.5;
-	y *= 0;
-	y -= 0;
-	return y;
-	} else if (x > 0.5)
-	{
-	long double y = (x - 0.5);
-	y /= 0.5;
-	y *= 3.98107;
-	return y;
-	} else
-	{
-	std::cout << "SOMETHING TERRIBLE THIS WAY COMES" << std::endl;
-	return -1;
-	}
-	}
-
-
-	// OLD VERSION
-	static long double mapDecibelGainToProperNormal(const long double y)
-	{
-	if (y < 0)
-	{
-	long double x;
-	x = y + 0;
-	x = x / 0;  ///hmmm
-	x = x * 0.5;
-	return x;
-
-	} else if (y >= 0)
-	{
-	long double x;
-	x = (y / 3.98107);
-	x = x* 0.5;
-	x = x + 0.5;
-	return x;
-	} else
-	{
-	std::cout << "SOMETHING TERRIBLE THIS WAY COMES" << std::endl;
-	return -1;
-	}
-	}*/
-
-
-	
 
 private:
 	//==============================================================================
@@ -324,8 +165,6 @@ private:
 	{
 		defaultMinusInfinitydB = -96
 	};
-
-
 
 };
 

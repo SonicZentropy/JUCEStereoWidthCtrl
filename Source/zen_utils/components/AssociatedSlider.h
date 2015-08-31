@@ -14,26 +14,21 @@
 
 #ifndef ASSOCIATED_SLIDER_H_INCLUDED
 #define ASSOCIATED_SLIDER_H_INCLUDED
-// #TODO: Convert this to new superclass that only adds the param pointers
 
 #include "../JuceLibraryCode/JuceHeader.h"
-
 
 class AssociatedSlider : public Slider
 {
 public:
 
-	//AssociatedSlider();
-	//explicit AssociatedSlider(const String& componentName);
 	AssociatedSlider(const String& componentName, AudioProcessorParameter* associatedParam);	
 	AssociatedSlider(const String& componentName, AudioProcessorParameter* associatedParam, const String& desiredUnitLabel);
 
 	AudioProcessorParameter* getAssociatedParameter() { return associatedParameter; };
-	void setAssociatedParameter(AudioProcessorParameter* assocParam) { associatedParameter = assocParam; };
 	
+	void setAssociatedParameter(AudioProcessorParameter* assocParam) { associatedParameter = assocParam; };	
 	void setGUIValueNotifyingHost(const float& newValue);
 	
-//	String getTextFromValue(double value) override;
 private:
 	AudioProcessorParameter* associatedParameter;
 	String unitLabel;

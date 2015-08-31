@@ -4,10 +4,6 @@
 #define PLUGINPROCESSOR_H_INCLUDED
 
 #include "../JuceLibraryCode/JuceHeader.h"
-#include "JuceHeader.h"
-#include "components/StereoWidthCtrlSlider/StereoWidthCtrlSlider.h"
-#include "components/GainCtrlSlider/GainCtrlSlider.h"
-#include "BufferSampleProcesses.h"
 
 /// <summary> Handles main VST processing via reactions to automation
 /// 		  (which calls the .setParameter() method) as well as GUI handling from PluginEditor.cpp</summary>
@@ -22,7 +18,7 @@ public:
 
 	//==============================================================================
 	void processBlock(AudioSampleBuffer& audioSampleBuffer, MidiBuffer& midiBuffer) override;
-	void setParameterNotifyingHost(const int parameterIndex, const float newValue);
+//	void setParameterNotifyingHost(const int parameterIndex, const float newValue);
 	//==============================================================================
 	void getStateInformation(MemoryBlock& destData) override;
 	void setStateInformation(const void* data, int sizeInBytes) override;
@@ -45,6 +41,7 @@ public:
 
     //const String getParameterName (int index) override;
     //const String getParameterText (int index) override;
+
 
     const String getInputChannelName (int channelIndex) const override;
     const String getOutputChannelName (int channelIndex) const override;

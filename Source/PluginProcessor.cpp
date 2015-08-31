@@ -18,9 +18,9 @@
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
 #include "zen_utils/Zen_Utils.h"
+#include "BufferSampleProcesses.h"
 
 
-using namespace juce;
 //==============================================================================
 StereoWidthCtrlAudioProcessor::StereoWidthCtrlAudioProcessor()
 {
@@ -32,60 +32,35 @@ StereoWidthCtrlAudioProcessor::StereoWidthCtrlAudioProcessor()
  	addParameter(lockGainParam = new BoolParameter(0.0f, "LockGain"));
  	addParameter(invertLeftParam = new BoolParameter(0.0f, "InvertLeft"));
  	addParameter(invertRightParam = new BoolParameter(0.0f, "InvertRight"));
-	debugPrintTimer = 0;
 
-
-	//widthControl = new StereoWidthCtrlSlider("StereoWidthCtrlSlider", stereoWidthParam);
-	
-	//widthControl->setValue(stereoWidthParam->getValue()); //Push user width to the controller, should happen in constructor now
-	//gainControl.setGain(audioGainParam->getValue());
-	
 	UIUpdateFlag = true; //flag UI for update
 
 }
 
 StereoWidthCtrlAudioProcessor::~StereoWidthCtrlAudioProcessor()
 {
-	//delete widthControl;
+	
 }
 
 //==============================================================================
 
-/**
-* Method:    processBlock
-* FullName:  StereoWidthCtrlAudioProcessor::processBlock
-* Access:    public 
-* Qualifier:
-* @param     AudioSampleBuffer & buffer
-* @param     MidiBuffer & midiMessages
-* @return    void
-*/
+/// <summary>	Process the block. </summary>
+/// <remarks>	Zentropy, 8/30/2015. </remarks>
+/// <param name="buffer">	   	[in,out] The buffer. </param>
+/// <param name="midiMessages">	[in,out] The MIDI messages. </param>
 void StereoWidthCtrlAudioProcessor::processBlock(AudioSampleBuffer& buffer, MidiBuffer& midiMessages)
 {
 	/*
 	// Assumes Stereo channels only
 	// Assumes Equal number of inputs and outputs
 	*/
-	if (getNumInputChannels() < 2 || masterBypassParam->getValue())
-	{
-		//Do nothing, just pass through
-	}
-	else  //Process channel data here **MAIN LOOP**
+	if (getNumInputChannels() >= 2 && masterBypassParam->getValue() != 1.0)  //Process channel data here **MAIN LOOP**
 	{
 		float* leftData = buffer.getWritePointer(0);  //leftData references left channel now
 		float* rightData = buffer.getWritePointer(1); //right data references right channel now
+		
 		//Handle Muting
-		if (!muteAudioParam->getValue())
-		{
-			//Stereo Width Process
-			for (long i = 0; i < buffer.getNumSamples(); i++)
-			{
-
-
-				BufferSampleProcesses::processStereoWidth(&leftData[i], &rightData[i], stereoWidthParam->getValue());
-			}
-		}
-		else if (muteAudioParam->getValue())  // MUTE ALL Audio
+		if (muteAudioParam->getValue())  // MUTE ALL Audio
 		{
 
 			for (long i = 0; i < buffer.getNumSamples(); i++)
@@ -93,53 +68,45 @@ void StereoWidthCtrlAudioProcessor::processBlock(AudioSampleBuffer& buffer, Midi
 				leftData[i] = 0.0f;
 				rightData[i] = 0.0f;
 			}
+			return;
+		}		
+		else if (!muteAudioParam->getValue())
+		{
+			//Stereo Width Process
+			for (long i = 0; i < buffer.getNumSamples(); i++)
+			{
+				BufferSampleProcesses::processStereoWidth(&leftData[i], &rightData[i], stereoWidthParam->getValue());
+			}
 		}
 		else
 		{
-			//	throw 
+			throw std::logic_error("Logic Error In: StereoWidthCtrlAudioProcessor:processBlock()");
 		}
 	
 		// Handle Gain
-		if (audioGainParam->getValue() != 0.251189f && !muteAudioParam->getValue()) // 0.251189f is value for gain = 0.0db in set range -96->12
+		if (audioGainParam->getValue() != 0.5f) //0.5 = 0db Unity Gain
 		{
-			//gainControl.setGain(audioGainParam->getValue());
+			
 			for (long i = 0; i < buffer.getNumSamples(); i++)
 			{
-				//gainControl.processBufferSample(&leftData[i], &rightData[i]);
-				
 				BufferSampleProcesses::processGain(&leftData[i], &rightData[i], audioGainParam->getValue());
-
 			}
 		}
-		if (invertLeftParam->getValue() && !muteAudioParam->getValue())
+		// Handle polarity inversion
+		if (invertLeftParam->getValue() || invertRightParam->getValue())
 		{
+			bool invertLeft=false, invertRight=false; //Loop optimization
+			if (invertLeftParam->getValue()) invertLeft = true;
+			if (invertLeftParam->getValue()) invertRight = true;
 			for (long i = 0; i < buffer.getNumSamples(); i++)
 			{
-				leftData[i] *= -1;
+				if (invertLeft) leftData[i] *= -1;
+				if (invertRight) rightData[i] *= -1;
 			}
 		}
-		if (invertRightParam->getValue() && !muteAudioParam->getValue())
-		{
-			for (long i = 0; i < buffer.getNumSamples(); i++)
-			{
-				rightData[i] *= -1;
-			}
-		}
-
-
 	}
 	
 }
-
-//==============================================================================
-void StereoWidthCtrlAudioProcessor::setParameterNotifyingHost(const int parameterIndex,
-	const float newValue)
-{
-	DBG("IN SETPARAM");
-	setParameter(parameterIndex, newValue);
-	sendParamChangeMessageToListeners(parameterIndex, newValue);
-}
-
 
 //==============================================================================
 void StereoWidthCtrlAudioProcessor::getStateInformation(MemoryBlock& destData)

@@ -1,31 +1,15 @@
 #include "GainCtrlSlider.h"
-#include "../../zen_utils/Zen_Utils.h"
 
 #include "../../zen_utils/converters/DecibelConversions.h"
 #include <sstream>
 #include <iomanip>
 
 
-/*GainCtrlSlider::GainCtrlSlider()
-{
-	DBG("SHOULD NEVER CALL THIS GainCtrlSlider.cpp CONSTRUCTOR");
-	//normRange = new NormalisableRange<float>(-96.0f, 18.0f, 0.1f);
-}
-
-GainCtrlSlider::GainCtrlSlider(const String& componentName)
-	: AssociatedSlider(componentName)
-{
-	DBG("SHOULD NEVER CALL THIS GainCtrlSlider.cpp CONSTRUCTOR");
-	//normRange = new NormalisableRange<float>(-96.0f, 18.0f, 0.1f);
-}*/
-
 GainCtrlSlider::GainCtrlSlider(const String& componentName, AudioProcessorParameter* associatedParam) 
 	: AssociatedSlider(componentName, associatedParam)
 {
-	//normRange = new NormalisableRange<float>(-96.0f, 18.0f, 0.1f);
-	setValue( associatedParam->getValue() );
-	//setValue(Decibels::)
 	
+	setValue( associatedParam->getValue() );
 }
 
 GainCtrlSlider::GainCtrlSlider(const String& componentName, AudioProcessorParameter* associatedParam, const String& desiredUnitLabel)
@@ -93,36 +77,3 @@ GainCtrlSlider::~GainCtrlSlider()
 	//normRange = nullptr;
 	//delete normRange;
 }
-
-/*
-
-void GainCtrlSlider::setGainFromDB(float gain)
-{
-//	convertToDecibels(gain);
-	gainInDB = gain;
-	audioGain = convertDecibelstoValue(gain);
-	DBG("Setting Gain in GainCtrlSlider.cpp with DB = " + String(gain) + " and Value = " + String(audioGain));
-}
-
-void GainCtrlSlider::setGain(float gain)
-{
-	audioGain = gain;
-}
-
-
-float GainCtrlSlider::convertValueToDecibels(float gain)
-{
-	return static_cast<float>(Decibels::gainToDecibels(gain, 0.0f));
-}
-
-float GainCtrlSlider::convertDecibelstoValue(float gain)
-{
-	return static_cast<float>(Decibels::decibelsToGain(gain, -96.0f));
-}
-
-void GainCtrlSlider::processBufferSample(float* LeftSample, float* RightSample)
-{
-	//DBG("In Volume Clock Process gain is : " + String(audioGain));
-	*LeftSample = *LeftSample * audioGain;
-	*RightSample = *RightSample * audioGain;
-}*/

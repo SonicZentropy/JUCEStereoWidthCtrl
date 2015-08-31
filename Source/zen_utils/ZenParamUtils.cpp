@@ -20,131 +20,124 @@
 
 
 #include "ZenParamUtils.h"
-#include <math.h>
 
-//using namespace juce;
-namespace juce
+/// <summary>
+/// Use in setParameter
+/// </summary>
+/// <param name="x"></param>
+/// <param name="max"></param>
+/// <param name="min"></param>
+/// <param name="mid"></param>
+/// <returns></returns>
+float ZenParamUtils::warp(float x, float max, float min, float mid)
 {
-	/// <summary>
-	/// Use in setParameter
-	/// </summary>
-	/// <param name="x"></param>
-	/// <param name="max"></param>
-	/// <param name="min"></param>
-	/// <param name="mid"></param>
-	/// <returns></returns>
-	float ZenParamUtils::warp(float x, float max, float min, float mid)
-	{
-		float sf = warpCoefficients(max, min, mid);
+	float sf = warpCoefficients(max, min, mid);
 
-		float y = exp(log(x) / sf);
-		return min + (max - min) * y;
-	}
-
-	/// <summary>
-	/// Use in 'getParameter' and 'setParameterNotifyingHost'
-	/// </summary>
-	/// <param name="x">The x.</param>
-	/// <param name="max">The maximum.</param>
-	/// <param name="min">The minimum.</param>
-	/// <param name="mid">The mid.</param>
-	/// <returns>float.</returns>
-	float ZenParamUtils::inverseWarp(float x, float max, float min, float mid)
-	{
-		float sf = warpCoefficients(max, min, mid);
-
-		float n = (x - min) / (max - min);
-
-		return pow(n, sf);
-	}
-
-	/// <summary>
-	/// Returns skew coeff
-	/// </summary>
-	/// <param name="max">The maximum.</param>
-	/// <param name="min">The minimum.</param>
-	/// <param name="mid">The mid.</param>
-	/// <returns>float.</returns>
-	float ZenParamUtils::warpCoefficients(float max, float min, float mid)
-	{
-		float  skewFactor = log(0.5f) / log((mid - min)
-			/ (max - min));
-
-		return skewFactor;
-	}
-
-	/// <summary>
-	/// Returns boolean TRUE if input >= 0.5, else false
-	/// </summary>
-	/// <param name="inputValue">Normalized 0.0-1.0 range float value</param>
-	/// <returns>(bool) value converted to a bool</returns>
-	bool ZenParamUtils::convertNormalizedValueToBoolViaRange(float inputValue)
-	{
-		if (inputValue < 0.5)
-			return false;
-		else
-			return true;
-	}
-
-	/// <summary>
-	/// Takes boolean input value and returns 1.0 if the boolean is true, 0.0 if false
-	/// </summary>
-	/// <param name="inputBool">Arbitrary input boolean</param>
-	/// <returns>(float) 1.0 if input was true, 0.0 if input is false</returns>
-	float ZenParamUtils::convertBoolToFloatNormalized(bool inputBool)
-	{
-		if (inputBool)
-			return 1.0;
-		else
-			return 0.0;
-	}
-
-	/// <summary>
-	/// Given a float value normalized in the range 0-1, return the value linearly rescaled/denormalized
-	/// to the range of (float) min - max
-	/// </summary>
-	/// <param name="value">Input Value from arbitrary range (GUI Input Methods)</param>
-	/// <param name="minValue">Minimum of GUI value's range</param>
-	/// <param name="maxValue">Maximum of GUI value's range</param>
-	/// <returns></returns>
-	float ZenParamUtils::normalizeValueLinear ( 
-		const double& value, const double& minValue, const double& maxValue )
-	{
-		jassert(maxValue > minValue);
-
-		float normalized = static_cast<float>((value - minValue) / (maxValue - minValue));
-		jassert(normalized >= 0.0f && normalized <= 1.0f);
-		return normalized;
-	}
-
-	/// <summary>
-	/// Given a denormalized float variable plus range min/max, return a normalized 0-1 value
-	/// </summary>
-	/// <param name="normalized">The normalized input value</param>
-	/// <param name="minValue">Minimum value of desired range</param>
-	/// <param name="maxValue">Maximum value of desired range</param>
-	/// <returns>(float) Denormalized value between given min/max</returns>
-	float ZenParamUtils::denormalizeValueLinear ( 
-		const float& normalized, const double& minValue, const double& maxValue )
-	{
-		jassert(normalized >= 0.0f && normalized <= 1.0f);
-		jassert(maxValue > minValue);
-
-		return static_cast<float>(minValue + normalized * (maxValue - minValue));
-	}
-
-	float ZenParamUtils::convertValueToDecibels(const float& gain)
-	{
-		return static_cast<float>(Decibels::gainToDecibels(gain, 0.0f));
-	}
-
-	float ZenParamUtils::convertDecibelstoValue(const float& gain)
-	{
-		return static_cast<float>(Decibels::decibelsToGain(gain, -96.0f));
-	}
-
+	float y = exp(log(x) / sf);
+	return min + (max - min) * y;
 }
-#if 0
+
+/// <summary>
+/// Use in 'getParameter' and 'setParameterNotifyingHost'
+/// </summary>
+/// <param name="x">The x.</param>
+/// <param name="max">The maximum.</param>
+/// <param name="min">The minimum.</param>
+/// <param name="mid">The mid.</param>
+/// <returns>float.</returns>
+float ZenParamUtils::inverseWarp(float x, float max, float min, float mid)
+{
+	float sf = warpCoefficients(max, min, mid);
+	float n = (x - min) / (max - min);
+
+	return pow(n, sf);
+}
+
+/// <summary>
+/// Returns skew coeff
+/// </summary>
+/// <param name="max">The maximum.</param>
+/// <param name="min">The minimum.</param>
+/// <param name="mid">The mid.</param>
+/// <returns>float.</returns>
+float ZenParamUtils::warpCoefficients(float max, float min, float mid)
+{
+	float  skewFactor = log(0.5f) / log((mid - min)
+		/ (max - min));
+
+	return skewFactor;
+}
+
+/// <summary>
+/// Returns boolean TRUE if input >= 0.5, else false
+/// </summary>
+/// <param name="inputValue">Normalized 0.0-1.0 range float value</param>
+/// <returns>(bool) value converted to a bool</returns>
+bool ZenParamUtils::convertNormalizedValueToBoolViaRange(float inputValue)
+{
+	if (inputValue < 0.5)
+		return false;
+	else
+		return true;
+}
+
+/// <summary>
+/// Takes boolean input value and returns 1.0 if the boolean is true, 0.0 if false
+/// </summary>
+/// <param name="inputBool">Arbitrary input boolean</param>
+/// <returns>(float) 1.0 if input was true, 0.0 if input is false</returns>
+float ZenParamUtils::convertBoolToFloatNormalized(bool inputBool)
+{
+	if (inputBool)
+		return 1.0;
+	else
+		return 0.0;
+}
+
+/// <summary>
+/// Given a float value normalized in the range 0-1, return the value linearly rescaled/denormalized
+/// to the range of (float) min - max
+/// </summary>
+/// <param name="value">Input Value from arbitrary range (GUI Input Methods)</param>
+/// <param name="minValue">Minimum of GUI value's range</param>
+/// <param name="maxValue">Maximum of GUI value's range</param>
+/// <returns></returns>
+float ZenParamUtils::normalizeValueLinear ( 
+	const double& value, const double& minValue, const double& maxValue )
+{
+	jassert(maxValue > minValue);
+
+	float normalized = static_cast<float>((value - minValue) / (maxValue - minValue));
+	jassert(normalized >= 0.0f && normalized <= 1.0f);
+	return normalized;
+}
+
+/// <summary>
+/// Given a denormalized float variable plus range min/max, return a normalized 0-1 value
+/// </summary>
+/// <param name="normalized">The normalized input value</param>
+/// <param name="minValue">Minimum value of desired range</param>
+/// <param name="maxValue">Maximum value of desired range</param>
+/// <returns>(float) Denormalized value between given min/max</returns>
+float ZenParamUtils::denormalizeValueLinear ( 
+	const float& normalized, const double& minValue, const double& maxValue )
+{
+	jassert(normalized >= 0.0f && normalized <= 1.0f);
+	jassert(maxValue > minValue);
+
+	return static_cast<float>(minValue + normalized * (maxValue - minValue));
+}
+
+float ZenParamUtils::convertValueToDecibels(const float& gain)
+{
+	return static_cast<float>(Decibels::gainToDecibels(gain, 0.0f));
+}
+
+float ZenParamUtils::convertDecibelstoValue(const float& gain)
+{
+	return static_cast<float>(Decibels::decibelsToGain(gain, -96.0f));
+}
+
 /*************************************************
 The "warping" of the parameters, and converting their values to Strings seemed to be worth extracting into dedicated classes to keep TextEditor, Slider and host automation in synch.Especially since it has do be done over and over again at many different places in the code(if you have more than a few parameters)
 
@@ -158,4 +151,3 @@ Heavily summarized, I ended up with
 
 This might sound a bit over - engineered to some, but looking back it was well worth the effort.It turned out to be quite useful, not only for plugin automation and GUI, but also for (de)serializing the state of your audio - chain(undo / redo, copy / paste, command line parsing, unit - tests)
 */
-#endif

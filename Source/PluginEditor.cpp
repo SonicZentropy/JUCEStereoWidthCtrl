@@ -18,7 +18,7 @@
 */
 #include "PluginEditor.h"
 #include <exception>
-#include "zen_utils/components/AssociatedButton.h"
+
 
 
 using namespace juce;
@@ -29,16 +29,7 @@ StereoWidthCtrlAudioProcessorEditor::StereoWidthCtrlAudioProcessorEditor(StereoW
 {
 	//Audio Processor reference
 	StereoWidthCtrlAudioProcessor* audioProc = getProcessor();
-	
-	addAndMakeVisible (testSlider = new Slider ("Test Slider"));
-    testSlider->setTooltip (TRANS("Test"));
-    testSlider->setRange (0, 10, 0);
-    testSlider->setSliderStyle (Slider::LinearHorizontal);
-    testSlider->setTextBoxStyle (Slider::TextBoxLeft, false, 80, 20);
-    testSlider->addListener (this);	
-	
-	
-	// #TODO: Add setValue in Slider Constructor from Param or maybe post-setRange
+		
 	addAndMakeVisible(stereoWidthSldCtrl = new StereoWidthCtrlSlider("Width Factor Slider", audioProc->stereoWidthParam, "%"));
 	stereoWidthSldCtrl->setTooltip(TRANS("Stereo Width"));
 	stereoWidthSldCtrl->setRange(0, 1, 0.005);
@@ -47,10 +38,8 @@ StereoWidthCtrlAudioProcessorEditor::StereoWidthCtrlAudioProcessorEditor(StereoW
 	stereoWidthSldCtrl->addListener(this);
 	
 	addAndMakeVisible(gainSldCtrl = new GainCtrlSlider("Gain Knob", audioProc->audioGainParam, "dB", 12.0));
-	//gainSldCtrl->setRange(-96, 12, 0.1);
 	gainSldCtrl->setRange(0.0, 1.0, 0.0);
 	gainSldCtrl->setSkewFactor(0.5);
-	//gainSldCtrl->setSkewFactorFromMidPoint(0.05f);
 	gainSldCtrl->setSliderStyle(Slider::LinearVertical);
 	gainSldCtrl->setTextBoxStyle(Slider::TextBoxBelow, false, 80, 20);
 	gainSldCtrl->setColour(Slider::backgroundColourId, Colour(0x00868181));
@@ -105,14 +94,12 @@ StereoWidthCtrlAudioProcessorEditor::StereoWidthCtrlAudioProcessorEditor(StereoW
 	invertLabel->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
 
 	// #TODO: Change these to use getDefaultValue from param
-	gainSldCtrl->setDoubleClickReturnValue(true, 0.251189f); //0.251189f is 0 gain with this range
+	gainSldCtrl->setDoubleClickReturnValue(true, 0.5f);
 	stereoWidthSldCtrl->setDoubleClickReturnValue(true, 0.5f);
-	//LogParam* logParam = processor->getLogParam()
 
 	// GUI Size 
 	setSize(375, 500);
 
-	// TODO: CURRENT FIX GAIN SCALING
 	getProcessor()->RequestUIUpdate(); //UI Update must be performed every time a new editor is constructed
 	startTimer(200); // Start timer poll with 200ms rate
 	bypassBtnCtrl->setClickingTogglesState(true);
@@ -124,6 +111,7 @@ StereoWidthCtrlAudioProcessorEditor::StereoWidthCtrlAudioProcessorEditor(StereoW
 	DBG("Just set associated Parameter: " + String(getProcessor()->audioGainParam->getName(20)));
 }
 
+///
 StereoWidthCtrlAudioProcessorEditor::~StereoWidthCtrlAudioProcessorEditor()
 {
 	stereoWidthSldCtrl = nullptr;
@@ -163,7 +151,6 @@ void StereoWidthCtrlAudioProcessorEditor::sliderValueChanged(Slider* sliderThatW
 	DBG("Entered method: StereoWidthCtrlAudioProcessorEditor:sliderValueChanged(sliderThatWasMoved)");
 	try
 	{
-		//associatedSliderValueChanged(static_cast<AssociatedSlider*>(sliderThatWasMoved));
 		AudioProcessorParameter* param = static_cast<AssociatedSlider*>(sliderThatWasMoved)->getAssociatedParameter();
 		if (sliderThatWasMoved == stereoWidthSldCtrl)
 		{
@@ -175,7 +162,6 @@ void StereoWidthCtrlAudioProcessorEditor::sliderValueChanged(Slider* sliderThatW
 			{   
 				DBG("Gain slider value changing from: " + String(param->getValue()) + " to: " + static_cast<String>(sliderThatWasMoved->getValue()));
 				param->setValueNotifyingHost(static_cast<float>(gainSldCtrl->getValue()));
-				//dynamic_cast<AssociatedSlider*>(param)->setGUIValueNotifyingHost(static_cast<float>(gainSldCtrl->getValue()));
 				DBG("audioGainParam is now: " + static_cast<String>(param->getValue()));
 			}
 			catch (...)
@@ -190,63 +176,26 @@ void StereoWidthCtrlAudioProcessorEditor::sliderValueChanged(Slider* sliderThatW
 	}
 }
 
-void StereoWidthCtrlAudioProcessorEditor::associatedSliderValueChanged(AssociatedSlider* sliderThatWasMoved)
-{
-	DBG("Entered method: StereoWidthCtrlAudioProcessorEditor:associatedSliderValueChanged(sliderThatWasMoved)");
-	AudioProcessorParameter* param = sliderThatWasMoved->getAssociatedParameter();
-	if (sliderThatWasMoved == stereoWidthSldCtrl)
-	{
-		DBG("Changing Width SliderValue from: " + String(param->getValue()) + " to: " + static_cast<String>(stereoWidthSldCtrl->getValue() ));
-		param->setValueNotifyingHost(static_cast<float>(stereoWidthSldCtrl->getValue()));
-	}
-	else if (sliderThatWasMoved == gainSldCtrl)
-	{
-		try
-		{
-			DBG("Gain slider value changing from: " + String(param->getValue()) + " to: " + static_cast<String>(sliderThatWasMoved->getValue()));
-			param->setValueNotifyingHost( static_cast<float>(gainSldCtrl->getValue()) );
-			DBG("audioGainParam is now: " + static_cast<String>(param->getValue()));
-		}
-		catch (...)
-		{
-			DBG("Access Violation Exception Caught In PluginEditor.cpp sliderValueChanged ");
-		}
-	}
-}
-
-/*void StereoWidthCtrlAudioProcessorEditor::associatedButtonValueChanged(AssociatedButton buttonThatWasClicked)
-{
-	
-}*/
 
 
 void StereoWidthCtrlAudioProcessorEditor::buttonClicked(Button* buttonThatWasClicked)
 {
 	DBG("Entered method: StereoWidthCtrlAudioProcessorEditor:buttonClicked(buttonThatWasClicked)");
-	/*try
-	{
-		associatedButtonValueChanged(static_cast<AssociatedButton*>(buttonThatWasClicked));
-	}
-	catch (std::exception& e)
-	{
-		DBG("Casting >" + buttonThatWasClicked->getName() + "< to AssociatedButton* Failed: " + String(e.what()));
-	}*/
 
 	StereoWidthCtrlAudioProcessor* audioProc = getProcessor();
-	 	if (buttonThatWasClicked == bypassBtnCtrl)
+
+	if (buttonThatWasClicked == bypassBtnCtrl)
+	{
+	 	if (AudioProcessorParameter* param = audioProc->masterBypassParam)
 	 	{
-	 		//if (AudioProcessorParameter* param = getParameterFromComponent(buttonThatWasClicked))
-	 		if (AudioProcessorParameter* param = audioProc->masterBypassParam)
-	 		{
-	 			DBG("Changing buttonClicked");
-	 			param->setValue(static_cast<float>(bypassBtnCtrl->getToggleState()));
-	 			DBG("Button->getToggleState = " + String(bypassBtnCtrl->getToggleState()) + " and ourProc Bypass = " + String(param->getValue()));
-	 		}
+	 		DBG("Changing buttonClicked");
+	 		param->setValue(static_cast<float>(bypassBtnCtrl->getToggleState()));
+	 		DBG("Button->getToggleState = " + String(bypassBtnCtrl->getToggleState()) + " and ourProc Bypass = " + String(param->getValue()));
 	 	}
-		else if (buttonThatWasClicked == muteBtnCtrl)
+	}
+	else if (buttonThatWasClicked == muteBtnCtrl)
 	if (buttonThatWasClicked == muteBtnCtrl)
 	{
-		//if (AudioProcessorParameter* param = getParameterFromComponent(buttonThatWasClicked))
 		if (AudioProcessorParameter* param = audioProc->muteAudioParam)
 		{
 			DBG("Changing muteButton");
@@ -261,19 +210,20 @@ void StereoWidthCtrlAudioProcessorEditor::buttonClicked(Button* buttonThatWasCli
 	 			param->setValue(static_cast<float>(lockGainBtnCtrl->getToggleState()));
 	 			if (lockGainBtnCtrl->getToggleState())
 	 			{
-	 				//gainSldCtrl->setRange(-96, 0, 0.1);
-	 				gainSldCtrl->setValue(std::min(0.251189f, static_cast<float>(gainSldCtrl->getValue())));
+					// #TODO: THIS IS ALL FUCKED UP
+					throw std::logic_error("NO In lockGain button clicked");
+	 				/*gainSldCtrl->setValue(std::min(0.251189f, static_cast<float>(gainSldCtrl->getValue())));
 	 				gainSldCtrl->repaint();
 	 				param->setValue(Decibels::decibelsToGain(static_cast<float>(gainSldCtrl->getValue())));
-	 				//StereoWidthCtrlAudioProcessor* ourProcessor = getProcessor();
-	 
-	 				getProcessor()->RequestUIUpdate();
+	 				
+	 				getProcessor()->RequestUIUpdate();*/
 	 			}
 	 			else
 	 			{
-	 				gainSldCtrl->setRange(-96, 12, 0.1);
+					throw std::logic_error("NO In lockGain button clicked");
+					/*gainSldCtrl->setRange(-96, 12, 0.1);
 	 				gainSldCtrl->repaint();
-	 				getProcessor()->RequestUIUpdate();
+	 				getProcessor()->RequestUIUpdate();*/
 	 			}
 	 		}
 	 	}
@@ -305,6 +255,7 @@ void StereoWidthCtrlAudioProcessorEditor::timerCallback()
 	//exchange data between UI Elements and the Plugin (ourProcessor)
 	if (ourProcessor->needsUIUpdate())
 	{
+		// #TODO: THIS IS WRONG timerCallback()
 		DBG("In editor->timeCallback");
 		muteBtnCtrl->setToggleState(1.0f == ourProcessor->muteAudioParam->getValue(), sendNotification);
 		bypassBtnCtrl->setToggleState(1.0f == ourProcessor->masterBypassParam->getValue(), sendNotification);
@@ -319,9 +270,4 @@ void StereoWidthCtrlAudioProcessorEditor::timerCallback()
 		ourProcessor->ClearUIUpdateFlag();
 	}
 }
-
-
-
-
 //END==============================================================================
-
