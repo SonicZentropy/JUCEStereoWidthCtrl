@@ -1,5 +1,5 @@
 Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2013
+# Visual Studio 2015
 Project("{A129F93C-CB06-BAD3-1CD9-84A36384FD3C}") = "StereoWidthCtrl", "StereoWidthCtrl.vcxproj", "{ADB9E2CC-033F-7A3F-2DA0-E2FE19D3448D}"
 EndProject
 Global

@@ -2,7 +2,7 @@
 
 <JUCERPROJECT id="OOjbwb" name="StereoWidthCtrl" projectType="audioplug" version="1.0.0"
               bundleIdentifier="com.zentropy.StereoWidthCtrl" includeBinaryInAppConfig="1"
-              buildVST="1" buildVST3="1" buildAU="0" buildRTAS="0" buildAAX="0"
+              buildVST="1" buildVST3="0" buildAU="0" buildRTAS="0" buildAAX="0"
               pluginName="StereoWidthCtrl" pluginDesc="Change Stereo Width of Audio"
               pluginManufacturer="Zentropy" pluginManufacturerCode="ZenA" pluginCode="SCtl"
               pluginChannelConfigs="{2, 2}" pluginIsSynth="0" pluginWantsMidiIn="0"
@@ -14,108 +14,111 @@
   <MAINGROUP id="JHoKxW" name="StereoWidthCtrl">
     <GROUP id="{449F2A72-20F9-17C7-2809-5D6ADB01CDA1}" name="Source">
       <GROUP id="{C15EF325-0C33-9861-75F1-2FF0D6A7218E}" name="zen_utils">
-        <FILE id="AwAEu8" name="BoolParameter.cpp" compile="1" resource="0"
-              file="Source/zen_utils/BoolParameter.cpp"/>
-        <FILE id="Z48M3A" name="BoolParameter.h" compile="0" resource="0" file="Source/zen_utils/BoolParameter.h"/>
-        <FILE id="BwsTyk" name="FloatParameter.cpp" compile="1" resource="0"
-              file="Source/zen_utils/FloatParameter.cpp"/>
-        <FILE id="XaPD3r" name="FloatParameter.h" compile="0" resource="0"
-              file="Source/zen_utils/FloatParameter.h"/>
-        <FILE id="GRCDbi" name="juce_zen_utils.h" compile="0" resource="0"
-              file="Source/zen_utils/juce_zen_utils.h"/>
+        <GROUP id="{46D925AD-FBD5-9858-D14F-D9E85CFD8E0E}" name="converters">
+          <FILE id="f7YYl9" name="DecibelConversions.h" compile="0" resource="0"
+                file="Source/zen_utils/converters/DecibelConversions.h"/>
+        </GROUP>
+        <GROUP id="{9590649E-7D54-D296-9A41-E68DF55C5BED}" name="components">
+          <FILE id="UrN13L" name="AssociatedButton.h" compile="0" resource="0"
+                file="Source/zen_utils/components/AssociatedButton.h"/>
+          <FILE id="LN6oWt" name="AssociatedButton.cpp" compile="1" resource="0"
+                file="Source/zen_utils/components/AssociatedButton.cpp"/>
+          <FILE id="AGaeZk" name="AssociatedSlider.h" compile="0" resource="0"
+                file="Source/zen_utils/components/AssociatedSlider.h"/>
+          <FILE id="xe7wWf" name="AssociatedSlider.cpp" compile="1" resource="0"
+                file="Source/zen_utils/components/AssociatedSlider.cpp"/>
+        </GROUP>
+        <GROUP id="{BAEE0A9C-7188-6E0E-CBF4-49DEEF0C1544}" name="params">
+          <FILE id="CtHq8f" name="BoolParameter.h" compile="0" resource="0" file="Source/zen_utils/params/BoolParameter.h"/>
+          <FILE id="rh153h" name="BoolParameter.cpp" compile="1" resource="0"
+                file="Source/zen_utils/params/BoolParameter.cpp"/>
+          <FILE id="giRGLj" name="FloatParameter.h" compile="0" resource="0"
+                file="Source/zen_utils/params/FloatParameter.h"/>
+          <FILE id="iB5IUF" name="FloatParameter.cpp" compile="1" resource="0"
+                file="Source/zen_utils/params/FloatParameter.cpp"/>
+        </GROUP>
+        <FILE id="QKLtHA" name="zen_utils.h" compile="0" resource="0" file="Source/zen_utils/zen_utils.h"/>
+        <FILE id="rxpjwI" name="ZenDebug.h" compile="0" resource="0" file="Source/zen_utils/ZenDebug.h"/>
+        <FILE id="wa2A1x" name="ZenDebug.cpp" compile="1" resource="0" file="Source/zen_utils/ZenDebug.cpp"/>
+        <FILE id="dgi06i" name="ZenParamUtils.h" compile="0" resource="0" file="Source/zen_utils/ZenParamUtils.h"/>
         <FILE id="Xmkkle" name="ZenParamUtils.cpp" compile="1" resource="0"
               file="Source/zen_utils/ZenParamUtils.cpp"/>
-        <FILE id="dgi06i" name="ZenParamUtils.h" compile="0" resource="0" file="Source/zen_utils/ZenParamUtils.h"/>
-        <FILE id="v5Xcah" name="ZenUtils.cpp" compile="1" resource="0" file="Source/zen_utils/ZenUtils.cpp"/>
-        <FILE id="ufjEtz" name="ZenUtils.h" compile="0" resource="0" file="Source/zen_utils/ZenUtils.h"/>
       </GROUP>
-      <GROUP id="{42559586-EA01-54C0-F5FF-91A075BFB7B7}" name="ComponentOverrides">
-        <FILE id="PP5u1k" name="GainSlider.cpp" compile="1" resource="0" file="Source/GainSlider.cpp"/>
-        <FILE id="ST4STp" name="GainSlider.h" compile="0" resource="0" file="Source/GainSlider.h"/>
+      <GROUP id="{104AE82E-1250-F11B-35E4-B191404D7D4A}" name="components">
+        <GROUP id="{9BCE696A-216F-6923-111B-B1345868F3EF}" name="GainCtrlSlider">
+          <FILE id="KyLtl1" name="GainCtrlSlider.h" compile="0" resource="0"
+                file="Source/components/GainCtrlSlider/GainCtrlSlider.h"/>
+          <FILE id="NXXCcc" name="GainCtrlSlider.cpp" compile="1" resource="0"
+                file="Source/components/GainCtrlSlider/GainCtrlSlider.cpp"/>
+        </GROUP>
+        <GROUP id="{58E798AF-47E0-CABC-7804-1D45D9E3FCBD}" name="StereoWidthCtrlSlider">
+          <FILE id="rN7LK7" name="StereoWidthCtrlSlider.h" compile="0" resource="0"
+                file="Source/components/StereoWidthCtrlSlider/StereoWidthCtrlSlider.h"/>
+          <FILE id="rPCu8U" name="StereoWidthCtrlSlider.cpp" compile="1" resource="0"
+                file="Source/components/StereoWidthCtrlSlider/StereoWidthCtrlSlider.cpp"/>
+        </GROUP>
       </GROUP>
-      <GROUP id="{9BCE696A-216F-6923-111B-B1345868F3EF}" name="VolumeInDB">
-        <FILE id="WG5B4D" name="VolumeInDBCtrl.cpp" compile="1" resource="0"
-              file="Source/VolumeInDBCtrl.cpp"/>
-        <FILE id="FFGstp" name="VolumeInDBCtrl.h" compile="0" resource="0"
-              file="Source/VolumeInDBCtrl.h"/>
-      </GROUP>
-      <GROUP id="{58E798AF-47E0-CABC-7804-1D45D9E3FCBD}" name="StereoWidthCtrl">
-        <FILE id="Qi69rn" name="StereoWidthCtrl.h" compile="0" resource="0"
-              file="Source/StereoWidthCtrl.h"/>
-        <FILE id="nQzevI" name="StereoWidthCtrl.cpp" compile="1" resource="0"
-              file="Source/StereoWidthCtrl.cpp"/>
-      </GROUP>
-      <FILE id="uE8FNa" name="PluginProcessor.cpp" compile="1" resource="0"
-            file="Source/PluginProcessor.cpp"/>
+      <GROUP id="{F46E9D92-3A07-75C2-3273-B97B429663FA}" name="params"/>
+      <FILE id="pwCJAR" name="BufferSampleProcesses.h" compile="0" resource="0"
+            file="Source/BufferSampleProcesses.h"/>
+      <FILE id="nSqWBA" name="BufferSampleProcesses.cpp" compile="1" resource="0"
+            file="Source/BufferSampleProcesses.cpp"/>
       <FILE id="smIUhC" name="PluginProcessor.h" compile="0" resource="0"
             file="Source/PluginProcessor.h"/>
-      <FILE id="R36YnP" name="PluginEditor.cpp" compile="1" resource="0"
+      <FILE id="uE8FNa" name="PluginProcessor.cpp" compile="1" resource="0"
+            file="Source/PluginProcessor.cpp"/>
+      <FILE id="juqvB5" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
+      <FILE id="UNq7uV" name="PluginEditor.cpp" compile="1" resource="0"
             file="Source/PluginEditor.cpp"/>
-      <FILE id="VpHMdV" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
+      <FILE id="VpHMdV" name="PluginEditorRef.h" compile="0" resource="0"
+            file="Source/PluginEditorRef.h"/>
+      <FILE id="R36YnP" name="PluginEditorRef.cpp" compile="1" resource="0"
+            file="Source/PluginEditorRef.cpp"/>
     </GROUP>
   </MAINGROUP>
   <EXPORTFORMATS>
-    <VS2013 targetFolder="Builds/VisualStudio2013" vstFolder="c:\SDKs\VST3 SDK"
-            vst3Folder="c:\SDKs\VST3 SDK">
+    <VS2015 targetFolder="Builds/VisualStudio2015" vstFolder="">
       <CONFIGURATIONS>
-        <CONFIGURATION name="DebugLite" winWarningLevel="4" generateManifest="1" winArchitecture="x64"
-                       isDebug="1" optimisation="1" targetName="StereoWidthCtrlx64"
-                       postbuildCommand="xcopy &quot;$(TargetPath)&quot; &quot;Z:\VSTs\VSTs\Test\&quot;  /q /y"
-                       headerPath="..\.\Source\StereoWidthCtrl;" binaryPath=""/>
         <CONFIGURATION name="Debug" winWarningLevel="4" generateManifest="1" winArchitecture="x64"
                        isDebug="1" optimisation="1" targetName="StereoWidthCtrlx64"
-                       postbuildCommand="xcopy &quot;$(TargetPath)&quot; &quot;Z:\VSTs\VSTs\Test\&quot;  /q /y"
-                       headerPath="..\.\Source\StereoWidthCtrl;" binaryPath=""/>
-        <CONFIGURATION name="DebugNoAudio" winWarningLevel="4" generateManifest="1"
-                       winArchitecture="x64" isDebug="1" optimisation="1" targetName="StereoWidthCtrlx64"
-                       postbuildCommand="xcopy &quot;$(TargetPath)&quot; &quot;Z:\VSTs\VSTs\Test\&quot;  /q /y"
-                       headerPath="..\.\Source\StereoWidthCtrl;" binaryPath=""/>
+                       headerPath="..\.\Source\StereoWidthCtrl;" postbuildCommand="xcopy &quot;$(TargetPath)&quot; &quot;Z:\VSTs\VSTs\Test\&quot;  /q /y"
+                       warningsAreErrors="1"/>
+        <CONFIGURATION name="DebugLite" winWarningLevel="4" generateManifest="1" winArchitecture="x64"
+                       isDebug="1" optimisation="1" targetName="StereoWidthCtrlx64"
+                       headerPath="..\.\Source\StereoWidthCtrl;" postbuildCommand="xcopy &quot;$(TargetPath)&quot; &quot;Z:\VSTs\VSTs\Test\&quot;  /q /y"
+                       warningsAreErrors="1"/>
         <CONFIGURATION name="DebugLive" winWarningLevel="4" generateManifest="1" winArchitecture="x64"
                        isDebug="1" optimisation="1" targetName="StereoWidthCtrlx64"
-                       postbuildCommand="xcopy &quot;$(TargetPath)&quot; &quot;Z:\VSTs\VSTs\Test\&quot;  /q /y"
-                       headerPath="..\.\Source\StereoWidthCtrl;" binaryPath=""/>
+                       headerPath="..\.\Source\StereoWidthCtrl;" postbuildCommand=""
+                       warningsAreErrors="1"/>
         <CONFIGURATION name="Release" winWarningLevel="4" generateManifest="1" winArchitecture="x64"
                        isDebug="0" optimisation="3" targetName="StereoWidthCtrlx64"
-                       postbuildCommand="xcopy &quot;$(TargetPath)&quot; &quot;Z:\VSTs\VSTs\Test\&quot;  /q /y"
-                       headerPath="..\.\Source\StereoWidthCtrl;"/>
+                       headerPath="..\.\Source\StereoWidthCtrl;" postbuildCommand="xcopy &quot;$(TargetPath)&quot; &quot;Z:\VSTs\VSTs\Test\&quot;  /q /y"
+                       warningsAreErrors="1"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
-        <MODULEPATH id="juce_core" path="../JUCEMain/modules"/>
-        <MODULEPATH id="juce_events" path="../JUCEMain/modules"/>
-        <MODULEPATH id="juce_graphics" path="../JUCEMain/modules"/>
-        <MODULEPATH id="juce_data_structures" path="../JUCEMain/modules"/>
-        <MODULEPATH id="juce_gui_basics" path="../JUCEMain/modules"/>
-        <MODULEPATH id="juce_gui_extra" path="../JUCEMain/modules"/>
-        <MODULEPATH id="juce_audio_basics" path="../JUCEMain/modules"/>
-        <MODULEPATH id="juce_audio_processors" path="../JUCEMain/modules"/>
-        <MODULEPATH id="juce_audio_plugin_client" path="../JUCEMain/modules"/>
-        <MODULEPATH id="juce_audio_utils" path="../JUCEMain/modules"/>
-        <MODULEPATH id="juce_audio_formats" path="../JUCEMain/modules"/>
-        <MODULEPATH id="juce_audio_devices" path="../JUCEMain/modules"/>
-        <MODULEPATH id="juce_box2d" path="../JUCEMain/modules"/>
-        <MODULEPATH id="juce_cryptography" path="../JUCEMain/modules"/>
-        <MODULEPATH id="juce_opengl" path="../JUCEMain/modules"/>
-        <MODULEPATH id="juce_video" path="../JUCEMain/modules"/>
+        <MODULEPATH id="juce_gui_extra" path="../JUCE/modules"/>
+        <MODULEPATH id="juce_gui_basics" path="../JUCE/modules"/>
+        <MODULEPATH id="juce_graphics" path="../JUCE/modules"/>
+        <MODULEPATH id="juce_events" path="../JUCE/modules"/>
+        <MODULEPATH id="juce_data_structures" path="../JUCE/modules"/>
+        <MODULEPATH id="juce_core" path="../JUCE/modules"/>
+        <MODULEPATH id="juce_audio_processors" path="../JUCE/modules"/>
+        <MODULEPATH id="juce_audio_plugin_client" path="../JUCE/modules"/>
+        <MODULEPATH id="juce_audio_basics" path="../JUCE/modules"/>
       </MODULEPATHS>
-    </VS2013>
+    </VS2015>
   </EXPORTFORMATS>
   <MODULES>
     <MODULE id="juce_audio_basics" showAllCode="1" useLocalCopy="0"/>
-    <MODULE id="juce_audio_devices" showAllCode="1" useLocalCopy="0"/>
-    <MODULE id="juce_audio_formats" showAllCode="1" useLocalCopy="0"/>
     <MODULE id="juce_audio_plugin_client" showAllCode="1" useLocalCopy="0"/>
     <MODULE id="juce_audio_processors" showAllCode="1" useLocalCopy="0"/>
-    <MODULE id="juce_audio_utils" showAllCode="1" useLocalCopy="0"/>
-    <MODULE id="juce_box2d" showAllCode="1" useLocalCopy="0"/>
     <MODULE id="juce_core" showAllCode="1" useLocalCopy="0"/>
-    <MODULE id="juce_cryptography" showAllCode="1" useLocalCopy="0"/>
     <MODULE id="juce_data_structures" showAllCode="1" useLocalCopy="0"/>
     <MODULE id="juce_events" showAllCode="1" useLocalCopy="0"/>
     <MODULE id="juce_graphics" showAllCode="1" useLocalCopy="0"/>
     <MODULE id="juce_gui_basics" showAllCode="1" useLocalCopy="0"/>
     <MODULE id="juce_gui_extra" showAllCode="1" useLocalCopy="0"/>
-    <MODULE id="juce_opengl" showAllCode="1" useLocalCopy="0"/>
-    <MODULE id="juce_video" showAllCode="1" useLocalCopy="0"/>
   </MODULES>
   <JUCEOPTIONS JUCE_QUICKTIME="disabled"/>
 </JUCERPROJECT>

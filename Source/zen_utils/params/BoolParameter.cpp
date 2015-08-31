@@ -22,11 +22,12 @@
 #pragma warning (disable : 4100 )
 
 #include "BoolParameter.h"
-#include <math.h>
 
-//using namespace juce;
-namespace juce
+BoolParameter::BoolParameter()
 {
+	//value = false;
+	//defaultValue = false;
+}
 	BoolParameter::BoolParameter(bool defaultParameterValue, const String& paramName)
 		: defaultValue(defaultParameterValue),
 		value(defaultParameterValue),
@@ -39,7 +40,7 @@ namespace juce
 		: name(paramName),
 		unitLabel("")
 	{
-		setValue(defaultParameterValue);
+		setValueFromFloat(defaultParameterValue);
 		setDefaultValue(defaultParameterValue);
 	}
 
@@ -55,7 +56,7 @@ namespace juce
 		: name(paramName),
 		unitLabel(desiredUnitsLabel)
 	{
-		setValue(defaultParameterValue);
+		setValueFromFloat(defaultParameterValue);
 		setDefaultValue(defaultParameterValue);
 	}
 
@@ -84,17 +85,24 @@ namespace juce
 	float BoolParameter::getValue() const
 	{
 		return convertBooleanToFloat(value);
+		//return value;
 	}
 
 	void BoolParameter::setValue(float newValue)
 	{
-		value = convertFloatToBoolean(newValue);
-
+		setValueFromFloat(newValue);
+		requestUIUpdate = true;
 	}
 	
 	void BoolParameter::setValue(bool newValue)
 	{
 		value = newValue;
+		requestUIUpdate = true;
+	}
+
+	void BoolParameter::setValueFromFloat(const float& inFloat)
+	{
+		value = convertFloatToBoolean(inFloat);
 	}
 	
 	void BoolParameter::setDefaultValue(float inFloat)
@@ -132,30 +140,20 @@ namespace juce
 		return text.getFloatValue();
 	}
 
-	
+	void BoolParameter::setValueNotifyingHost(float newValue)
+	{
+		AudioProcessor* processor = getProcessor();
+		// This method can't be used until the parameter has been attached to a processor!
+		jassert(processor != nullptr && getParameterIndex() >= 0);
+		processor->setParameterNotifyingHost(getParameterIndex(), newValue);
+		requestUIUpdate = false;  //set this to false because change came from GUI
+		return;
+	}
 
-// 	bool BoolParameter::isMetaParameter() const
-// 	{
-// 		throw std::logic_error("The method or operation is not implemented.");
-// 	}
-// 
-// 	int BoolParameter::getNumSteps() const
-// 	{
-// 		throw std::logic_error("The method or operation is not implemented.");
-// 	}
-// 
-// 	bool BoolParameter::isAutomatable() const
-// 	{
-// 		throw std::logic_error("The method or operation is not implemented.");
-// 	}
-// 	bool BoolParameter::isOrientationInverted() const
-// 	{
-// 		throw std::logic_error("The method or operation is not implemented.");
-// 	}
-// 
-// 	String BoolParameter::getText(bool value, int) const
-// 	{
-// 		throw std::logic_error("The method or operation is not implemented.");
-// 	}
+	bool BoolParameter::needsUIUpdate()
+	{
+		bool updateSet = requestUIUpdate;
+		requestUIUpdate = false;
+		return updateSet;
+	}
 
-}

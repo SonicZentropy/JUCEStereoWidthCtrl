@@ -18,92 +18,23 @@
 // [BEGIN_USER_CODE_SECTION]
 
 // (You can add your own code in this section, and the Introjucer will not overwrite it)
-
+#pragma warning(disable:4458)
 // [END_USER_CODE_SECTION]
 
 //==============================================================================
 #define JUCE_MODULE_AVAILABLE_juce_audio_basics             1
-#define JUCE_MODULE_AVAILABLE_juce_audio_devices            1
-#define JUCE_MODULE_AVAILABLE_juce_audio_formats            1
 #define JUCE_MODULE_AVAILABLE_juce_audio_plugin_client      1
 #define JUCE_MODULE_AVAILABLE_juce_audio_processors         1
-#define JUCE_MODULE_AVAILABLE_juce_audio_utils              1
-#define JUCE_MODULE_AVAILABLE_juce_box2d                    1
 #define JUCE_MODULE_AVAILABLE_juce_core                     1
-#define JUCE_MODULE_AVAILABLE_juce_cryptography             1
 #define JUCE_MODULE_AVAILABLE_juce_data_structures          1
 #define JUCE_MODULE_AVAILABLE_juce_events                   1
 #define JUCE_MODULE_AVAILABLE_juce_graphics                 1
 #define JUCE_MODULE_AVAILABLE_juce_gui_basics               1
 #define JUCE_MODULE_AVAILABLE_juce_gui_extra                1
-#define JUCE_MODULE_AVAILABLE_juce_opengl                   1
-#define JUCE_MODULE_AVAILABLE_juce_video                    1
 
 //==============================================================================
 #ifndef    JUCE_STANDALONE_APPLICATION
  #define   JUCE_STANDALONE_APPLICATION 0
-#endif
-
-//==============================================================================
-// juce_audio_devices flags:
-
-#ifndef    JUCE_ASIO
- //#define JUCE_ASIO
-#endif
-
-#ifndef    JUCE_WASAPI
- //#define JUCE_WASAPI
-#endif
-
-#ifndef    JUCE_WASAPI_EXCLUSIVE
- //#define JUCE_WASAPI_EXCLUSIVE
-#endif
-
-#ifndef    JUCE_DIRECTSOUND
- //#define JUCE_DIRECTSOUND
-#endif
-
-#ifndef    JUCE_ALSA
- //#define JUCE_ALSA
-#endif
-
-#ifndef    JUCE_JACK
- //#define JUCE_JACK
-#endif
-
-#ifndef    JUCE_USE_ANDROID_OPENSLES
- //#define JUCE_USE_ANDROID_OPENSLES
-#endif
-
-#ifndef    JUCE_USE_CDREADER
- //#define JUCE_USE_CDREADER
-#endif
-
-#ifndef    JUCE_USE_CDBURNER
- //#define JUCE_USE_CDBURNER
-#endif
-
-//==============================================================================
-// juce_audio_formats flags:
-
-#ifndef    JUCE_USE_FLAC
- //#define JUCE_USE_FLAC
-#endif
-
-#ifndef    JUCE_USE_OGGVORBIS
- //#define JUCE_USE_OGGVORBIS
-#endif
-
-#ifndef    JUCE_USE_MP3AUDIOFORMAT
- //#define JUCE_USE_MP3AUDIOFORMAT
-#endif
-
-#ifndef    JUCE_USE_LAME_AUDIO_FORMAT
- //#define JUCE_USE_LAME_AUDIO_FORMAT
-#endif
-
-#ifndef    JUCE_USE_WINDOWS_MEDIA_FORMAT
- //#define JUCE_USE_WINDOWS_MEDIA_FORMAT
 #endif
 
 //==============================================================================
@@ -189,25 +120,6 @@
  //#define JUCE_ENABLE_LIVE_CONSTANT_EDITOR
 #endif
 
-//==============================================================================
-// juce_video flags:
-
-#ifndef    JUCE_DIRECTSHOW
- //#define JUCE_DIRECTSHOW
-#endif
-
-#ifndef    JUCE_MEDIAFOUNDATION
- //#define JUCE_MEDIAFOUNDATION
-#endif
-
-#ifndef    JUCE_QUICKTIME
- #define   JUCE_QUICKTIME 0
-#endif
-
-#ifndef    JUCE_USE_CAMERA
- //#define JUCE_USE_CAMERA
-#endif
-
 
 //==============================================================================
 // Audio plugin settings..
@@ -216,7 +128,7 @@
  #define JucePlugin_Build_VST              1
 #endif
 #ifndef  JucePlugin_Build_VST3
- #define JucePlugin_Build_VST3             1
+ #define JucePlugin_Build_VST3             0
 #endif
 #ifndef  JucePlugin_Build_AU
  #define JucePlugin_Build_AU               0

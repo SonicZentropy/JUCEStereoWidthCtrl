@@ -1,0 +1,137 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" GroupingSetting="Access" MembersFormat="NameAndType">
+  <Class Name="StereoWidthCtrlAudioProcessor" Collapsed="true">
+    <Position X="12.25" Y="3" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>FSQCBQAAAQBQogYQQgBAEkAUCEAgABQAAAQWAAQAFAA=</HashCode>
+      <FileName>D:\Applications\Workspace\VisualStudio\JUCE\StereoWidthCtrl\Source\PluginProcessor.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="StereoWidthCtrlAudioProcessorEditor" Collapsed="true">
+    <Position X="6.25" Y="2.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AEwAAAQAAQAAAAIUAAYAABAAAAQAAAQABAAiDABAgAA=</HashCode>
+      <FileName>D:\Applications\Workspace\VisualStudio\JUCE\StereoWidthCtrl\Source\PluginEditor.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BufferSampleProcesses" Collapsed="true">
+    <Position X="23.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAgIAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>D:\Applications\Workspace\VisualStudio\JUCE\StereoWidthCtrl\Source\BufferSampleProcesses.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="juce::FloatParameter" Collapsed="true">
+    <Position X="15.75" Y="6.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAAAAAEACAAAAIAIACAAAAEECAAQAAEAAABAAA=</HashCode>
+      <FileName>d:\Applications\Workspace\VisualStudio\JUCE\JUCE\modules\zen_utils\imp\FloatParameter.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="juce::BoolParameter" Collapsed="true">
+    <Position X="18.75" Y="6.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>BAAEIAAAAAAEAGAAgAIAACCAAAAEECEAQQAEAAAAAAA=</HashCode>
+      <FileName>d:\Applications\Workspace\VisualStudio\JUCE\JUCE\modules\zen_utils\imp\BoolParameter.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DecibelConversions" Collapsed="true">
+    <Position X="23.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAAACAAAAAAAABAABAAAAAAAAAAAQgCAAAAAAAA=</HashCode>
+      <FileName>D:\Applications\Workspace\VisualStudio\JUCE\StereoWidthCtrl\Source\zen_utils\converters\DecibelConversions.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AssociatedSlider">
+    <Position X="2.25" Y="5.25" Width="3.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAgAAMAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAA=</HashCode>
+      <FileName>D:\Applications\Workspace\VisualStudio\JUCE\StereoWidthCtrl\Source\zen_utils\components\AssociatedSlider.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AssociatedButton" Collapsed="true">
+    <Position X="7" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAIAAAAAAAAAAAIAAAAAAAAEAAAAAAAAAAAA=</HashCode>
+      <FileName>D:\Applications\Workspace\VisualStudio\JUCE\StereoWidthCtrl\Source\zen_utils\components\AssociatedButton.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="StereoWidthCtrlSlider" Collapsed="true">
+    <Position X="1.75" Y="7.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAEAAAAAAAAAAAAIAAAAgAAAIAAAIAAA=</HashCode>
+      <FileName>D:\Applications\Workspace\VisualStudio\JUCE\StereoWidthCtrl\Source\components\StereoWidthCtrlSlider\StereoWidthCtrlSlider.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GainCtrlSlider" Collapsed="true">
+    <Position X="4.25" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAKSACAAAAAIAACAAAA=</HashCode>
+      <FileName>D:\Applications\Workspace\VisualStudio\JUCE\StereoWidthCtrl\Source\components\GainCtrlSlider\GainCtrlSlider.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Slider" Collapsed="true">
+    <Position X="3" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAsIACLVXSCBoCteAgIKegkQWAKCGAoOLIC7CAIEhkg=</HashCode>
+      <FileName>D:\Applications\Workspace\VisualStudio\JUCE\JUCE\modules\juce_gui_basics\widgets\juce_Slider.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Button" Collapsed="true">
+    <Position X="7" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>SFgECYwKckaiIEIwiDUHpgAYXKkQSARJAEUgJIEBrA4=</HashCode>
+      <FileName>D:\Applications\Workspace\VisualStudio\JUCE\JUCE\modules\juce_gui_basics\buttons\juce_Button.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AudioProcessorParameter">
+    <Position X="17" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAQAAUAAAAAEACAAAwIACAKAAAAAEAQAAEoEBEgAAAA=</HashCode>
+      <FileName>D:\Applications\Workspace\VisualStudio\JUCE\JUCE\modules\juce_audio_processors\processors\juce_AudioProcessorParameter.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AudioProcessorEditor" Collapsed="true">
+    <Position X="5.5" Y="0.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AARAABAAAAAAAAAAAAAAAhAAAAAAAAAAAAAAAAAAAQA=</HashCode>
+      <FileName>D:\Applications\Workspace\VisualStudio\JUCE\JUCE\modules\juce_audio_processors\processors\juce_AudioProcessorEditor.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Timer" Collapsed="true">
+    <Position X="8" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAEIAAAAIAAAAAgAAAAAIAAAAIACAAAAiMAEAQA=</HashCode>
+      <FileName>D:\Applications\Workspace\VisualStudio\JUCE\JUCE\modules\juce_events\timers\juce_Timer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AudioProcessor" Collapsed="true">
+    <Position X="12.75" Y="0.5" Width="1.5" />
+    <NestedTypes>
+      <Enum Name="AudioProcessor::WrapperType" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>D:\Applications\Workspace\VisualStudio\JUCE\JUCE\modules\juce_audio_processors\processors\juce_AudioProcessor.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>i+cmARREEwFM6tCAWEIENk12AskgJlSQJAQGQAwEEAQ=</HashCode>
+      <FileName>D:\Applications\Workspace\VisualStudio\JUCE\JUCE\modules\juce_audio_processors\processors\juce_AudioProcessor.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Typedef Name="SliderListener" Collapsed="true">
+    <Position X="1.75" Y="0.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>D:\Applications\Workspace\VisualStudio\JUCE\JUCE\modules\juce_gui_basics\widgets\juce_Slider.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="ButtonListener" Collapsed="true">
+    <Position X="10.25" Y="0.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>D:\Applications\Workspace\VisualStudio\JUCE\JUCE\modules\juce_gui_basics\buttons\juce_Button.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Font Name="Segoe UI Semibold" Size="8.25" />
+</ClassDiagram>

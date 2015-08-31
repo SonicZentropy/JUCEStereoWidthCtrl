@@ -1,92 +1,77 @@
-/*
-  ==============================================================================
+/* ==============================================================================
+//  PluginEditor.h
+//  Part of the Zentropia JUCE Collection
+//  @author Casey Bailey (<a href="SonicZentropy@gmail.com">email</a>)
+//  @version 0.1
+//  @date 2015/08/20
+//  Copyright (C) 2015 by Casey Bailey
+//  Provided under the [GNU license]
+//
+//  Details: GUI Editor Header
+//
+//  Zentropia is hosted on Github at [https://github.com/SonicZentropy]
+===============================================================================*/
 
-  This is an automatically generated GUI class created by the Introjucer!
+#ifndef JUCE_STEREO_WIDTH_PLUGIN_EDITOR
+#define JUCE_STEREO_WIDTH_PLUGIN_EDITOR
 
-  Be careful when adding custom code to these files, as only the code within
-  the "//[xyz]" and "//[/xyz]" sections will be retained when the file is loaded
-  and re-saved.
-
-  Created with Introjucer version: 3.2.0
-
-  ------------------------------------------------------------------------------
-
-  The Introjucer is part of the JUCE library - "Jules' Utility Class Extensions"
-  Copyright (c) 2015 - ROLI Ltd.
-
-  ==============================================================================
-*/
-
-#ifndef __JUCE_HEADER_F8EB772295D855C6__
-#define __JUCE_HEADER_F8EB772295D855C6__
-
-//[Headers]     -- You can add your own extra header files here --
 #include "JuceHeader.h"
 #include "PluginProcessor.h"
-#include "gainSlider.h"
-#include "zen_utils/juce_zen_utils.h"
-
-//[/Headers]
-
-
+#include "components/StereoWidthCtrlSlider/StereoWidthCtrlSlider.h"
+#include "components/GainCtrlSlider/GainCtrlSlider.h"
 
 //==============================================================================
-/**
-                                                                    //[Comments]
-    An auto-generated component, created by the Introjucer.
 
-    Describe your class and how it works here!
-                                                                    //[/Comments]
-*/
-class StereoWidthCtrlAudioProcessorEditor  : public AudioProcessorEditor,
-                                             public Timer,
-                                             public SliderListener,
-                                             public ButtonListener
+/// <summary> GUI Editor Handler </summary>
+/// <seealso cref="T:AudioProcessorEditor"/>
+/// <seealso cref="T:Timer"/>
+/// <seealso cref="T:SliderListener"/>
+/// <seealso cref="T:ButtonListener"/>
+class StereoWidthCtrlAudioProcessorEditor : public AudioProcessorEditor,
+											public Timer,
+											public SliderListener,
+											public ButtonListener
 {
 public:
-    //==============================================================================
-    StereoWidthCtrlAudioProcessorEditor (StereoWidthCtrlAudioProcessor& ownerFilter);
-    ~StereoWidthCtrlAudioProcessorEditor();
+	//==============================================================================
+	explicit StereoWidthCtrlAudioProcessorEditor(StereoWidthCtrlAudioProcessor& ownerFilter);
+	~StereoWidthCtrlAudioProcessorEditor();
 
-    //==============================================================================
-    //[UserMethods]     -- You can add your own custom methods in this section.
+	//==============================================================================
+
 	void timerCallback() override;
+
 	StereoWidthCtrlAudioProcessor* getProcessor() const
 	{
 		return static_cast<StereoWidthCtrlAudioProcessor*>(getAudioProcessor());
 	}
 
-    //[/UserMethods]
-
-    void paint (Graphics& g);
-    void resized();
-    void sliderValueChanged (Slider* sliderThatWasMoved);
-    void buttonClicked (Button* buttonThatWasClicked);
+	void paint(Graphics& g) override;
+	void resized() override;
 
 
+	void sliderValueChanged(Slider* sliderThatWasMoved) override;
+
+	void buttonClicked(Button* buttonThatWasClicked) override;
 
 private:
-    //[UserVariables]   -- You can add your own custom variables in this section.
-	AudioProcessorParameter* getParameterFromSlider(const Slider*) const;
-    //[/UserVariables]
 
-    //==============================================================================
-    ScopedPointer<Slider> stereoWidthSldCtrl;
-    ScopedPointer<TextButton> bypassBtnCtrl;
-    ScopedPointer<Label> widthLabel;
-    ScopedPointer<TextButton> muteBtnCtrl;
-    ScopedPointer<GainSlider> gainSldCtrl;
-    ScopedPointer<TextButton> lockGainBtnCtrl;
-    ScopedPointer<ToggleButton> invertLeftBtnCtrl;
-    ScopedPointer<ToggleButton> invertRightBtnCtrl;
-    ScopedPointer<Label> invertLabel;
+	AudioProcessor* processor;
 
-
-    //==============================================================================
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (StereoWidthCtrlAudioProcessorEditor)
+ 	ScopedPointer<StereoWidthCtrlSlider> stereoWidthSldCtrl;
+ 	ScopedPointer<TextButton> bypassBtnCtrl;
+ 	ScopedPointer<Label> widthLabel;
+ 	ScopedPointer<TextButton> muteBtnCtrl;
+ 	ScopedPointer<GainCtrlSlider> gainSldCtrl;
+ 	ScopedPointer<TextButton> lockGainBtnCtrl;
+ 	ScopedPointer<ToggleButton> invertLeftBtnCtrl;
+ 	ScopedPointer<ToggleButton> invertRightBtnCtrl;
+ 	ScopedPointer<Label> invertLabel;
+	
+	
+	//==============================================================================
+	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (StereoWidthCtrlAudioProcessorEditor)
 };
 
-//[EndFile] You can add extra defines here...
-//[/EndFile]
+#endif //JUCE_STEREO_WIDTH_PLUGIN_EDITOR
 
-#endif   // __JUCE_HEADER_F8EB772295D855C6__

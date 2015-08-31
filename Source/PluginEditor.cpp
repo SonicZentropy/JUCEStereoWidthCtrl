@@ -7,7 +7,7 @@
   the "//[xyz]" and "//[/xyz]" sections will be retained when the file is loaded
   and re-saved.
 
-  Created with Introjucer version: 3.2.0
+  Created with Introjucer version: 3.2.0 
 
   ------------------------------------------------------------------------------
 
@@ -16,356 +16,239 @@
 
   ==============================================================================
 */
-
-//[Headers] You can add your own extra header files here...
-//[/Headers]
-
 #include "PluginEditor.h"
+#include <exception>
 
 
-//[MiscUserDefs] You can add your own user definitions and misc code here...
+
 using namespace juce;
-//[/MiscUserDefs]
 
 //==============================================================================
-StereoWidthCtrlAudioProcessorEditor::StereoWidthCtrlAudioProcessorEditor (StereoWidthCtrlAudioProcessor& ownerFilter)
-    : AudioProcessorEditor(ownerFilter)
+StereoWidthCtrlAudioProcessorEditor::StereoWidthCtrlAudioProcessorEditor(StereoWidthCtrlAudioProcessor& ownerFilter)
+	: AudioProcessorEditor(ownerFilter), processor(&ownerFilter)
 {
-    //[Constructor_pre] You can add your own custom stuff here..
-    //[/Constructor_pre]
+	//Audio Processor reference
+	StereoWidthCtrlAudioProcessor* audioProc = getProcessor();
+		
+	addAndMakeVisible(stereoWidthSldCtrl = new StereoWidthCtrlSlider("Width Factor Slider", audioProc->stereoWidthParam, "%"));
+	stereoWidthSldCtrl->setTooltip(TRANS("Stereo Width"));
+	stereoWidthSldCtrl->setRange(0, 1, 0.005);
+	stereoWidthSldCtrl->setSliderStyle(Slider::LinearHorizontal);
+	stereoWidthSldCtrl->setTextBoxStyle(Slider::TextBoxLeft, false, 80, 20);
+	stereoWidthSldCtrl->addListener(this);
+	
+	addAndMakeVisible(gainSldCtrl = new GainCtrlSlider("Gain Knob", audioProc->audioGainParam, "dB", 12.0));
+	gainSldCtrl->setRange(0.0, 1.0, 0.0);
+	gainSldCtrl->setSkewFactor(0.5);
+	gainSldCtrl->setSliderStyle(Slider::LinearVertical);
+	gainSldCtrl->setTextBoxStyle(Slider::TextBoxBelow, false, 80, 20);
+	gainSldCtrl->setColour(Slider::backgroundColourId, Colour(0x00868181));
+	gainSldCtrl->setColour(Slider::trackColourId, Colour(0x7fffffff));
+	gainSldCtrl->setColour(Slider::rotarySliderFillColourId, Colour(0x7fbcbcff));
+	gainSldCtrl->setColour(Slider::rotarySliderOutlineColourId, Colour(0x66ffffff));
+	gainSldCtrl->addListener(this);
+	
 
-    addAndMakeVisible (stereoWidthSldCtrl = new Slider ("Width Factor Slider"));
-    stereoWidthSldCtrl->setTooltip (TRANS("Stereo Width"));
-    stereoWidthSldCtrl->setRange (0, 2, 0.05);
-    stereoWidthSldCtrl->setSliderStyle (Slider::LinearHorizontal);
-    stereoWidthSldCtrl->setTextBoxStyle (Slider::TextBoxLeft, false, 80, 20);
-    stereoWidthSldCtrl->addListener (this);
+	addAndMakeVisible(bypassBtnCtrl = new TextButton("Bypass Button"));
+	bypassBtnCtrl->setButtonText(TRANS("Bypass"));
+	bypassBtnCtrl->addListener(this);
+	bypassBtnCtrl->setColour(TextButton::buttonColourId, Colour(0xffe2e2e2));
 
-    addAndMakeVisible (bypassBtnCtrl = new TextButton ("Bypass Button"));
-    bypassBtnCtrl->setButtonText (TRANS("Bypass"));
-    bypassBtnCtrl->addListener (this);
-    bypassBtnCtrl->setColour (TextButton::buttonColourId, Colour (0xffe2e2e2));
+	addAndMakeVisible(widthLabel = new Label("Width Label", TRANS("Stereo Width Factor:")));
+	widthLabel->setFont(Font(15.00f, Font::plain));
+	widthLabel->setJustificationType(Justification::centredLeft);
+	widthLabel->setEditable(false, false, false);
+	widthLabel->setColour(Label::textColourId, Colours::grey);
+	widthLabel->setColour(TextEditor::textColourId, Colours::black);
+	widthLabel->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
 
-    addAndMakeVisible (widthLabel = new Label ("Width Label",
-                                               TRANS("Stereo Width Factor:")));
-    widthLabel->setFont (Font (15.00f, Font::plain));
-    widthLabel->setJustificationType (Justification::centredLeft);
-    widthLabel->setEditable (false, false, false);
-    widthLabel->setColour (Label::textColourId, Colours::grey);
-    widthLabel->setColour (TextEditor::textColourId, Colours::black);
-    widthLabel->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+	addAndMakeVisible(muteBtnCtrl = new TextButton("Mute Button"));
+	muteBtnCtrl->setButtonText(TRANS("Mute"));
+	muteBtnCtrl->addListener(this);
+	muteBtnCtrl->setColour(TextButton::buttonColourId, Colour(0xffe2e2e2));
 
-    addAndMakeVisible (muteBtnCtrl = new TextButton ("Mute Button"));
-    muteBtnCtrl->setButtonText (TRANS("Mute"));
-    muteBtnCtrl->addListener (this);
-    muteBtnCtrl->setColour (TextButton::buttonColourId, Colour (0xffe2e2e2));
+	addAndMakeVisible(lockGainBtnCtrl = new TextButton("Lock Gain"));
+	lockGainBtnCtrl->setButtonText(TRANS("Lock Gain to 0db"));
+	lockGainBtnCtrl->addListener(this);
+	lockGainBtnCtrl->setColour(TextButton::buttonColourId, Colour(0xffe2e2e2));
 
-    addAndMakeVisible (gainSldCtrl = new GainSlider ("Gain Knob"));
-    gainSldCtrl->setRange (-96, 12, 0.1);
-    gainSldCtrl->setSliderStyle (Slider::LinearVertical);
-    gainSldCtrl->setTextBoxStyle (Slider::TextBoxBelow, false, 80, 20);
-    gainSldCtrl->setColour (Slider::backgroundColourId, Colour (0x00868181));
-    gainSldCtrl->setColour (Slider::trackColourId, Colour (0x7fffffff));
-    gainSldCtrl->setColour (Slider::rotarySliderFillColourId, Colour (0x7fbcbcff));
-    gainSldCtrl->setColour (Slider::rotarySliderOutlineColourId, Colour (0x66ffffff));
-    gainSldCtrl->addListener (this);
+	addAndMakeVisible(invertLeftBtnCtrl = new ToggleButton("Invert Left"));
+	invertLeftBtnCtrl->setTooltip(TRANS("Phase invert Left Channel"));
+	invertLeftBtnCtrl->setButtonText(String::empty);
+	invertLeftBtnCtrl->addListener(this);
 
-    addAndMakeVisible (lockGainBtnCtrl = new TextButton ("Lock Gain"));
-    lockGainBtnCtrl->setButtonText (TRANS("Lock Gain to 0db"));
-    lockGainBtnCtrl->addListener (this);
-    lockGainBtnCtrl->setColour (TextButton::buttonColourId, Colour (0xffe2e2e2));
+	addAndMakeVisible(invertRightBtnCtrl = new ToggleButton("Invert Right"));
+	invertRightBtnCtrl->setTooltip(TRANS("Phase invert Right Channel"));
+	invertRightBtnCtrl->setButtonText(String::empty);
+	invertRightBtnCtrl->addListener(this);
+	invertRightBtnCtrl->setColour(ToggleButton::textColourId, Colours::black);
 
-    addAndMakeVisible (invertLeftBtnCtrl = new ToggleButton ("Invert Left"));
-    invertLeftBtnCtrl->setTooltip (TRANS("Phase invert Left Channel"));
-    invertLeftBtnCtrl->setButtonText (String::empty);
-    invertLeftBtnCtrl->addListener (this);
+	addAndMakeVisible(invertLabel = new Label("Invert Label",
+											TRANS("Invert Phase\n"
+												"L       R")));
+	invertLabel->setFont(Font(15.00f, Font::plain));
+	invertLabel->setJustificationType(Justification::centredBottom);
+	invertLabel->setEditable(false, false, false);
+	invertLabel->setColour(Label::textColourId, Colours::grey);
+	invertLabel->setColour(TextEditor::textColourId, Colours::black);
+	invertLabel->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
 
-    addAndMakeVisible (invertRightBtnCtrl = new ToggleButton ("Invert Right"));
-    invertRightBtnCtrl->setTooltip (TRANS("Phase invert Right Channel"));
-    invertRightBtnCtrl->setButtonText (String::empty);
-    invertRightBtnCtrl->addListener (this);
-    invertRightBtnCtrl->setColour (ToggleButton::textColourId, Colours::black);
+	//Set default double click reset values
+	gainSldCtrl->setDoubleClickReturnValue(true, gainSldCtrl->getAssociatedParameter()->getDefaultValue());
+	stereoWidthSldCtrl->setDoubleClickReturnValue(true, stereoWidthSldCtrl->getAssociatedParameter()->getDefaultValue());
 
-    addAndMakeVisible (invertLabel = new Label ("Invert Label",
-                                                TRANS("Invert Phase\n"
-                                                "L       R")));
-    invertLabel->setFont (Font (15.00f, Font::plain));
-    invertLabel->setJustificationType (Justification::centredBottom);
-    invertLabel->setEditable (false, false, false);
-    invertLabel->setColour (Label::textColourId, Colours::grey);
-    invertLabel->setColour (TextEditor::textColourId, Colours::black);
-    invertLabel->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+	// GUI Size 
+	setSize(375, 500);
 
-
-    //[UserPreSize]
-	gainSldCtrl->setDoubleClickReturnValue(true, 0.0f);
-	stereoWidthSldCtrl->setDoubleClickReturnValue(true, 1.0f);
-    //[/UserPreSize]
-
-    setSize (375, 500);
-
-
-    //[Constructor] You can add your own custom stuff here..
 	getProcessor()->RequestUIUpdate(); //UI Update must be performed every time a new editor is constructed
-	startTimer(200); // Start timer poll with 200ms rate
+	startTimer(20); // Start timer poll with 20ms rate
 	bypassBtnCtrl->setClickingTogglesState(true);
 	muteBtnCtrl->setClickingTogglesState(true);
 	lockGainBtnCtrl->setClickingTogglesState(true);
 	invertLeftBtnCtrl->setClickingTogglesState(true);
 	invertRightBtnCtrl->setClickingTogglesState(true);
-    //[/Constructor]
+	gainSldCtrl->setAssociatedParameter(getProcessor()->audioGainParam); //WRONG
+
 }
 
+///
 StereoWidthCtrlAudioProcessorEditor::~StereoWidthCtrlAudioProcessorEditor()
 {
-    //[Destructor_pre]. You can add your own custom destruction code here..
-    //[/Destructor_pre]
-
-    stereoWidthSldCtrl = nullptr;
-    bypassBtnCtrl = nullptr;
-    widthLabel = nullptr;
-    muteBtnCtrl = nullptr;
-    gainSldCtrl = nullptr;
-    lockGainBtnCtrl = nullptr;
-    invertLeftBtnCtrl = nullptr;
-    invertRightBtnCtrl = nullptr;
-    invertLabel = nullptr;
-
-
-    //[Destructor]. You can add your own custom destruction code here..
-    //[/Destructor]
+	stereoWidthSldCtrl = nullptr;
+	bypassBtnCtrl = nullptr;
+	widthLabel = nullptr;
+	muteBtnCtrl = nullptr;
+	gainSldCtrl = nullptr;
+	lockGainBtnCtrl = nullptr;
+	invertLeftBtnCtrl = nullptr;
+	invertRightBtnCtrl = nullptr;
+	invertLabel = nullptr;
 }
 
 //==============================================================================
-void StereoWidthCtrlAudioProcessorEditor::paint (Graphics& g)
+void StereoWidthCtrlAudioProcessorEditor::paint(Graphics& g)
 {
-    //[UserPrePaint] Add your own custom painting code here..
-    //[/UserPrePaint]
-
-    g.fillAll (Colours::black);
-
-    //[UserPaint] Add your own custom painting code here..
-    //[/UserPaint]
+	g.fillAll(Colours::black);
 }
 
 void StereoWidthCtrlAudioProcessorEditor::resized()
 {
-    //[UserPreResize] Add your own custom resize code here..
-    //[/UserPreResize]
-
-    stereoWidthSldCtrl->setBounds (16, 40, 352, 24);
-    bypassBtnCtrl->setBounds (8, 234, 360, 24);
-    widthLabel->setBounds (8, 8, 150, 24);
-    muteBtnCtrl->setBounds (16, 194, 150, 24);
-    gainSldCtrl->setBounds (200, 72, 150, 104);
-    lockGainBtnCtrl->setBounds (208, 184, 150, 24);
-    invertLeftBtnCtrl->setBounds (33, 118, 25, 20);
-    invertRightBtnCtrl->setBounds (71, 118, 25, 20);
-    invertLabel->setBounds (12, 80, 100, 32);
-    //[UserResized] Add your own custom resize handling here..
-    //[/UserResized]
+	stereoWidthSldCtrl->setBounds(16, 40, 352, 24);
+	bypassBtnCtrl->setBounds(8, 234, 360, 24);
+	widthLabel->setBounds(8, 8, 150, 24);
+	muteBtnCtrl->setBounds(16, 194, 150, 24);
+	gainSldCtrl->setBounds(200, 72, 150, 104);
+	lockGainBtnCtrl->setBounds(208, 184, 150, 24);
+	invertLeftBtnCtrl->setBounds(33, 118, 25, 20);
+	invertRightBtnCtrl->setBounds(71, 118, 25, 20);
+	invertLabel->setBounds(12, 80, 100, 32);
 }
 
-void StereoWidthCtrlAudioProcessorEditor::sliderValueChanged (Slider* sliderThatWasMoved)
+/// <summary> Called by JUCE when slider is moved.  Casts slider as Associated and passes to associatedSliderValueChanged</summary>
+/// <param name="sliderThatWasMoved"> The slider that was moved.</param>
+void StereoWidthCtrlAudioProcessorEditor::sliderValueChanged(Slider* sliderThatWasMoved)
 {
-    //[UsersliderValueChanged_Pre]
-	StereoWidthCtrlAudioProcessor* ourProcessor = getProcessor();
-    //[/UsersliderValueChanged_Pre]
-
-    if (sliderThatWasMoved == stereoWidthSldCtrl)
-    {
-        //[UserSliderCode_stereoWidthSldCtrl] -- add your slider handling code here..
-		DBG("Changing Width SliderValue from: " + String(ourProcessor->getParameter(StereoWidthCtrlAudioProcessor::StereoWidth)) + " to: " + static_cast<String>(stereoWidthSldCtrl->getValue()));
-		ourProcessor->setParameter(StereoWidthCtrlAudioProcessor::StereoWidth, static_cast<float>(stereoWidthSldCtrl->getValue() / 2.0f));
-		//ourProcessor->se
-
-        //[/UserSliderCode_stereoWidthSldCtrl]
-    }
-    else if (sliderThatWasMoved == gainSldCtrl)
-    {
-        //[UserSliderCode_gainSldCtrl] -- add your slider handling code here..
-//		DBG("Gain slider value changing from: " + String(ourProcessor->getParameter(StereoWidthCtrlAudioProcessor::AudioGain)) + " to: " + static_cast<String>(gainSldCtrl->getValue()));
-//		ourProcessor->setParameter(StereoWidthCtrlAudioProcessor::AudioGain, Decibels::decibelsToGain(static_cast<float>(gainSldCtrl->getValue())));
-		if (AudioProcessorParameter* param = getParameterFromSlider(sliderThatWasMoved))
+	try
+	{
+		AudioProcessorParameter* param = static_cast<AssociatedSlider*>(sliderThatWasMoved)->getAssociatedParameter();
+		if (sliderThatWasMoved == stereoWidthSldCtrl)
 		{
-			DBG("Gain slider value changing from: " + String(param->getValue()) + " to: " + static_cast<String>(sliderThatWasMoved->getValue()));
-			//CONVERT FROM DB TO VALUE
-			float valueDenormal = static_cast<float>(sliderThatWasMoved->getValue());
-			float valueNorm = Decibels::decibelsToGain(valueDenormal, -96.0f);
-			param->setValueNotifyingHost( valueNorm );
-			DBG("audioGainParam is now: " + static_cast<String>(param->getValue()));
+			param->setValueNotifyingHost(static_cast<float>(stereoWidthSldCtrl->getValue()));
+		} else if (sliderThatWasMoved == gainSldCtrl)
+		{
+			try
+			{   
+				param->setValueNotifyingHost(static_cast<float>(gainSldCtrl->getValue()));
+			}
+			catch (...)
+			{
+				DBG("Access Violation Exception Caught In PluginEditor.cpp::sliderValueChanged ");
+			}
 		}
-        //[/UserSliderCode_gainSldCtrl]
-    }
-
-    //[UsersliderValueChanged_Post]
-    //[/UsersliderValueChanged_Post]
+	}
+	catch (std::exception& e)
+	{
+		DBG("Casting >" + sliderThatWasMoved->getName() +"< to AssociatedSlider* failed: " + String(e.what()));
+	}
 }
 
-void StereoWidthCtrlAudioProcessorEditor::buttonClicked (Button* buttonThatWasClicked)
+
+
+void StereoWidthCtrlAudioProcessorEditor::buttonClicked(Button* buttonThatWasClicked)
 {
-    //[UserbuttonClicked_Pre]
-	StereoWidthCtrlAudioProcessor* ourProcessor = getProcessor();
-    //[/UserbuttonClicked_Pre]
+	//DBG("Entered method: StereoWidthCtrlAudioProcessorEditor:buttonClicked(buttonThatWasClicked)");
+	//DBG("Button Clicked: " + String(buttonThatWasClicked->getName()));
+	//DBG("Compare: " + buttonThatWasClicked->getName() + " to " + lockGainBtnCtrl->getName());
 
-    if (buttonThatWasClicked == bypassBtnCtrl)
-    {
-        //[UserButtonCode_bypassBtnCtrl] -- add your button handler code here..
-		DBG("Changing buttonClicked");
-		ourProcessor->setParameter(StereoWidthCtrlAudioProcessor::MasterBypass, static_cast<float>(bypassBtnCtrl->getToggleState()));
-		DBG("Button->getToggleState = " + String(bypassBtnCtrl->getToggleState()) + " and ourProc Bypass = " + String(ourProcessor->getParameter(StereoWidthCtrlAudioProcessor::MasterBypass)));
+	StereoWidthCtrlAudioProcessor* audioProc = getProcessor();
 
-        //[/UserButtonCode_bypassBtnCtrl]
-    }
-    else if (buttonThatWasClicked == muteBtnCtrl)
-    {
-        //[UserButtonCode_muteBtnCtrl] -- add your button handler code here..
-		DBG("Changing muteButton");
-		ourProcessor->setParameter(StereoWidthCtrlAudioProcessor::MuteAudio, static_cast<float>(muteBtnCtrl->getToggleState()));
-        //[/UserButtonCode_muteBtnCtrl]
-    }
-    else if (buttonThatWasClicked == lockGainBtnCtrl)
-    {
-        //[UserButtonCode_lockGainBtnCtrl] -- add your button handler code here..
-		DBG("Changing Lock Gain");
-		ourProcessor->setParameter(StereoWidthCtrlAudioProcessor::LockGain, static_cast<float>(lockGainBtnCtrl->getToggleState()));
-		if (lockGainBtnCtrl->getToggleState())
+	if (buttonThatWasClicked == bypassBtnCtrl)
+	{
+		DBG("Bypass clicked");
+	 	if (AudioProcessorParameter* param = audioProc->masterBypassParam)
+	 	{
+//	 		DBG("Changing buttonClicked");
+	 		param->setValueNotifyingHost(bypassBtnCtrl->getToggleState());
+//	 		DBG("Button->getToggleState = " + String(bypassBtnCtrl->getToggleState()) + " and ourProc Bypass = " + String(param->getValue()));
+	 	}
+	}
+	else if (buttonThatWasClicked == muteBtnCtrl)
+	{
+		DBG("Mute button clicked");
+		if (AudioProcessorParameter* param = audioProc->muteAudioParam)
 		{
-			gainSldCtrl->setRange(-96, 0, 0.1);
-			gainSldCtrl->setValue(std::min(0.0f, static_cast<float>(gainSldCtrl->getValue())));
-			gainSldCtrl->repaint();
-			ourProcessor->setParameter(StereoWidthCtrlAudioProcessor::AudioGain, Decibels::decibelsToGain(static_cast<float>(gainSldCtrl->getValue())));
-			ourProcessor->RequestUIUpdate();
+	//		DBG("Changing muteButton param From: " + String(param->getValue()) + " To: " + String(muteBtnCtrl->getToggleState()));
+			param->setValueNotifyingHost(muteBtnCtrl->getToggleState());
+	//		DBG("Changed muteButton param To: " + String(param->getValue()));
 		}
-		else
-		{
-			gainSldCtrl->setRange(-96, 12, 0.1);
-			gainSldCtrl->repaint();
-			ourProcessor->RequestUIUpdate();
-		}
-        //[/UserButtonCode_lockGainBtnCtrl]
-    }
-    else if (buttonThatWasClicked == invertLeftBtnCtrl)
-    {
-        //[UserButtonCode_invertLeftBtnCtrl] -- add your button handler code here..
-		DBG("Before Inverting Left is : " + String(StereoWidthCtrlAudioProcessor::InvertLeft));
-		ourProcessor->setParameter(StereoWidthCtrlAudioProcessor::InvertLeft, static_cast<float>(invertLeftBtnCtrl->getToggleStateValue().getValue()));
-		DBG("Inverted is: " + String(StereoWidthCtrlAudioProcessor::InvertLeft) + " From toggle : " + String(static_cast<float>(invertLeftBtnCtrl->getToggleStateValue().getValue())));
-
-        //[/UserButtonCode_invertLeftBtnCtrl]
-    }
-    else if (buttonThatWasClicked == invertRightBtnCtrl)
-    {
-        //[UserButtonCode_invertRightBtnCtrl] -- add your button handler code here..
-		DBG("Before Inverting Right is : " + String(StereoWidthCtrlAudioProcessor::InvertRight));
-		ourProcessor->setParameterNotifyingHost(StereoWidthCtrlAudioProcessor::InvertRight, static_cast<float>(invertRightBtnCtrl->getToggleStateValue().getValue()));
-
-		DBG("Inverted is: " + String(StereoWidthCtrlAudioProcessor::InvertRight) + " From toggle : " + String(static_cast<float>(invertRightBtnCtrl->getToggleStateValue().getValue())));
-
-        //[/UserButtonCode_invertRightBtnCtrl]
-    }
-
-    //[UserbuttonClicked_Post]
-    //[/UserbuttonClicked_Post]
+	}
+	else if (buttonThatWasClicked == lockGainBtnCtrl)
+	{		
+	 	if (AudioProcessorParameter* lockParam = audioProc->lockGainParam)
+	 	{
+			lockParam->setValueNotifyingHost(buttonThatWasClicked->getToggleState());
+	 	}
+	}
+	 	else if (buttonThatWasClicked == invertLeftBtnCtrl)
+	 	{
+	 		if (AudioProcessorParameter* param = audioProc->invertLeftParam)
+	 		{
+	 			param->setValueNotifyingHost(static_cast<float>(invertLeftBtnCtrl->getToggleStateValue().getValue()));
+	 		}
+	 	}
+	 	else if (buttonThatWasClicked == invertRightBtnCtrl)
+	 	{
+	 		if (AudioProcessorParameter* param = audioProc->invertRightParam )
+	 		{
+	 			param->setValueNotifyingHost(static_cast<float>(invertRightBtnCtrl->getToggleStateValue().getValue()));
+				
+	 		}
+	 	}
 }
 
-
-
-//[MiscUserCode] You can add your own definitions of your custom methods or any other code here...
+/// <summary>This method is called automatically every 200ms to update GUI if required</summary>
 void StereoWidthCtrlAudioProcessorEditor::timerCallback()
 {
 	StereoWidthCtrlAudioProcessor* ourProcessor = getProcessor();
 	//exchange data between UI Elements and the Plugin (ourProcessor)
-	if (ourProcessor->needsUIUpdate())
-	{
-		muteBtnCtrl->setToggleState(1.0f == ourProcessor->muteAudioParam->getValue(), sendNotification);
-		DBG("Past muteBtn");
-		bypassBtnCtrl->setToggleState(1.0f == ourProcessor->masterBypassParam->getValue(), sendNotification);
-		DBG("Past bypassBtn");
-		DBG("Changing Width SliderValue from proc: " + String(ourProcessor->stereoWidthParam->getValue()) + " to WidthSld/2: " + static_cast<String>(stereoWidthSldCtrl->getValue() / 2.0f));
-		stereoWidthSldCtrl->setValue(ourProcessor->stereoWidthParam->getValue() * 2.0f, sendNotification);
+
+	if (ourProcessor->muteAudioParam->needsUIUpdate())
+		muteBtnCtrl->setToggleState(0.0f != ourProcessor->muteAudioParam->getValue(), dontSendNotification);
+	if (ourProcessor->masterBypassParam->needsUIUpdate())
+		bypassBtnCtrl->setToggleState(0.0f != ourProcessor->masterBypassParam->getValue(), dontSendNotification);
+	if (ourProcessor->lockGainParam->needsUIUpdate()) 
+		lockGainBtnCtrl->setToggleState(0.0f != ourProcessor->lockGainParam->getValue(), dontSendNotification);
+	if (ourProcessor->invertLeftParam->needsUIUpdate()) 
+		invertLeftBtnCtrl->setToggleState(0.0f != ourProcessor->invertLeftParam->getValue(), dontSendNotification);
+	if (ourProcessor->invertRightParam->needsUIUpdate()) 
+		invertRightBtnCtrl->setToggleState(0.0f != ourProcessor->invertRightParam->getValue(), dontSendNotification);
+
 		
-		DBG("Changing gainSldCtrl Value: " + String(gainSldCtrl->getValue()) + " to audioGainParam: " + String(ourProcessor->audioGainParam->getValue()) );
-		gainSldCtrl->setValue(Decibels::gainToDecibels(ourProcessor->audioGainParam->getValue()), sendNotification);
-		DBG("gainSldCtrl value set (converted gain to Decibels) : " + String(gainSldCtrl->getValue()));
-		ourProcessor->ClearUIUpdateFlag();
-	}
+	if (ourProcessor->stereoWidthParam->needsUIUpdate())	
+		stereoWidthSldCtrl->setValue(ourProcessor->stereoWidthParam->getValue(), dontSendNotification);		
+	if (ourProcessor->audioGainParam->needsUIUpdate()) 
+		gainSldCtrl->setValue(ourProcessor->audioGainParam->getValue(), dontSendNotification);
+		
+	//ourProcessor->ClearUIUpdateFlag(); //Shouldn't be needed anymore since it's effectively not doing anything	
 }
-
-AudioProcessorParameter* StereoWidthCtrlAudioProcessorEditor::getParameterFromSlider(const Slider* slider) const
-{
-	if (slider == gainSldCtrl)
-	{
-		return getProcessor()->audioGainParam;
-	}
-	return nullptr;
-}
-
-
-//[/MiscUserCode]
-
-
-//==============================================================================
-#if 0
-/*  -- Introjucer information section --
-
-    This is where the Introjucer stores the metadata that describe this GUI layout, so
-    make changes in here at your peril!
-
-BEGIN_JUCER_METADATA
-
-<JUCER_COMPONENT documentType="Component" className="StereoWidthCtrlAudioProcessorEditor"
-                 componentName="" parentClasses="public AudioProcessorEditor, public Timer"
-                 constructorParams="StereoWidthCtrlAudioProcessor&amp; ownerFilter"
-                 variableInitialisers="AudioProcessorEditor(ownerFilter)" snapPixels="4"
-                 snapActive="1" snapShown="1" overlayOpacity="0.330" fixedSize="0"
-                 initialWidth="375" initialHeight="500">
-  <BACKGROUND backgroundColour="ff000000"/>
-  <SLIDER name="Width Factor Slider" id="8506fc7967803b22" memberName="stereoWidthSldCtrl"
-          virtualName="" explicitFocusOrder="0" pos="16 40 352 24" tooltip="Stereo Width"
-          min="0" max="2" int="0.050000000000000003" style="LinearHorizontal"
-          textBoxPos="TextBoxLeft" textBoxEditable="1" textBoxWidth="80"
-          textBoxHeight="20" skewFactor="1"/>
-  <TEXTBUTTON name="Bypass Button" id="7af29ac990473e08" memberName="bypassBtnCtrl"
-              virtualName="" explicitFocusOrder="0" pos="8 234 360 24" bgColOff="ffe2e2e2"
-              buttonText="Bypass" connectedEdges="0" needsCallback="1" radioGroupId="0"/>
-  <LABEL name="Width Label" id="d43333b7c7118250" memberName="widthLabel"
-         virtualName="" explicitFocusOrder="0" pos="8 8 150 24" textCol="ff808080"
-         edTextCol="ff000000" edBkgCol="0" labelText="Stereo Width Factor:"
-         editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
-         fontname="Default font" fontsize="15" bold="0" italic="0" justification="33"/>
-  <TEXTBUTTON name="Mute Button" id="914591cf8043a819" memberName="muteBtnCtrl"
-              virtualName="" explicitFocusOrder="0" pos="16 194 150 24" bgColOff="ffe2e2e2"
-              buttonText="Mute" connectedEdges="0" needsCallback="1" radioGroupId="0"/>
-  <SLIDER name="Gain Knob" id="dd791eb940d88513" memberName="gainSldCtrl"
-          virtualName="GainSlider" explicitFocusOrder="0" pos="200 72 150 104"
-          bkgcol="868181" trackcol="7fffffff" rotarysliderfill="7fbcbcff"
-          rotaryslideroutline="66ffffff" min="-96" max="12" int="0.10000000000000001"
-          style="LinearVertical" textBoxPos="TextBoxBelow" textBoxEditable="1"
-          textBoxWidth="80" textBoxHeight="20" skewFactor="1"/>
-  <TEXTBUTTON name="Lock Gain" id="1dcd400b4d4f873f" memberName="lockGainBtnCtrl"
-              virtualName="" explicitFocusOrder="0" pos="208 184 150 24" bgColOff="ffe2e2e2"
-              buttonText="Lock Gain to 0db" connectedEdges="0" needsCallback="1"
-              radioGroupId="0"/>
-  <TOGGLEBUTTON name="Invert Left" id="4fd996f19d4c1c9a" memberName="invertLeftBtnCtrl"
-                virtualName="" explicitFocusOrder="0" pos="33 118 25 20" tooltip="Phase invert Left Channel"
-                buttonText="" connectedEdges="0" needsCallback="1" radioGroupId="0"
-                state="0"/>
-  <TOGGLEBUTTON name="Invert Right" id="e82b7317ef02b75f" memberName="invertRightBtnCtrl"
-                virtualName="" explicitFocusOrder="0" pos="71 118 25 20" tooltip="Phase invert Right Channel"
-                txtcol="ff000000" buttonText="" connectedEdges="0" needsCallback="1"
-                radioGroupId="0" state="0"/>
-  <LABEL name="Invert Label" id="cc1a383f50c89523" memberName="invertLabel"
-         virtualName="" explicitFocusOrder="0" pos="12 80 100 32" textCol="ff808080"
-         edTextCol="ff000000" edBkgCol="0" labelText="Invert Phase&#10;L       R"
-         editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
-         fontname="Default font" fontsize="15" bold="0" italic="0" justification="20"/>
-</JUCER_COMPONENT>
-
-END_JUCER_METADATA
-*/
-#endif
-
-
-//[EndFile] You can add extra defines here...
-//[/EndFile]
+//END==============================================================================
