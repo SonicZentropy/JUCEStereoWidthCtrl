@@ -49,3 +49,30 @@ void BufferSampleProcesses::processGain(float* LeftSample, float* RightSample, c
 	shouldPrint = false;
 #endif*/
 }
+
+//==============================================================================
+//#if JUCE_UNIT_TESTS
+/*
+class BufferSampleProcessesTests : public UnitTest
+{
+public:
+	BufferSampleProcessesTests() : UnitTest("Buffer Sample Processes") {}
+
+	void runTest() override
+	{
+		beginTest("Part 1");
+
+		float lSample = 1.0, rSample = 1.0;
+		float gainValue;
+		expect (BufferSampleProcesses::processGain())
+	}
+
+};
+
+static BufferSampleProcessesTests bspTests;
+UnitTestRunner utRunner;
+utRunner.runTests
+*/
+
+
+
