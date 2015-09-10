@@ -73,6 +73,9 @@ public:
  	BoolParameter* lockGainParam;
  	BoolParameter* invertLeftParam;
  	BoolParameter* invertRightParam;
+	BoolParameter* midOnlyParam;
+	FloatParameter* stereoPanParam;
+	
 
 	bool needsUIUpdate() { return UIUpdateFlag; };
 	void RequestUIUpdate(){ UIUpdateFlag = true; };

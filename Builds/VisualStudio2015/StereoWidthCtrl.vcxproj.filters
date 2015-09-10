@@ -268,6 +268,9 @@
     <Filter Include="Juce Library Code">
       <UniqueIdentifier>{8B4D1BAA-6DB4-CAEC-A0FA-271F354D5C61}</UniqueIdentifier>
     </Filter>
+    <Filter Include="StereoWidthCtrl\Source\components\NotepadComponent">
+      <UniqueIdentifier>{49c2b35a-38c1-49f0-82c4-d10d6d6098fb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Source\zen_utils\components\AssociatedButton.cpp">
@@ -1256,6 +1259,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\JUCE\modules\juce_audio_plugin_client\VST3\juce_VST3_Wrapper.cpp">
       <Filter>Juce Library Code</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\components\NotepadComponent\NotepadComponent.cpp">
+      <Filter>StereoWidthCtrl\Source\components\NotepadComponent</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -2476,6 +2482,9 @@
     </ClInclude>
     <ClInclude Include="..\..\JuceLibraryCode\JuceHeader.h">
       <Filter>Juce Library Code</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\components\NotepadComponent\NotepadComponent.h">
+      <Filter>StereoWidthCtrl\Source\components\NotepadComponent</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

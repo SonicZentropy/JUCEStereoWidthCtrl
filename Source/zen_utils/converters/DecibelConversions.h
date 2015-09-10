@@ -154,9 +154,9 @@ public:
 	template <typename Type>
 	static Type decibelRangeGainToRawDecibelGain(const Type normGainValue, const Type maximumDecibels, const Type minusInfinityDb)
 	{
-		long double decibels = DecibelConversions::gainToDecibelRange<Type>(static_cast<Type>(normGainValue), static_cast<Type>(maximumDecibels), static_cast<Type>(minusInfinityDb));
-		return DecibelConversions::decibelsToGain<Type>(decibels, -96.0);
 		
+		Type valueInDecibels = DecibelConversions::mapNormalizedValueToDecibels<Type>(normGainValue, 0.0, 1.0, 0.5, minusInfinityDb, maximumDecibels, 0.0);
+		return DecibelConversions::decibelsToGain<Type>(valueInDecibels, minusInfinityDb);
 	}
 
 private:

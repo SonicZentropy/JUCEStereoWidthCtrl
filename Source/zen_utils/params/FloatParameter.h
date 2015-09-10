@@ -47,7 +47,7 @@ public:
 
 private:
 	float defaultValue, value;
-	bool requestUIUpdate;
+	bool requestUIUpdate = true;
 	String name, unitLabel;
 };
 

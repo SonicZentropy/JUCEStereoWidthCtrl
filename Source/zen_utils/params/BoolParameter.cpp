@@ -25,8 +25,8 @@
 
 BoolParameter::BoolParameter()
 {
-	//value = false;
-	//defaultValue = false;
+	value = false;
+	defaultValue = false;
 }
 	BoolParameter::BoolParameter(bool defaultParameterValue, const String& paramName)
 		: defaultValue(defaultParameterValue),

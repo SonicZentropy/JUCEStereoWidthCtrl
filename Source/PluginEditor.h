@@ -49,7 +49,6 @@ public:
 	void paint(Graphics& g) override;
 	void resized() override;
 
-
 	void sliderValueChanged(Slider* sliderThatWasMoved) override;
 
 	void buttonClicked(Button* buttonThatWasClicked) override;
@@ -58,6 +57,7 @@ private:
 
 	AudioProcessor* processor;
 
+	ScopedPointer<TabbedComponent> tabbedComponent;
  	ScopedPointer<StereoWidthCtrlSlider> stereoWidthSldCtrl;
  	ScopedPointer<TextButton> bypassBtnCtrl;
  	ScopedPointer<Label> widthLabel;
@@ -67,8 +67,11 @@ private:
  	ScopedPointer<ToggleButton> invertLeftBtnCtrl;
  	ScopedPointer<ToggleButton> invertRightBtnCtrl;
  	ScopedPointer<Label> invertLabel;
-	
-	
+	ScopedPointer<Label> gainLabel;
+	ScopedPointer<AssociatedSlider> stereoPanSldCtrl;
+	//ScopedPointer<Label> panLabel;
+
+
 	//==============================================================================
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (StereoWidthCtrlAudioProcessorEditor)
 };

@@ -18,6 +18,7 @@
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
 #include "BufferSampleProcesses.h"
+#include "zen_utils/converters/DecibelConversions.h"
 
 
 //==============================================================================
@@ -31,13 +32,15 @@ StereoWidthCtrlAudioProcessor::StereoWidthCtrlAudioProcessor()
  	addParameter(lockGainParam = new BoolParameter(0.0f, "LockGain"));
  	addParameter(invertLeftParam = new BoolParameter(0.0f, "InvertLeft"));
  	addParameter(invertRightParam = new BoolParameter(0.0f, "InvertRight"));
-
+	addParameter(midOnlyParam = new BoolParameter(0.0f, "MidOnly"));
+	addParameter(stereoPanParam = new FloatParameter(0.0f, "Pan"));
+		
 	UIUpdateFlag = true; //flag UI for update
 }
 
 StereoWidthCtrlAudioProcessor::~StereoWidthCtrlAudioProcessor()
 {
-	
+
 }
 
 //==============================================================================
@@ -56,18 +59,19 @@ void StereoWidthCtrlAudioProcessor::processBlock(AudioSampleBuffer& buffer, Midi
 	{
 		float* leftData = buffer.getWritePointer(0);  //leftData references left channel now
 		float* rightData = buffer.getWritePointer(1); //right data references right channel now
-		bool stereoWidthProcess = false, audioGainProcess = false, invertLeftProcess = false, invertRightProcess = false, lockGainProcess = false;
-		float stereoWidthValue, audioGainValue, invertLeftValue, invertRightValue, lockGainValue;
-		stereoWidthValue = stereoWidthParam->getValue();
-		audioGainValue = audioGainParam->getValue();
-		invertLeftValue = invertLeftParam->getValue();
-		invertRightValue = invertRightParam->getValue();
-		lockGainValue = lockGainParam->getValue();
+		bool stereoWidthProcess = false, audioGainProcess = false, invertLeftProcess = false,
+			invertRightProcess = false, stereoPanProcess = false;
+		float stereoWidthValue = stereoWidthParam->getValue();
+		float audioGainValue = audioGainParam->getValue();
+		float invertLeftValue = invertLeftParam->getValue();
+		float invertRightValue = invertRightParam->getValue();
+		float lockGainValue = lockGainParam->getValue();
+		float panValue = stereoPanParam->getValue();
 
 		//Handle Muting
 		if (muteAudioParam->getValue())  // MUTE ALL Audio
 		{
-			for (long i = 0; i < buffer.getNumSamples(); i++)
+			for (long i = 0; i  < buffer.getNumSamples(); i++)
 			{
 				leftData[i] = 0.0f;
 				rightData[i] = 0.0f;
@@ -83,6 +87,10 @@ void StereoWidthCtrlAudioProcessor::processBlock(AudioSampleBuffer& buffer, Midi
 			if (audioGainValue != audioGainParam->getDefaultValue())
 			{
 				audioGainProcess = true;
+				//convert Audio Gain value to a raw decibel gain value
+//				float valueInDecibels = DecibelConversions::mapNormalizedValueToDecibels<float>(audioGainValue, 0.0, 1.0, 0.5, -96.0, 12.0, 0.0);
+//				audioGainValue = DecibelConversions::decibelsToGain<float>(valueInDecibels, -96.0f);
+				audioGainValue = DecibelConversions::decibelRangeGainToRawDecibelGain<float>(audioGainValue, 12.0f, -96.0f);
 			}
 			if (invertLeftValue != 0.0)
 			{
@@ -92,58 +100,49 @@ void StereoWidthCtrlAudioProcessor::processBlock(AudioSampleBuffer& buffer, Midi
 			{
 				invertRightProcess = true;
 			}
-			if (lockGainValue != 0.0 && audioGainValue > 0.5f)
+			if (lockGainValue != 0.0 && audioGainValue > 1.0f) //Gain is converted to raw decibel gain now from above
 			{
-				lockGainProcess = true;
+				// #TODO: SOMETHING WRONG WITH LOCK GAIN AFFECTING MID/SIDE
 				audioGainProcess = false;
 			}
-
-			for (long i = 0; i < buffer.getNumSamples(); i++)
+			if (panValue != 0.5)
+			{
+				stereoPanProcess = true;
+			}
+				for (long i = 0; i < buffer.getNumSamples(); i++)
 			{
 				if (stereoWidthProcess)
 				{
-					BufferSampleProcesses::processStereoWidth(&leftData[i], &rightData[i], stereoWidthValue);
+					BufferSampleProcesses::processStereoWidth(&leftData[i], &rightData[i], stereoWidthValue);					
 				}
 				if(audioGainProcess)  //Don't process gain if it's default OR if gain's locked at 0db and gain value > 0db
 				{	
-					//Process gain
+					//Process gain					
 					BufferSampleProcesses::processGain(&leftData[i], &rightData[i], audioGainValue);
 				}
 				// Handle polarity inversion
-				if (invertLeftProcess) leftData[i] *= -1;
-				if (invertRightProcess) rightData[i] *= -1;
+				if (invertLeftProcess)
+				{
+					BufferSampleProcesses::processInvertLeftChannel(&leftData[i]);
+				}
+				if (invertRightProcess)
+				{
+					BufferSampleProcesses::processInvertRightChannel(&rightData[i]);
+				}
+				if (panValue != 0.5f)
+				{
+					//Pan processing
+					BufferSampleProcesses::processPanning(&leftData[i], &rightData[i], panValue);
+				}
 
+				// Always process these FOR TESTING
+				{
+					
+				}
+				// End of Always-Process block
 			}
 		}
-		
-	
-		// Handle Gain
-		/*if (audioGainParam->getValue() != 0.5f) //0.5 = 0db Unity Gain
-		{
-			
-			if (lockGainParam->getValue() && audioGainParam->getValue() > 0.5f)
-			{
-			
-			}
-			else for (long i = 0; i < buffer.getNumSamples(); i++)
-			{
-				BufferSampleProcesses::processGain(&leftData[i], &rightData[i], audioGainParam->getValue());
-			}
-		}*/
-		// Handle polarity inversion
-		/*if (invertLeftParam->getValue() || invertRightParam->getValue())
-		{
-			bool invertLeft=false, invertRight=false; //Loop optimization
-			if (invertLeftParam->getValue()) invertLeft = true;
-			if (invertRightParam->getValue()) invertRight = true;
-			for (long i = 0; i < buffer.getNumSamples(); i++)
-			{
-				if (invertLeft) leftData[i] *= -1;
-				if (invertRight) rightData[i] *= -1;
-			}
-		}*/
 	}
-	
 }
 
 //==============================================================================
@@ -154,11 +153,12 @@ void StereoWidthCtrlAudioProcessor::getStateInformation(MemoryBlock& destData)
 	// as intermediaries to make it easy to save and load complex data.
 	XmlElement root("Root");
 	XmlElement* el;
+
 	el = root.createNewChildElement("Bypass");
 	el->addTextElement(String(masterBypassParam->getValue()));
 	el = root.createNewChildElement("StereoWidth");
 	el->addTextElement(String(stereoWidthParam->getValue()));
-	el = root.createNewChildElement("MuteAudio");      // This shouldn't work? Was "Mute"
+	el = root.createNewChildElement("MuteAudio");
 	el->addTextElement(String(muteAudioParam->getValue()));
 	el = root.createNewChildElement("Gain");
 	el->addTextElement(String(audioGainParam->getValue()));
@@ -168,6 +168,9 @@ void StereoWidthCtrlAudioProcessor::getStateInformation(MemoryBlock& destData)
 	el->addTextElement(String(invertRightParam->getValue()));
 	el = root.createNewChildElement("LockGain");
 	el->addTextElement(String(lockGainParam->getValue()));
+	el = root.createNewChildElement("StereoPan");
+	el->addTextElement(String(stereoPanParam->getValue()));
+
 	copyXmlToBinary(root, destData);
 }
 
@@ -208,7 +211,12 @@ void StereoWidthCtrlAudioProcessor::setStateInformation(const void* data, int si
 			{
 				String text = pChild->getAllSubText();
 				setParameter(lockGainParam->getParameterIndex(), text.getFloatValue());
+			} else if (pChild->hasTagName("StereoPan"))
+			{
+				String text = pChild->getAllSubText();
+				setParameter( stereoPanParam->getParameterIndex(), text.getFloatValue() );
 			}
+
 		}
 		delete pRoot;
 		UIUpdateFlag = true;
@@ -218,91 +226,92 @@ void StereoWidthCtrlAudioProcessor::setStateInformation(const void* data, int si
 
 //==============================================================================
 
+#pragma region overrides
 const String StereoWidthCtrlAudioProcessor::getName() const
 {
-    return JucePlugin_Name;
+	return JucePlugin_Name;
 }
 
-const String StereoWidthCtrlAudioProcessor::getInputChannelName (int channelIndex) const
+const String StereoWidthCtrlAudioProcessor::getInputChannelName(int channelIndex) const
 {
-    return String (channelIndex + 1);
+	return String(channelIndex + 1);
 }
 
-const String StereoWidthCtrlAudioProcessor::getOutputChannelName (int channelIndex) const
+const String StereoWidthCtrlAudioProcessor::getOutputChannelName(int channelIndex) const
 {
-    return String (channelIndex + 1);
+	return String(channelIndex + 1);
 }
 
-bool StereoWidthCtrlAudioProcessor::isInputChannelStereoPair (int index) const
+bool StereoWidthCtrlAudioProcessor::isInputChannelStereoPair(int index) const
 {
-    return true;
+	return true;
 }
 
-bool StereoWidthCtrlAudioProcessor::isOutputChannelStereoPair (int index) const
+bool StereoWidthCtrlAudioProcessor::isOutputChannelStereoPair(int index) const
 {
-    return true;
+	return true;
 }
 
 bool StereoWidthCtrlAudioProcessor::acceptsMidi() const
 {
-   #if JucePlugin_WantsMidiInput
-    return true;
-   #else
-    return false;
-   #endif
+#if JucePlugin_WantsMidiInput
+	return true;
+#else
+	return false;
+#endif
 }
 
 bool StereoWidthCtrlAudioProcessor::producesMidi() const
 {
-   #if JucePlugin_ProducesMidiOutput
-    return true;
-   #else
-    return false;
-   #endif
+#if JucePlugin_ProducesMidiOutput
+	return true;
+#else
+	return false;
+#endif
 }
 
 bool StereoWidthCtrlAudioProcessor::silenceInProducesSilenceOut() const
 {
-    return true;
+	return true;
 }
 
 double StereoWidthCtrlAudioProcessor::getTailLengthSeconds() const
 {
-    return 0.0;
+	return 0.0;
 }
 
 int StereoWidthCtrlAudioProcessor::getNumPrograms()
 {
-    return 1;   // NB: some hosts don't cope very well if you tell them there are 0 programs,
-                // so this should be at least 1, even if you're not really implementing programs.
+	return 1;   // NB: some hosts don't cope very well if you tell them there are 0 programs,
+				// so this should be at least 1, even if you're not really implementing programs.
 }
 
 int StereoWidthCtrlAudioProcessor::getCurrentProgram()
 {
-    return 0;
+	return 0;
 }
 
-void StereoWidthCtrlAudioProcessor::setCurrentProgram (int index)
+void StereoWidthCtrlAudioProcessor::setCurrentProgram(int index)
 {
 
 }
 
-const String StereoWidthCtrlAudioProcessor::getProgramName (int index)
+const String StereoWidthCtrlAudioProcessor::getProgramName(int index)
 {
 	return String();
 }
 
-void StereoWidthCtrlAudioProcessor::changeProgramName (int index, const String& newName)
+void StereoWidthCtrlAudioProcessor::changeProgramName(int index, const String& newName)
 {
-	
+
 }
 
 //==============================================================================
 
-void StereoWidthCtrlAudioProcessor::prepareToPlay (double inSampleRate, int samplesPerBlock)
+void StereoWidthCtrlAudioProcessor::prepareToPlay(double inSampleRate, int samplesPerBlock)
 {
-    // Use this method as the place to do any pre-playback
-    // initialisation that you need..
+	// Use this method as the place to do any pre-playback
+	// initialisation that you need..
 	//sampleRate = inSampleRate;
 	//samplesPerBlock = samplesPerBlock;
 }
@@ -310,14 +319,14 @@ void StereoWidthCtrlAudioProcessor::prepareToPlay (double inSampleRate, int samp
 
 void StereoWidthCtrlAudioProcessor::releaseResources()
 {
-    // When playback stops, you can use this as an opportunity to free up any
-    // spare memory, etc.
+	// When playback stops, you can use this as an opportunity to free up any
+	// spare memory, etc.
 }
 
 //==============================================================================
 bool StereoWidthCtrlAudioProcessor::hasEditor() const
 {
-    return true; // (change this to false if you choose to not supply an editor)
+	return true; // (change this to false if you choose to not supply an editor)
 }
 
 AudioProcessorEditor* StereoWidthCtrlAudioProcessor::createEditor()
@@ -329,5 +338,6 @@ AudioProcessorEditor* StereoWidthCtrlAudioProcessor::createEditor()
 // This creates new instances of the plugin..
 AudioProcessor* JUCE_CALLTYPE createPluginFilter()
 {
-    return new StereoWidthCtrlAudioProcessor();
+	return new StereoWidthCtrlAudioProcessor();
 }
+#pragma endregion overrides

@@ -16,11 +16,13 @@
 #define ASSOCIATED_SLIDER_H_INCLUDED
 
 #include "../JuceLibraryCode/JuceHeader.h"
+#include "juce_gui_basics/widgets/juce_Slider.h"
 
 class AssociatedSlider : public Slider
 {
 public:
 
+	AssociatedSlider(const String& componentName);
 	AssociatedSlider(const String& componentName, AudioProcessorParameter* associatedParam);	
 	AssociatedSlider(const String& componentName, AudioProcessorParameter* associatedParam, const String& desiredUnitLabel);
 
@@ -29,6 +31,9 @@ public:
 	void setAssociatedParameter(AudioProcessorParameter* assocParam) { associatedParameter = assocParam; };	
 	void setGUIValueNotifyingHost(const float& newValue);
 	
+	float getLinearNormalizedValue();
+	
+	void setValueFromLinearNormalized(const float& inValue, NotificationType notification = sendNotificationAsync);
 private:
 	AudioProcessorParameter* associatedParameter;
 	String unitLabel;
