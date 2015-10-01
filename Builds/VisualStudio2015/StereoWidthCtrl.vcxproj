@@ -226,6 +226,11 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <TreatWarningAsError>false</TreatWarningAsError>
       <DisableSpecificWarnings>4244;</DisableSpecificWarnings>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <OmitFramePointers>true</OmitFramePointers>
+      <FloatingPointModel>Fast</FloatingPointModel>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -241,6 +246,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <LargeAddressAware>true</LargeAddressAware>
       <AdditionalOptions>/FORCE:multiple %(AdditionalOptions)</AdditionalOptions>
+      <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
     </Link>
     <Bscmake>
       <SuppressStartupBanner>true</SuppressStartupBanner>
@@ -252,15 +258,16 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Source\components\NotepadComponent\NotepadComponent.cpp" />
+    <ClCompile Include="..\..\Source\components\PanSlider\PanSlider.cpp" />
     <ClCompile Include="..\..\Source\zen_utils\components\AssociatedButton.cpp" />
     <ClCompile Include="..\..\Source\zen_utils\components\AssociatedSlider.cpp" />
     <ClCompile Include="..\..\Source\zen_utils\params\BoolParameter.cpp" />
     <ClCompile Include="..\..\Source\zen_utils\params\FloatParameter.cpp" />
+    <ClCompile Include="..\..\Source\zen_utils\processing\BufferSampleProcesses.cpp" />
     <ClCompile Include="..\..\Source\zen_utils\ZenDebug.cpp" />
     <ClCompile Include="..\..\Source\zen_utils\ZenParamUtils.cpp" />
     <ClCompile Include="..\..\Source\components\GainCtrlSlider\GainCtrlSlider.cpp" />
     <ClCompile Include="..\..\Source\components\StereoWidthCtrlSlider\StereoWidthCtrlSlider.cpp" />
-    <ClCompile Include="..\..\Source\BufferSampleProcesses.cpp" />
     <ClCompile Include="..\..\Source\PluginProcessor.cpp" />
     <ClCompile Include="..\..\Source\PluginEditor.cpp" />
     <ClCompile Include="..\..\Source\PluginEditorRef.cpp" />
@@ -1196,17 +1203,18 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Source\components\NotepadComponent\NotepadComponent.h" />
+    <ClInclude Include="..\..\Source\components\PanSlider\PanSlider.h" />
     <ClInclude Include="..\..\Source\zen_utils\converters\DecibelConversions.h" />
     <ClInclude Include="..\..\Source\zen_utils\components\AssociatedButton.h" />
     <ClInclude Include="..\..\Source\zen_utils\components\AssociatedSlider.h" />
     <ClInclude Include="..\..\Source\zen_utils\params\BoolParameter.h" />
     <ClInclude Include="..\..\Source\zen_utils\params\FloatParameter.h" />
+    <ClInclude Include="..\..\Source\zen_utils\processing\BufferSampleProcesses.h" />
     <ClInclude Include="..\..\Source\zen_utils\zen_utils.h" />
     <ClInclude Include="..\..\Source\zen_utils\ZenDebug.h" />
     <ClInclude Include="..\..\Source\zen_utils\ZenParamUtils.h" />
     <ClInclude Include="..\..\Source\components\GainCtrlSlider\GainCtrlSlider.h" />
     <ClInclude Include="..\..\Source\components\StereoWidthCtrlSlider\StereoWidthCtrlSlider.h" />
-    <ClInclude Include="..\..\Source\BufferSampleProcesses.h" />
     <ClInclude Include="..\..\Source\PluginProcessor.h" />
     <ClInclude Include="..\..\Source\PluginEditor.h" />
     <ClInclude Include="..\..\Source\PluginEditorRef.h" />

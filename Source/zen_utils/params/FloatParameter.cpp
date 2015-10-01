@@ -37,13 +37,11 @@ FloatParameter::~FloatParameter()
 
 float FloatParameter::getValue() const
 {
-//	DBG("Entered method: FloatParameter:getValue()");
 	return value;
 }
 
 void FloatParameter::setValue(float newValue)
 {
-	//DBG("Entered method: FloatParameter:setValue(newValue) with value: " + String(newValue));
 	value = newValue;
 	requestUIUpdate = true;
 }
@@ -63,9 +61,10 @@ String FloatParameter::getLabel() const
 	return unitLabel;
 }
 
+
 void FloatParameter::setValueNotifyingHost(float newValue)
 {
-	AudioProcessor* processor = getProcessor();
+	//AudioProcessor* processor = getProcessor();
 	// This method can't be used until the parameter has been attached to a processor!
 	jassert(processor != nullptr && getParameterIndex() >= 0);
 	processor->setParameterNotifyingHost(getParameterIndex(), newValue);

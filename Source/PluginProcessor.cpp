@@ -17,7 +17,7 @@
 
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
-#include "BufferSampleProcesses.h"
+#include "zen_utils/processing/BufferSampleProcesses.h"
 #include "zen_utils/converters/DecibelConversions.h"
 
 
@@ -27,13 +27,14 @@ StereoWidthCtrlAudioProcessor::StereoWidthCtrlAudioProcessor()
 	//DBG("Entered method: StereoWidthCtrlAudioProcessor:StereoWidthCtrlAudioProcessor()");
  	addParameter(masterBypassParam = new BoolParameter(0.0f, "MasterBypass"));
  	addParameter(stereoWidthParam = new FloatParameter(0.5f, "StereoWidth"));
- 	addParameter(muteAudioParam = new BoolParameter(0.0f, "MuteAudio"));
+	DBG("Sizeof: " + String(sizeof(float)));
+	addParameter(muteAudioParam = new BoolParameter(0.0f, "MuteAudio"));
  	addParameter(audioGainParam = new FloatParameter(0.5f, "AudioGain")); //0.5f is 0 gain with this range
  	addParameter(lockGainParam = new BoolParameter(0.0f, "LockGain"));
  	addParameter(invertLeftParam = new BoolParameter(0.0f, "InvertLeft"));
  	addParameter(invertRightParam = new BoolParameter(0.0f, "InvertRight"));
 	addParameter(midOnlyParam = new BoolParameter(0.0f, "MidOnly"));
-	addParameter(stereoPanParam = new FloatParameter(0.0f, "Pan"));
+	addParameter(stereoPanParam = new FloatParameter(0.5f, "Pan"));
 		
 	UIUpdateFlag = true; //flag UI for update
 }
@@ -59,8 +60,7 @@ void StereoWidthCtrlAudioProcessor::processBlock(AudioSampleBuffer& buffer, Midi
 	{
 		float* leftData = buffer.getWritePointer(0);  //leftData references left channel now
 		float* rightData = buffer.getWritePointer(1); //right data references right channel now
-		bool stereoWidthProcess = false, audioGainProcess = false, invertLeftProcess = false,
-			invertRightProcess = false, stereoPanProcess = false;
+		bool stereoWidthProcess = false, audioGainProcess = false, invertLeftProcess = false, invertRightProcess = false;
 		float stereoWidthValue = stereoWidthParam->getValue();
 		float audioGainValue = audioGainParam->getValue();
 		float invertLeftValue = invertLeftParam->getValue();
@@ -104,10 +104,6 @@ void StereoWidthCtrlAudioProcessor::processBlock(AudioSampleBuffer& buffer, Midi
 			{
 				// #TODO: SOMETHING WRONG WITH LOCK GAIN AFFECTING MID/SIDE
 				audioGainProcess = false;
-			}
-			if (panValue != 0.5)
-			{
-				stereoPanProcess = true;
 			}
 				for (long i = 0; i < buffer.getNumSamples(); i++)
 			{
@@ -168,6 +164,7 @@ void StereoWidthCtrlAudioProcessor::getStateInformation(MemoryBlock& destData)
 	el->addTextElement(String(invertRightParam->getValue()));
 	el = root.createNewChildElement("LockGain");
 	el->addTextElement(String(lockGainParam->getValue()));
+
 	el = root.createNewChildElement("StereoPan");
 	el->addTextElement(String(stereoPanParam->getValue()));
 
@@ -190,7 +187,7 @@ void StereoWidthCtrlAudioProcessor::setStateInformation(const void* data, int si
 			} else if (pChild->hasTagName("StereoWidth"))
 			{
 				String text = pChild->getAllSubText();
-				setParameter(stereoWidthParam->getParameterIndex(), text.getFloatValue() / 2.0f);
+				setParameter(stereoWidthParam->getParameterIndex(), text.getFloatValue() );
 			} else if (pChild->hasTagName("MuteAudio"))  //This shouldn't work?  Switch MuteAudio to Mute
 			{
 				String text = pChild->getAllSubText();

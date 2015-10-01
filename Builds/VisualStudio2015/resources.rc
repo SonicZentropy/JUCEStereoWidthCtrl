@@ -14,9 +14,9 @@ BEGIN
     BLOCK "040904E4"
     BEGIN
       VALUE "CompanyName",  "Zentropy\0"
-      VALUE "FileDescription",  "StereoWidthCtrl\0"
+      VALUE "FileDescription",  "ZenTool\0"
       VALUE "FileVersion",  "1.0.0\0"
-      VALUE "ProductName",  "StereoWidthCtrl\0"
+      VALUE "ProductName",  "ZenTool\0"
       VALUE "ProductVersion",  "1.0.0\0"
     END
   END

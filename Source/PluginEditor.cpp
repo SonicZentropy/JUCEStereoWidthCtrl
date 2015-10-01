@@ -18,7 +18,6 @@
 */
 #include "PluginEditor.h"
 #include <exception>
-#include "components/NotepadComponent/NotepadComponent.h"
 
 using namespace juce;
 
@@ -26,17 +25,10 @@ using namespace juce;
 StereoWidthCtrlAudioProcessorEditor::StereoWidthCtrlAudioProcessorEditor(StereoWidthCtrlAudioProcessor& ownerFilter)
 	: AudioProcessorEditor(ownerFilter), processor(&ownerFilter)
 {
-	// #TODO: Set Default Look And Feel
 	//Audio Processor reference
 	StereoWidthCtrlAudioProcessor* audioProc = getProcessor();
-
-	addAndMakeVisible(tabbedComponent = new TabbedComponent(TabbedButtonBar::TabsAtTop));
-	tabbedComponent->setTabBarDepth(20);
-	tabbedComponent->addTab(TRANS("Main"), Colours::black, new Component("Main"), true);
-	tabbedComponent->addTab(TRANS("Notes"), Colours::lightgrey, new NotepadComponent("Notepad", "NOTEPAD CONTENTS"), true);
-	tabbedComponent->setCurrentTabIndex(0);
 		
-	tabbedComponent->getTabContentComponent(0)->addAndMakeVisible(stereoWidthSldCtrl = new StereoWidthCtrlSlider("Width Factor Slider", audioProc->stereoWidthParam, "%"));
+	addAndMakeVisible(stereoWidthSldCtrl = new StereoWidthCtrlSlider("Width Factor Slider", audioProc->stereoWidthParam, "%"));
 	stereoWidthSldCtrl->setTooltip(TRANS("Stereo Width"));
 	stereoWidthSldCtrl->setRange(0, 1, 0.005);
 	stereoWidthSldCtrl->setSliderStyle(Slider::Rotary);
@@ -50,9 +42,9 @@ StereoWidthCtrlAudioProcessorEditor::StereoWidthCtrlAudioProcessorEditor(StereoW
 	stereoWidthSldCtrl->setColour(Slider::textBoxHighlightColourId, Colour(0x40ffffff));
 	stereoWidthSldCtrl->addListener(this);
 	
-	tabbedComponent->getTabContentComponent(0)->addAndMakeVisible(gainSldCtrl = new GainCtrlSlider("Gain Knob", audioProc->audioGainParam, "dB", 12.0));
+	addAndMakeVisible(gainSldCtrl = new GainCtrlSlider("Gain Knob", audioProc->audioGainParam, "dB", 12.0));
 	gainSldCtrl->setRange(0.0, 1.0, 0.0);
-	gainSldCtrl->setSkewFactor(0.5);
+	gainSldCtrl->setSkewFactor(0.4f);
 	gainSldCtrl->setSliderStyle(Slider::LinearVertical);
 	gainSldCtrl->setTextBoxStyle(Slider::TextBoxBelow, false, 50, 20);
 	gainSldCtrl->setColour(Slider::backgroundColourId, Colour(0x00868181));
@@ -62,12 +54,12 @@ StereoWidthCtrlAudioProcessorEditor::StereoWidthCtrlAudioProcessorEditor(StereoW
 	gainSldCtrl->setColour(Slider::textBoxBackgroundColourId, Colour(0xffb2b2ff));
 	gainSldCtrl->addListener(this);
 	
-	tabbedComponent->getTabContentComponent(0)->addAndMakeVisible(bypassBtnCtrl = new TextButton("Bypass Button"));
+	addAndMakeVisible(bypassBtnCtrl = new TextButton("Bypass Button"));
 	bypassBtnCtrl->setButtonText(TRANS("Bypass"));
 	bypassBtnCtrl->addListener(this);
 	bypassBtnCtrl->setColour(TextButton::buttonColourId, Colour(0xffe2e2e2));
 
-	tabbedComponent->getTabContentComponent(0)->addAndMakeVisible(widthLabel = new Label("Width Label", TRANS("Stereo Width Factor:")));
+	addAndMakeVisible(widthLabel = new Label("Width Label", TRANS("S. Width:")));
 	widthLabel->setFont(Font(10.00f, Font::bold));
 	widthLabel->setJustificationType(Justification::centred);
 	widthLabel->setEditable(false, false, false);
@@ -75,28 +67,28 @@ StereoWidthCtrlAudioProcessorEditor::StereoWidthCtrlAudioProcessorEditor(StereoW
 	widthLabel->setColour(TextEditor::textColourId, Colours::black);
 	widthLabel->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
 
-	tabbedComponent->getTabContentComponent(0)->addAndMakeVisible(muteBtnCtrl = new TextButton("Mute Button"));
+	addAndMakeVisible(muteBtnCtrl = new TextButton("Mute Button"));
 	muteBtnCtrl->setButtonText(TRANS("Mute"));
 	muteBtnCtrl->addListener(this);
 	muteBtnCtrl->setColour(TextButton::buttonColourId, Colour(0xffe2e2e2));
 
-	tabbedComponent->getTabContentComponent(0)->addAndMakeVisible(lockGainBtnCtrl = new TextButton("Lock Gain"));
+	addAndMakeVisible(lockGainBtnCtrl = new TextButton("Lock Gain"));
 	lockGainBtnCtrl->setButtonText(TRANS("Lock Gain to 0db"));
 	lockGainBtnCtrl->addListener(this);
 	lockGainBtnCtrl->setColour(TextButton::buttonColourId, Colour(0xffe2e2e2));
 
-	tabbedComponent->getTabContentComponent(0)->addAndMakeVisible(invertLeftBtnCtrl = new ToggleButton("Invert Left"));
+	addAndMakeVisible(invertLeftBtnCtrl = new ToggleButton("Invert Left"));
 	invertLeftBtnCtrl->setTooltip(TRANS("Phase invert Left Channel"));
 	invertLeftBtnCtrl->setButtonText(String::empty);
 	invertLeftBtnCtrl->addListener(this);
 
-	tabbedComponent->getTabContentComponent(0)->addAndMakeVisible(invertRightBtnCtrl = new ToggleButton("Invert Right"));
+	addAndMakeVisible(invertRightBtnCtrl = new ToggleButton("Invert Right"));
 	invertRightBtnCtrl->setTooltip(TRANS("Phase invert Right Channel"));
 	invertRightBtnCtrl->setButtonText(String::empty);
 	invertRightBtnCtrl->addListener(this);
 	invertRightBtnCtrl->setColour(ToggleButton::textColourId, Colour(0xffb2b2ff));
 
-	tabbedComponent->getTabContentComponent(0)->addAndMakeVisible(invertLabel = new Label("Invert Label",
+	addAndMakeVisible(invertLabel = new Label("Invert Label",
 		TRANS("Invert:\n"
 			"L       R")));
 	invertLabel->setFont(Font(10.00f, Font::bold));
@@ -106,8 +98,8 @@ StereoWidthCtrlAudioProcessorEditor::StereoWidthCtrlAudioProcessorEditor(StereoW
 	invertLabel->setColour(TextEditor::textColourId, Colours::black);
 	invertLabel->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
 
-	tabbedComponent->getTabContentComponent(0)->addAndMakeVisible(gainLabel = new Label("Gain Label",
-		TRANS("Gain:")));
+	addAndMakeVisible(gainLabel = new Label("Gain Label",
+		"Gain:"));
 	gainLabel->setFont(Font(10.00f, Font::bold));
 	gainLabel->setJustificationType(Justification::centredBottom);
 	gainLabel->setEditable(false, false, false);
@@ -115,13 +107,14 @@ StereoWidthCtrlAudioProcessorEditor::StereoWidthCtrlAudioProcessorEditor(StereoW
 	gainLabel->setColour(TextEditor::textColourId, Colours::black);
 	gainLabel->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
 
-	tabbedComponent->getTabContentComponent(0)->addAndMakeVisible(stereoPanSldCtrl = new AssociatedSlider("Panning"));
+	addAndMakeVisible(stereoPanSldCtrl = new PanSlider("Pan", audioProc->stereoPanParam));
 	stereoPanSldCtrl->setRange(-100, 100, 1);
 	stereoPanSldCtrl->setSliderStyle(Slider::RotaryHorizontalVerticalDrag);
 	stereoPanSldCtrl->setTextBoxStyle(Slider::TextBoxBelow, false, 50, 20);
 	stereoPanSldCtrl->setColour(Slider::rotarySliderFillColourId, Colour(0x7f8080ff));
 	stereoPanSldCtrl->setColour(Slider::rotarySliderOutlineColourId, Colour(0x66ffffff));
 	stereoPanSldCtrl->setColour(Slider::textBoxBackgroundColourId, Colour(0xffb2b2ff));
+	stereoPanSldCtrl->setValue(0.0f, dontSendNotification);
 	stereoPanSldCtrl->addListener(this);
 	
 
@@ -129,13 +122,13 @@ StereoWidthCtrlAudioProcessorEditor::StereoWidthCtrlAudioProcessorEditor(StereoW
 
 	gainSldCtrl->setDoubleClickReturnValue(true, gainSldCtrl->getAssociatedParameter()->getDefaultValue());
 	stereoWidthSldCtrl->setDoubleClickReturnValue(true, stereoWidthSldCtrl->getAssociatedParameter()->getDefaultValue());
-	stereoPanSldCtrl->setDoubleClickReturnValue(true, 0.5f);
+	stereoPanSldCtrl->setDoubleClickReturnValue(true, 0.0f);
 
 	// GUI Size 
-	setSize(250, 280);
+	setSize(118, 164);
 
 	getProcessor()->RequestUIUpdate(); //UI Update must be performed every time a new editor is constructed
-	startTimer(20); // Start timer poll with 20ms rate
+	startTimer(20); // Start timer poll with 20ms 
 
 	bypassBtnCtrl->setClickingTogglesState(true);
 	muteBtnCtrl->setClickingTogglesState(true);
@@ -150,8 +143,6 @@ StereoWidthCtrlAudioProcessorEditor::StereoWidthCtrlAudioProcessorEditor(StereoW
 ///
 StereoWidthCtrlAudioProcessorEditor::~StereoWidthCtrlAudioProcessorEditor()
 {
-	tabbedComponent = nullptr;
-
 	stereoWidthSldCtrl = nullptr;
 	bypassBtnCtrl = nullptr;
 	widthLabel = nullptr;
@@ -163,7 +154,6 @@ StereoWidthCtrlAudioProcessorEditor::~StereoWidthCtrlAudioProcessorEditor()
 	invertLabel = nullptr;
 	gainLabel = nullptr;
 	stereoPanSldCtrl = nullptr;	
-
 }
 
 //==============================================================================
@@ -174,60 +164,36 @@ void StereoWidthCtrlAudioProcessorEditor::paint(Graphics& g)
 
 void StereoWidthCtrlAudioProcessorEditor::resized()
 {
-	
-	tabbedComponent->setBounds(0, 0, getWidth(), getHeight());
-	
 	//MainTab
-	stereoWidthSldCtrl->setBounds(53, 4, 69, 30);
+	stereoWidthSldCtrl->setBounds(53, 0, 69, 30);
 	bypassBtnCtrl->setBounds(3, 145, 112, 16);
-	widthLabel->setBounds(6, 5, 42, 24);
+	widthLabel->setBounds(6, 0, 42, 24);
 	muteBtnCtrl->setBounds(3, 124, 30, 16);
 	gainSldCtrl->setBounds(64, 49, 50, 69);
 	lockGainBtnCtrl->setBounds(33, 124, 82, 16);
-	invertLeftBtnCtrl->setBounds(8, 48, 20, 20);
-	invertRightBtnCtrl->setBounds(33, 48, 20, 20);
+	invertLeftBtnCtrl->setBounds(8, 48, 24, 20);
+	invertRightBtnCtrl->setBounds(33, 48, 24, 20);
 	invertLabel->setBounds(8, 30, 44, 20);
 	gainLabel->setBounds(63, 32, 39, 14);
-	stereoPanSldCtrl->setBounds(3, 74, 56, 44);
-/*
-	stereoWidthSldCtrl->setBounds(81, 11, 61, 18);
-	widthLabel->setBounds(8, 8, 72, 24);
-	bypassBtnCtrl->setBounds(14, 123, 112, 16);
-	muteBtnCtrl->setBounds(14, 106, 30, 16);
-	gainSldCtrl->setBounds(76, 36, 38, 69);
-	lockGainBtnCtrl->setBounds(44,106,82,16);
-	invertLeftBtnCtrl->setBounds(22, 46, 20, 16);
-	invertRightBtnCtrl->setBounds(47, 46, 20, 16);
-	invertLabel->setBounds(21, 28, 44, 20);
-	stereoPanSldCtrl->setBounds(16, 61, 56, 44);*/
-	//panLabel->setBounds(162, 72, 35, 24);
-	//midOnlyBtnCtrl->setBounds(124, 80, 40, 24);
-	
+	stereoPanSldCtrl->setBounds(3, 74, 56, 44);	
 }
 
 /// <summary> Called by JUCE when slider is moved.  Casts slider as Associated and passes to associatedSliderValueChanged</summary>
 /// <param name="sliderThatWasMoved"> The slider that was moved.</param>
 void StereoWidthCtrlAudioProcessorEditor::sliderValueChanged(Slider* sliderThatWasMoved)
 {
-	try
+	AudioProcessorParameter* param = static_cast<AssociatedSlider*>(sliderThatWasMoved)->getAssociatedParameter();
+	if (sliderThatWasMoved == stereoWidthSldCtrl)
 	{
-		AudioProcessorParameter* param = static_cast<AssociatedSlider*>(sliderThatWasMoved)->getAssociatedParameter();
-		if (sliderThatWasMoved == stereoWidthSldCtrl)
-		{
-			param->setValueNotifyingHost(static_cast<float>(stereoWidthSldCtrl->getValue()));
-		} 
-		else if (sliderThatWasMoved == gainSldCtrl)
-		{   
-			param->setValueNotifyingHost(static_cast<float>(gainSldCtrl->getValue()));
-		}
-		else if (sliderThatWasMoved == stereoPanSldCtrl)
-		{
-			getProcessor()->stereoPanParam->setValueNotifyingHost(stereoPanSldCtrl->getLinearNormalizedValue());
-		}
+		param->setValueNotifyingHost(static_cast<float>(stereoWidthSldCtrl->getValue()));
+	} 
+	else if (sliderThatWasMoved == gainSldCtrl)
+	{   
+		param->setValueNotifyingHost(static_cast<float>(gainSldCtrl->getValue()));
 	}
-	catch (std::exception& e)
+	else if (sliderThatWasMoved == stereoPanSldCtrl)
 	{
-		DBG("Casting >" + sliderThatWasMoved->getName() +"< to AssociatedSlider* failed: " + String(e.what()));
+		param->setValueNotifyingHost(stereoPanSldCtrl->getLinearNormalizedValue());			
 	}
 }
 

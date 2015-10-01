@@ -140,10 +140,10 @@
  #define JucePlugin_Build_AAX              0
 #endif
 #ifndef  JucePlugin_Name
- #define JucePlugin_Name                   "StereoWidthCtrl"
+ #define JucePlugin_Name                   "ZenTool"
 #endif
 #ifndef  JucePlugin_Desc
- #define JucePlugin_Desc                   "Change Stereo Width of Audio"
+ #define JucePlugin_Desc                   "Lightweight Audio Utility"
 #endif
 #ifndef  JucePlugin_Manufacturer
  #define JucePlugin_Manufacturer           "Zentropy"
@@ -155,10 +155,10 @@
  #define JucePlugin_ManufacturerEmail      "SonicZentropy@gmail.com"
 #endif
 #ifndef  JucePlugin_ManufacturerCode
- #define JucePlugin_ManufacturerCode       'ZenA'
+ #define JucePlugin_ManufacturerCode       'ZENT'
 #endif
 #ifndef  JucePlugin_PluginCode
- #define JucePlugin_PluginCode             'SCtl'
+ #define JucePlugin_PluginCode             'ZNTL'
 #endif
 #ifndef  JucePlugin_MaxNumInputChannels
  #define JucePlugin_MaxNumInputChannels    2

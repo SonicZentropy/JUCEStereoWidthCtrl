@@ -21,27 +21,19 @@
 
 AssociatedSlider::AssociatedSlider(const String& componentName, AudioProcessorParameter* associatedParam)
 : Slider(componentName), associatedParameter(associatedParam)
-{
-	
-}
+{}
 
 AssociatedSlider::AssociatedSlider(const String& componentName, AudioProcessorParameter* associatedParam, const String& desiredUnitLabel) 
 : Slider(componentName), associatedParameter(associatedParam), unitLabel(desiredUnitLabel)
-{
-}
+{}
 
-AssociatedSlider::AssociatedSlider(const String& componentName)
-	: Slider(componentName)
-{
-
-}
-
+/*
 void AssociatedSlider::setGUIValueNotifyingHost(const float& newValue)
 {
-	jassert(associatedParameter->getProcessor() != nullptr && associatedParameter->getParameterIndex() >= 0);
+//	jassert(associatedParameter->getProcessor() != nullptr && associatedParameter->getParameterIndex() >= 0);
 
-	return associatedParameter->getProcessor()->setParameterNotifyingHost(associatedParameter->getParameterIndex(), newValue);
-}
+//	return associatedParameter->setParameterNotifyingHost(associatedParameter->getParameterIndex(), newValue);
+}*/
 
 float AssociatedSlider::getLinearNormalizedValue()
 {

@@ -140,15 +140,16 @@ BoolParameter::BoolParameter()
 		return text.getFloatValue();
 	}
 
+/*
 	void BoolParameter::setValueNotifyingHost(float newValue)
 	{
 		AudioProcessor* processor = getProcessor();
 		// This method can't be used until the parameter has been attached to a processor!
-		jassert(processor != nullptr && getParameterIndex() >= 0);
-		processor->setParameterNotifyingHost(getParameterIndex(), newValue);
+		//jassert(processor != nullptr && getParameterIndex() >= 0);
+		//processor->setParameterNotifyingHost(getParameterIndex(), newValue);
 		requestUIUpdate = false;  //set this to false because change came from GUI
 		return;
-	}
+	}*/
 
 	bool BoolParameter::needsUIUpdate()
 	{

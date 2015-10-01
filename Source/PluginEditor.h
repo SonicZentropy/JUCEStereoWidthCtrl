@@ -19,6 +19,7 @@
 #include "PluginProcessor.h"
 #include "components/StereoWidthCtrlSlider/StereoWidthCtrlSlider.h"
 #include "components/GainCtrlSlider/GainCtrlSlider.h"
+#include "components/PanSlider/PanSlider.h"
 
 //==============================================================================
 
@@ -57,7 +58,7 @@ private:
 
 	AudioProcessor* processor;
 
-	ScopedPointer<TabbedComponent> tabbedComponent;
+	//ScopedPointer<TabbedComponent> tabbedComponent;
  	ScopedPointer<StereoWidthCtrlSlider> stereoWidthSldCtrl;
  	ScopedPointer<TextButton> bypassBtnCtrl;
  	ScopedPointer<Label> widthLabel;
@@ -68,7 +69,7 @@ private:
  	ScopedPointer<ToggleButton> invertRightBtnCtrl;
  	ScopedPointer<Label> invertLabel;
 	ScopedPointer<Label> gainLabel;
-	ScopedPointer<AssociatedSlider> stereoPanSldCtrl;
+	ScopedPointer<PanSlider> stereoPanSldCtrl;
 	//ScopedPointer<Label> panLabel;
 
 
