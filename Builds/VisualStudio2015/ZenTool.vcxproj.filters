@@ -1,33 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="StereoWidthCtrl">
-      <UniqueIdentifier>{C677FC03-253F-F846-8CA2-CB7929B21F1E}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="StereoWidthCtrl\Source">
-      <UniqueIdentifier>{1BC2DA06-2716-3F79-5B30-6FEC3256AAC6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="StereoWidthCtrl\Source\zen_utils">
-      <UniqueIdentifier>{42A3CBD4-4421-D6F4-BDD1-F1D0B741116D}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="StereoWidthCtrl\Source\zen_utils\converters">
-      <UniqueIdentifier>{D85442BD-3FAF-87AD-9D4E-B4B74477B58E}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="StereoWidthCtrl\Source\zen_utils\components">
-      <UniqueIdentifier>{74EA75D9-AE44-ACBD-CB1A-54FFA7EB78A3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="StereoWidthCtrl\Source\zen_utils\params">
-      <UniqueIdentifier>{5680D239-06D6-B083-C944-55AFE6644D16}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="StereoWidthCtrl\Source\components">
-      <UniqueIdentifier>{212289F6-B89F-2BEF-149D-C9B5C4B2ED48}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="StereoWidthCtrl\Source\components\GainCtrlSlider">
-      <UniqueIdentifier>{063B5B73-E8E7-17EA-444B-4B16C98D1F50}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="StereoWidthCtrl\Source\components\StereoWidthCtrlSlider">
-      <UniqueIdentifier>{FE43B306-4051-1D53-1B27-219013548ABD}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Juce Modules">
       <UniqueIdentifier>{422C46B7-0467-2DB0-BF3C-16DFCAFD69AC}</UniqueIdentifier>
     </Filter>
@@ -265,49 +238,73 @@
     <Filter Include="Juce Library Code">
       <UniqueIdentifier>{8B4D1BAA-6DB4-CAEC-A0FA-271F354D5C61}</UniqueIdentifier>
     </Filter>
-    <Filter Include="StereoWidthCtrl\Source\components\NotepadComponent">
-      <UniqueIdentifier>{49c2b35a-38c1-49f0-82c4-d10d6d6098fb}</UniqueIdentifier>
+    <Filter Include="ZenTool">
+      <UniqueIdentifier>{C677FC03-253F-F846-8CA2-CB7929B21F1E}</UniqueIdentifier>
     </Filter>
-    <Filter Include="StereoWidthCtrl\Source\zen_utils\processing">
+    <Filter Include="ZenTool\Source">
+      <UniqueIdentifier>{1BC2DA06-2716-3F79-5B30-6FEC3256AAC6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ZenTool\Source\zen_utils">
+      <UniqueIdentifier>{42A3CBD4-4421-D6F4-BDD1-F1D0B741116D}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ZenTool\Source\zen_utils\converters">
+      <UniqueIdentifier>{D85442BD-3FAF-87AD-9D4E-B4B74477B58E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ZenTool\Source\zen_utils\components">
+      <UniqueIdentifier>{74EA75D9-AE44-ACBD-CB1A-54FFA7EB78A3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ZenTool\Source\zen_utils\params">
+      <UniqueIdentifier>{5680D239-06D6-B083-C944-55AFE6644D16}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ZenTool\Source\zen_utils\processing">
       <UniqueIdentifier>{aff5f597-dd0a-4259-b243-0c9a2ba9845b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="StereoWidthCtrl\Source\components\PanSlider">
+    <Filter Include="ZenTool\Source\components">
+      <UniqueIdentifier>{212289F6-B89F-2BEF-149D-C9B5C4B2ED48}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ZenTool\Source\components\GainCtrlSlider">
+      <UniqueIdentifier>{063B5B73-E8E7-17EA-444B-4B16C98D1F50}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ZenTool\Source\components\StereoWidthCtrlSlider">
+      <UniqueIdentifier>{FE43B306-4051-1D53-1B27-219013548ABD}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ZenTool\Source\components\NotepadComponent">
+      <UniqueIdentifier>{49c2b35a-38c1-49f0-82c4-d10d6d6098fb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ZenTool\Source\components\PanSlider">
       <UniqueIdentifier>{b0aeddab-66b9-45dd-9221-0ebfb52ca326}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Source\zen_utils\components\AssociatedButton.cpp">
-      <Filter>StereoWidthCtrl\Source\zen_utils\components</Filter>
+      <Filter>ZenTool\Source\zen_utils\components</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\zen_utils\components\AssociatedSlider.cpp">
-      <Filter>StereoWidthCtrl\Source\zen_utils\components</Filter>
+      <Filter>ZenTool\Source\zen_utils\components</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\zen_utils\params\BoolParameter.cpp">
-      <Filter>StereoWidthCtrl\Source\zen_utils\params</Filter>
+      <Filter>ZenTool\Source\zen_utils\params</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\zen_utils\params\FloatParameter.cpp">
-      <Filter>StereoWidthCtrl\Source\zen_utils\params</Filter>
+      <Filter>ZenTool\Source\zen_utils\params</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\zen_utils\ZenDebug.cpp">
-      <Filter>StereoWidthCtrl\Source\zen_utils</Filter>
+      <Filter>ZenTool\Source\zen_utils</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\zen_utils\ZenParamUtils.cpp">
-      <Filter>StereoWidthCtrl\Source\zen_utils</Filter>
+      <Filter>ZenTool\Source\zen_utils</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\components\GainCtrlSlider\GainCtrlSlider.cpp">
-      <Filter>StereoWidthCtrl\Source\components\GainCtrlSlider</Filter>
+      <Filter>ZenTool\Source\components\GainCtrlSlider</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\components\StereoWidthCtrlSlider\StereoWidthCtrlSlider.cpp">
-      <Filter>StereoWidthCtrl\Source\components\StereoWidthCtrlSlider</Filter>
+      <Filter>ZenTool\Source\components\StereoWidthCtrlSlider</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\PluginProcessor.cpp">
-      <Filter>StereoWidthCtrl\Source</Filter>
+      <Filter>ZenTool\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\PluginEditor.cpp">
-      <Filter>StereoWidthCtrl\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\PluginEditorRef.cpp">
-      <Filter>StereoWidthCtrl\Source</Filter>
+      <Filter>ZenTool\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\JUCE\modules\juce_audio_basics\buffers\juce_AudioDataConverters.cpp">
       <Filter>Juce Modules\juce_audio_basics\buffers</Filter>
@@ -1261,54 +1258,51 @@
       <Filter>Juce Library Code</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\components\NotepadComponent\NotepadComponent.cpp">
-      <Filter>StereoWidthCtrl\Source\components\NotepadComponent</Filter>
+      <Filter>ZenTool\Source\components\NotepadComponent</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\zen_utils\processing\BufferSampleProcesses.cpp">
-      <Filter>StereoWidthCtrl\Source\zen_utils\processing</Filter>
+      <Filter>ZenTool\Source\zen_utils\processing</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\components\PanSlider\PanSlider.cpp">
-      <Filter>StereoWidthCtrl\Source\components\PanSlider</Filter>
+      <Filter>ZenTool\Source\components\PanSlider</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Source\zen_utils\converters\DecibelConversions.h">
-      <Filter>StereoWidthCtrl\Source\zen_utils\converters</Filter>
+      <Filter>ZenTool\Source\zen_utils\converters</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\zen_utils\components\AssociatedButton.h">
-      <Filter>StereoWidthCtrl\Source\zen_utils\components</Filter>
+      <Filter>ZenTool\Source\zen_utils\components</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\zen_utils\components\AssociatedSlider.h">
-      <Filter>StereoWidthCtrl\Source\zen_utils\components</Filter>
+      <Filter>ZenTool\Source\zen_utils\components</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\zen_utils\params\BoolParameter.h">
-      <Filter>StereoWidthCtrl\Source\zen_utils\params</Filter>
+      <Filter>ZenTool\Source\zen_utils\params</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\zen_utils\params\FloatParameter.h">
-      <Filter>StereoWidthCtrl\Source\zen_utils\params</Filter>
+      <Filter>ZenTool\Source\zen_utils\params</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\zen_utils\zen_utils.h">
-      <Filter>StereoWidthCtrl\Source\zen_utils</Filter>
+      <Filter>ZenTool\Source\zen_utils</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\zen_utils\ZenDebug.h">
-      <Filter>StereoWidthCtrl\Source\zen_utils</Filter>
+      <Filter>ZenTool\Source\zen_utils</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\zen_utils\ZenParamUtils.h">
-      <Filter>StereoWidthCtrl\Source\zen_utils</Filter>
+      <Filter>ZenTool\Source\zen_utils</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\components\GainCtrlSlider\GainCtrlSlider.h">
-      <Filter>StereoWidthCtrl\Source\components\GainCtrlSlider</Filter>
+      <Filter>ZenTool\Source\components\GainCtrlSlider</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\components\StereoWidthCtrlSlider\StereoWidthCtrlSlider.h">
-      <Filter>StereoWidthCtrl\Source\components\StereoWidthCtrlSlider</Filter>
+      <Filter>ZenTool\Source\components\StereoWidthCtrlSlider</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\PluginProcessor.h">
-      <Filter>StereoWidthCtrl\Source</Filter>
+      <Filter>ZenTool\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\PluginEditor.h">
-      <Filter>StereoWidthCtrl\Source</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\PluginEditorRef.h">
-      <Filter>StereoWidthCtrl\Source</Filter>
+      <Filter>ZenTool\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\JUCE\modules\juce_audio_basics\buffers\juce_AudioDataConverters.h">
       <Filter>Juce Modules\juce_audio_basics\buffers</Filter>
@@ -2487,13 +2481,13 @@
       <Filter>Juce Library Code</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\components\NotepadComponent\NotepadComponent.h">
-      <Filter>StereoWidthCtrl\Source\components\NotepadComponent</Filter>
+      <Filter>ZenTool\Source\components\NotepadComponent</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\zen_utils\processing\BufferSampleProcesses.h">
-      <Filter>StereoWidthCtrl\Source\zen_utils\processing</Filter>
+      <Filter>ZenTool\Source\zen_utils\processing</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\components\PanSlider\PanSlider.h">
-      <Filter>StereoWidthCtrl\Source\components\PanSlider</Filter>
+      <Filter>ZenTool\Source\components\PanSlider</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

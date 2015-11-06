@@ -28,23 +28,23 @@
 /// <seealso cref="T:Timer"/>
 /// <seealso cref="T:SliderListener"/>
 /// <seealso cref="T:ButtonListener"/>
-class StereoWidthCtrlAudioProcessorEditor : public AudioProcessorEditor,
+class ZenToolGUIEditor : public AudioProcessorEditor,
 											public Timer,
 											public SliderListener,
 											public ButtonListener
 {
 public:
 	//==============================================================================
-	explicit StereoWidthCtrlAudioProcessorEditor(StereoWidthCtrlAudioProcessor& ownerFilter);
-	~StereoWidthCtrlAudioProcessorEditor();
+	explicit ZenToolGUIEditor(ZenToolAudioProcessor& ownerFilter);
+	~ZenToolGUIEditor();
 
 	//==============================================================================
 
 	void timerCallback() override;
 
-	StereoWidthCtrlAudioProcessor* getProcessor() const
+	ZenToolAudioProcessor* getProcessor() const
 	{
-		return static_cast<StereoWidthCtrlAudioProcessor*>(getAudioProcessor());
+		return static_cast<ZenToolAudioProcessor*>(getAudioProcessor());
 	}
 
 	void paint(Graphics& g) override;
@@ -74,7 +74,7 @@ private:
 
 
 	//==============================================================================
-	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (StereoWidthCtrlAudioProcessorEditor)
+	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ZenToolGUIEditor)
 };
 
 #endif //JUCE_STEREO_WIDTH_PLUGIN_EDITOR

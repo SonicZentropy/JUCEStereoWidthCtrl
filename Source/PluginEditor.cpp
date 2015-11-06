@@ -22,11 +22,11 @@
 using namespace juce;
 
 //==============================================================================
-StereoWidthCtrlAudioProcessorEditor::StereoWidthCtrlAudioProcessorEditor(StereoWidthCtrlAudioProcessor& ownerFilter)
+ZenToolGUIEditor::ZenToolGUIEditor(ZenToolAudioProcessor& ownerFilter)
 	: AudioProcessorEditor(ownerFilter), processor(&ownerFilter)
 {
 	//Audio Processor reference
-	StereoWidthCtrlAudioProcessor* processor = getProcessor();
+	ZenToolAudioProcessor* processor = getProcessor();
 		
 	addAndMakeVisible(stereoWidthSldCtrl = new StereoWidthCtrlSlider("Width Factor Slider", processor->stereoWidthParam, "%"));
 	stereoWidthSldCtrl->setTooltip(TRANS("Stereo Width"));
@@ -149,7 +149,7 @@ StereoWidthCtrlAudioProcessorEditor::StereoWidthCtrlAudioProcessorEditor(StereoW
 }
 
 ///
-StereoWidthCtrlAudioProcessorEditor::~StereoWidthCtrlAudioProcessorEditor()
+ZenToolGUIEditor::~ZenToolGUIEditor()
 {
 	stereoWidthSldCtrl = nullptr;
 	bypassBtnCtrl = nullptr;
@@ -166,12 +166,12 @@ StereoWidthCtrlAudioProcessorEditor::~StereoWidthCtrlAudioProcessorEditor()
 }
 
 //==============================================================================
-void StereoWidthCtrlAudioProcessorEditor::paint(Graphics& g)
+void ZenToolGUIEditor::paint(Graphics& g)
 {
 	g.fillAll(Colours::black);
 }
 
-void StereoWidthCtrlAudioProcessorEditor::resized()
+void ZenToolGUIEditor::resized()
 {
 	//MainTab
 	stereoWidthSldCtrl->setBounds(53, 0, 69, 30);
@@ -190,7 +190,7 @@ void StereoWidthCtrlAudioProcessorEditor::resized()
 
 /// <summary> Called by JUCE when slider is moved.  Casts slider as Associated and passes to associatedSliderValueChanged</summary>
 /// <param name="sliderThatWasMoved"> The slider that was moved.</param>
-void StereoWidthCtrlAudioProcessorEditor::sliderValueChanged(Slider* sliderThatWasMoved)
+void ZenToolGUIEditor::sliderValueChanged(Slider* sliderThatWasMoved)
 {
 	AudioProcessorParameter* param = static_cast<AssociatedSlider*>(sliderThatWasMoved)->getAssociatedParameter();
 	if (sliderThatWasMoved == stereoWidthSldCtrl)
@@ -209,9 +209,9 @@ void StereoWidthCtrlAudioProcessorEditor::sliderValueChanged(Slider* sliderThatW
 
 
 
-void StereoWidthCtrlAudioProcessorEditor::buttonClicked(Button* buttonThatWasClicked)
+void ZenToolGUIEditor::buttonClicked(Button* buttonThatWasClicked)
 {
-	StereoWidthCtrlAudioProcessor* audioProc = getProcessor();
+	ZenToolAudioProcessor* audioProc = getProcessor();
 
 	if (buttonThatWasClicked == bypassBtnCtrl)
 	{
@@ -253,9 +253,9 @@ void StereoWidthCtrlAudioProcessorEditor::buttonClicked(Button* buttonThatWasCli
 }
 
 /// <summary>This method is called automatically every 200ms to update GUI if required</summary>
-void StereoWidthCtrlAudioProcessorEditor::timerCallback()
+void ZenToolGUIEditor::timerCallback()
 {
-	StereoWidthCtrlAudioProcessor* ourProcessor = getProcessor();
+	ZenToolAudioProcessor* ourProcessor = getProcessor();
 	//exchange data between UI Elements and the Plugin (ourProcessor)
 
 	if (ourProcessor->muteAudioParam->needsUIUpdate())

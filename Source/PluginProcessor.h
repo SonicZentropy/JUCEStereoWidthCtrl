@@ -10,13 +10,13 @@
 /// <summary> Handles main VST processing via reactions to automation
 /// 		  (which calls the .setParameter() method) as well as GUI handling from PluginEditor.cpp</summary>
 /// <seealso cref="T:AudioProcessor"/>
-class StereoWidthCtrlAudioProcessor  :  public AudioProcessor/*, public ParamGroup*/
+class ZenToolAudioProcessor  :  public AudioProcessor/*, public ParamGroup*/
 {
 public:
 
     //==============================================================================
-    StereoWidthCtrlAudioProcessor();
-    ~StereoWidthCtrlAudioProcessor();
+    ZenToolAudioProcessor();
+    ~ZenToolAudioProcessor();
 
 	//==============================================================================
 	void processBlock(AudioSampleBuffer& audioSampleBuffer, MidiBuffer& midiBuffer) override;
@@ -86,7 +86,7 @@ private:
 
 	bool UIUpdateFlag;
 	//==============================================================================
-	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(StereoWidthCtrlAudioProcessor)
+	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ZenToolAudioProcessor)
 
 };
 

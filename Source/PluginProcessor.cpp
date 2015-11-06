@@ -22,9 +22,9 @@
 
 
 //==============================================================================
-StereoWidthCtrlAudioProcessor::StereoWidthCtrlAudioProcessor()
+ZenToolAudioProcessor::ZenToolAudioProcessor()
 {
-	//DBG("Entered method: StereoWidthCtrlAudioProcessor:StereoWidthCtrlAudioProcessor()");
+	//DBGM("In ZenToolAudioProcessor::ZenToolAudioProcessor() ");
  	addParameter(masterBypassParam = new BoolParameter(0.0f, "MasterBypass"));
  	addParameter(stereoWidthParam = new FloatParameter(0.5f, "StereoWidth"));
 	addParameter(muteAudioParam = new BoolParameter(0.0f, "MuteAudio"));
@@ -38,7 +38,7 @@ StereoWidthCtrlAudioProcessor::StereoWidthCtrlAudioProcessor()
 	UIUpdateFlag = true; //flag UI for update
 }
 
-StereoWidthCtrlAudioProcessor::~StereoWidthCtrlAudioProcessor()
+ZenToolAudioProcessor::~ZenToolAudioProcessor()
 {
 
 }
@@ -49,7 +49,7 @@ StereoWidthCtrlAudioProcessor::~StereoWidthCtrlAudioProcessor()
 /// <remarks>	Zentropy, 8/30/2015. </remarks>
 /// <param name="buffer">	   	[in,out] The buffer. </param>
 /// <param name="midiMessages">	[in,out] The MIDI messages. </param>
-void StereoWidthCtrlAudioProcessor::processBlock(AudioSampleBuffer& buffer, MidiBuffer& midiMessages)
+void ZenToolAudioProcessor::processBlock(AudioSampleBuffer& buffer, MidiBuffer& midiMessages)
 {
 	/*
 	// Assumes Stereo channels only
@@ -143,7 +143,7 @@ void StereoWidthCtrlAudioProcessor::processBlock(AudioSampleBuffer& buffer, Midi
 }
 
 //==============================================================================
-void StereoWidthCtrlAudioProcessor::getStateInformation(MemoryBlock& destData)
+void ZenToolAudioProcessor::getStateInformation(MemoryBlock& destData)
 {
 	// You should use this method to store your parameters in the memory block.
 	// You could do that either as raw data, or use the XML or ValueTree classes
@@ -172,7 +172,7 @@ void StereoWidthCtrlAudioProcessor::getStateInformation(MemoryBlock& destData)
 	copyXmlToBinary(root, destData);
 }
 
-void StereoWidthCtrlAudioProcessor::setStateInformation(const void* data, int sizeInBytes)
+void ZenToolAudioProcessor::setStateInformation(const void* data, int sizeInBytes)
 {
 	// You should use this method to restore your parameters from this memory block,
 	// whose contents will have been created by the getStateInformation() call.
@@ -225,32 +225,32 @@ void StereoWidthCtrlAudioProcessor::setStateInformation(const void* data, int si
 //==============================================================================
 
 #pragma region overrides
-const String StereoWidthCtrlAudioProcessor::getName() const
+const String ZenToolAudioProcessor::getName() const
 {
 	return JucePlugin_Name;
 }
 
-const String StereoWidthCtrlAudioProcessor::getInputChannelName(int channelIndex) const
+const String ZenToolAudioProcessor::getInputChannelName(int channelIndex) const
 {
 	return String(channelIndex + 1);
 }
 
-const String StereoWidthCtrlAudioProcessor::getOutputChannelName(int channelIndex) const
+const String ZenToolAudioProcessor::getOutputChannelName(int channelIndex) const
 {
 	return String(channelIndex + 1);
 }
 
-bool StereoWidthCtrlAudioProcessor::isInputChannelStereoPair(int index) const
+bool ZenToolAudioProcessor::isInputChannelStereoPair(int index) const
 {
 	return true;
 }
 
-bool StereoWidthCtrlAudioProcessor::isOutputChannelStereoPair(int index) const
+bool ZenToolAudioProcessor::isOutputChannelStereoPair(int index) const
 {
 	return true;
 }
 
-bool StereoWidthCtrlAudioProcessor::acceptsMidi() const
+bool ZenToolAudioProcessor::acceptsMidi() const
 {
 #if JucePlugin_WantsMidiInput
 	return true;
@@ -259,7 +259,7 @@ bool StereoWidthCtrlAudioProcessor::acceptsMidi() const
 #endif
 }
 
-bool StereoWidthCtrlAudioProcessor::producesMidi() const
+bool ZenToolAudioProcessor::producesMidi() const
 {
 #if JucePlugin_ProducesMidiOutput
 	return true;
@@ -268,45 +268,45 @@ bool StereoWidthCtrlAudioProcessor::producesMidi() const
 #endif
 }
 
-bool StereoWidthCtrlAudioProcessor::silenceInProducesSilenceOut() const
+bool ZenToolAudioProcessor::silenceInProducesSilenceOut() const
 {
 	return true;
 }
 
-double StereoWidthCtrlAudioProcessor::getTailLengthSeconds() const
+double ZenToolAudioProcessor::getTailLengthSeconds() const
 {
 	return 0.0;
 }
 
-int StereoWidthCtrlAudioProcessor::getNumPrograms()
+int ZenToolAudioProcessor::getNumPrograms()
 {
 	return 1;   // NB: some hosts don't cope very well if you tell them there are 0 programs,
 				// so this should be at least 1, even if you're not really implementing programs.
 }
 
-int StereoWidthCtrlAudioProcessor::getCurrentProgram()
+int ZenToolAudioProcessor::getCurrentProgram()
 {
 	return 0;
 }
 
-void StereoWidthCtrlAudioProcessor::setCurrentProgram(int index)
+void ZenToolAudioProcessor::setCurrentProgram(int index)
 {
 
 }
 
-const String StereoWidthCtrlAudioProcessor::getProgramName(int index)
+const String ZenToolAudioProcessor::getProgramName(int index)
 {
 	return String();
 }
 
-void StereoWidthCtrlAudioProcessor::changeProgramName(int index, const String& newName)
+void ZenToolAudioProcessor::changeProgramName(int index, const String& newName)
 {
 
 }
 
 //==============================================================================
 
-void StereoWidthCtrlAudioProcessor::prepareToPlay(double inSampleRate, int samplesPerBlock)
+void ZenToolAudioProcessor::prepareToPlay(double inSampleRate, int samplesPerBlock)
 {
 	// Use this method as the place to do any pre-playback
 	// initialisation that you need..
@@ -315,27 +315,27 @@ void StereoWidthCtrlAudioProcessor::prepareToPlay(double inSampleRate, int sampl
 }
 
 
-void StereoWidthCtrlAudioProcessor::releaseResources()
+void ZenToolAudioProcessor::releaseResources()
 {
 	// When playback stops, you can use this as an opportunity to free up any
 	// spare memory, etc.
 }
 
 //==============================================================================
-bool StereoWidthCtrlAudioProcessor::hasEditor() const
+bool ZenToolAudioProcessor::hasEditor() const
 {
 	return true; // (change this to false if you choose to not supply an editor)
 }
 
-AudioProcessorEditor* StereoWidthCtrlAudioProcessor::createEditor()
+AudioProcessorEditor* ZenToolAudioProcessor::createEditor()
 {
-	return new StereoWidthCtrlAudioProcessorEditor(*this);
+	return new ZenToolGUIEditor(*this);
 }
 
 //==============================================================================
 // This creates new instances of the plugin..
 AudioProcessor* JUCE_CALLTYPE createPluginFilter()
 {
-	return new StereoWidthCtrlAudioProcessor();
+	return new ZenToolAudioProcessor();
 }
 #pragma endregion overrides
