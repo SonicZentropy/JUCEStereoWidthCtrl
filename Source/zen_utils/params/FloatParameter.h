@@ -39,7 +39,7 @@ public:
 	virtual float getValueForText(const String& text) const override;
 	virtual String getLabel() const override;
 	// ReSharper disable once CppHidingFunction
-	void setValueNotifyingHost(float newValue) override; 
+	virtual void setValueNotifyingHost(float newValue) override; 
 
 	bool needsUIUpdate();
 	void setLabel(const String& inLabel);

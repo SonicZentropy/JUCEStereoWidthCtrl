@@ -70,7 +70,7 @@ private:
  	ScopedPointer<Label> invertLabel;
 	ScopedPointer<Label> gainLabel;
 	ScopedPointer<PanSlider> stereoPanSldCtrl;
-	//ScopedPointer<Label> panLabel;
+	ScopedPointer<Label> panLabel;
 
 
 	//==============================================================================

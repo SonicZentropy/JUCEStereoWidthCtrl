@@ -26,9 +26,9 @@ StereoWidthCtrlAudioProcessorEditor::StereoWidthCtrlAudioProcessorEditor(StereoW
 	: AudioProcessorEditor(ownerFilter), processor(&ownerFilter)
 {
 	//Audio Processor reference
-	StereoWidthCtrlAudioProcessor* audioProc = getProcessor();
+	StereoWidthCtrlAudioProcessor* processor = getProcessor();
 		
-	addAndMakeVisible(stereoWidthSldCtrl = new StereoWidthCtrlSlider("Width Factor Slider", audioProc->stereoWidthParam, "%"));
+	addAndMakeVisible(stereoWidthSldCtrl = new StereoWidthCtrlSlider("Width Factor Slider", processor->stereoWidthParam, "%"));
 	stereoWidthSldCtrl->setTooltip(TRANS("Stereo Width"));
 	stereoWidthSldCtrl->setRange(0, 1, 0.005);
 	stereoWidthSldCtrl->setSliderStyle(Slider::Rotary);
@@ -42,7 +42,7 @@ StereoWidthCtrlAudioProcessorEditor::StereoWidthCtrlAudioProcessorEditor(StereoW
 	stereoWidthSldCtrl->setColour(Slider::textBoxHighlightColourId, Colour(0x40ffffff));
 	stereoWidthSldCtrl->addListener(this);
 	
-	addAndMakeVisible(gainSldCtrl = new GainCtrlSlider("Gain Knob", audioProc->audioGainParam, "dB", 12.0));
+	addAndMakeVisible(gainSldCtrl = new GainCtrlSlider("Gain Knob", processor->audioGainParam, "dB", processor->MaxDecibelsInRange));
 	gainSldCtrl->setRange(0.0, 1.0, 0.0);
 	gainSldCtrl->setSkewFactor(0.4f);
 	gainSldCtrl->setSliderStyle(Slider::LinearVertical);
@@ -107,7 +107,7 @@ StereoWidthCtrlAudioProcessorEditor::StereoWidthCtrlAudioProcessorEditor(StereoW
 	gainLabel->setColour(TextEditor::textColourId, Colours::black);
 	gainLabel->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
 
-	addAndMakeVisible(stereoPanSldCtrl = new PanSlider("Pan", audioProc->stereoPanParam));
+	addAndMakeVisible(stereoPanSldCtrl = new PanSlider("Pan", processor->stereoPanParam));
 	stereoPanSldCtrl->setRange(-100, 100, 1);
 	stereoPanSldCtrl->setSliderStyle(Slider::RotaryHorizontalVerticalDrag);
 	stereoPanSldCtrl->setTextBoxStyle(Slider::TextBoxBelow, false, 50, 20);
@@ -117,6 +117,14 @@ StereoWidthCtrlAudioProcessorEditor::StereoWidthCtrlAudioProcessorEditor(StereoW
 	stereoPanSldCtrl->setValue(0.0f, dontSendNotification);
 	stereoPanSldCtrl->addListener(this);
 	
+	addAndMakeVisible(panLabel = new Label("Pan Label",
+		TRANS("Pan:")));
+	panLabel->setFont(Font(10.00f, Font::bold));
+	panLabel->setJustificationType(Justification::centredBottom);
+	panLabel->setEditable(false, false, false);
+	panLabel->setColour(Label::textColourId, Colours::grey);
+	panLabel->setColour(TextEditor::textColourId, Colours::black);
+	panLabel->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
 
 	//Set default double click reset values
 
@@ -154,6 +162,7 @@ StereoWidthCtrlAudioProcessorEditor::~StereoWidthCtrlAudioProcessorEditor()
 	invertLabel = nullptr;
 	gainLabel = nullptr;
 	stereoPanSldCtrl = nullptr;	
+	panLabel = nullptr;
 }
 
 //==============================================================================
@@ -176,6 +185,7 @@ void StereoWidthCtrlAudioProcessorEditor::resized()
 	invertLabel->setBounds(8, 30, 44, 20);
 	gainLabel->setBounds(63, 32, 39, 14);
 	stereoPanSldCtrl->setBounds(3, 74, 56, 44);	
+	panLabel->setBounds(12, 63, 39, 14);
 }
 
 /// <summary> Called by JUCE when slider is moved.  Casts slider as Associated and passes to associatedSliderValueChanged</summary>

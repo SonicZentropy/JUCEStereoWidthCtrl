@@ -9,9 +9,7 @@ class GainCtrlSlider : public AssociatedSlider
 {
 public:
 
-	GainCtrlSlider(const String& componentName, AudioProcessorParameter* associatedParam);
-	GainCtrlSlider(const String& componentName, AudioProcessorParameter* associatedParam, const String& desiredUnitLabel);
-	GainCtrlSlider(const String& componentName, AudioProcessorParameter* associatedParam, const String& desiredUnitLabel, const float& desiredMaxDBRange);
+	GainCtrlSlider(const String& componentName, AudioProcessorParameter* associatedParam, const String& desiredUnitLabel="dB", const float& desiredMaxDBRange=12.0f);
 	
 	~GainCtrlSlider();
 
@@ -20,11 +18,12 @@ public:
 	double getValueFromText(const String& text) override;
 
 	float getMaximumDecibelsInRange() const { return maximumDecibelsInRange; }
-	void setMaximumDecibelsInRange(float val) { maximumDecibelsInRange = val; }
+	//void setMaximumDecibelsInRange(float val) { maximumDecibelsInRange = val; }
 
 private:
 
-	float maximumDecibelsInRange = 0;
+	const float maximumDecibelsInRange;
+	const float minimumDecibelsInRange;
 	
 };
 #endif  // GAINCTRLSLIDER_H_INCLUDED

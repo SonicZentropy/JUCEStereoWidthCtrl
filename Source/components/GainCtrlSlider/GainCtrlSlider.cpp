@@ -5,22 +5,9 @@
 #include <iomanip>
 
 
-GainCtrlSlider::GainCtrlSlider(const String& componentName, AudioProcessorParameter* associatedParam) 
-	: AssociatedSlider(componentName, associatedParam)
-{
-	
-	setValue( associatedParam->getValue() );
-}
-
-GainCtrlSlider::GainCtrlSlider(const String& componentName, AudioProcessorParameter* associatedParam, const String& desiredUnitLabel)
-	: AssociatedSlider(componentName, associatedParam, desiredUnitLabel)
-{
-	setValue( associatedParam->getValue());
-	this->setTextValueSuffix(desiredUnitLabel);
-}
 
 GainCtrlSlider::GainCtrlSlider(const String& componentName, AudioProcessorParameter* associatedParam, const String& desiredUnitLabel, const float& desiredMaxDBRange)
-	: AssociatedSlider(componentName, associatedParam, desiredUnitLabel), maximumDecibelsInRange(desiredMaxDBRange)
+	: AssociatedSlider(componentName, associatedParam, desiredUnitLabel), maximumDecibelsInRange(desiredMaxDBRange), minimumDecibelsInRange(-96.0f)
 {
 	setValue(associatedParam->getValue());
 	this->setTextValueSuffix(desiredUnitLabel);	
@@ -31,7 +18,7 @@ GainCtrlSlider::GainCtrlSlider(const String& componentName, AudioProcessorParame
 /// <returns>String representing the input value in decibelsFS + Unit label</returns>
 String GainCtrlSlider::getTextFromValue(double value)
 {
-	float decibelsFromGain = static_cast<float>(DecibelConversions::mapNormalizedValueToDecibels<float>(static_cast<float>(value), 0.0, 1.0, 0.5, -96, 12, 0.0));
+	float decibelsFromGain = static_cast<float>(DecibelConversions::mapNormalizedValueToDecibels<float>(static_cast<float>(value), 0.0, 1.0, 0.5, minimumDecibelsInRange, maximumDecibelsInRange, 0.0));
 	if (decibelsFromGain <= -96.0f)
 	{
 		return String("-INF dB");
@@ -50,7 +37,7 @@ double GainCtrlSlider::getValueFromText(const String& text)
 {	
 	
 	float rawValue = text.getFloatValue();
-	float gainFromDecibels = DecibelConversions::mapDecibelsToProperNormalizedValue<float>(rawValue, 0.0, 1.0, 0.5, -96, 12, 0.0);
+	float gainFromDecibels = DecibelConversions::mapDecibelsToProperNormalizedValue<float>(rawValue, 0.0, 1.0, 0.5, minimumDecibelsInRange, maximumDecibelsInRange, 0.0);
 	
 	return gainFromDecibels;
 }

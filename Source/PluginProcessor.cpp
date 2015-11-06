@@ -27,7 +27,6 @@ StereoWidthCtrlAudioProcessor::StereoWidthCtrlAudioProcessor()
 	//DBG("Entered method: StereoWidthCtrlAudioProcessor:StereoWidthCtrlAudioProcessor()");
  	addParameter(masterBypassParam = new BoolParameter(0.0f, "MasterBypass"));
  	addParameter(stereoWidthParam = new FloatParameter(0.5f, "StereoWidth"));
-	DBG("Sizeof: " + String(sizeof(float)));
 	addParameter(muteAudioParam = new BoolParameter(0.0f, "MuteAudio"));
  	addParameter(audioGainParam = new FloatParameter(0.5f, "AudioGain")); //0.5f is 0 gain with this range
  	addParameter(lockGainParam = new BoolParameter(0.0f, "LockGain"));
@@ -60,7 +59,7 @@ void StereoWidthCtrlAudioProcessor::processBlock(AudioSampleBuffer& buffer, Midi
 	{
 		float* leftData = buffer.getWritePointer(0);  //leftData references left channel now
 		float* rightData = buffer.getWritePointer(1); //right data references right channel now
-		bool stereoWidthProcess = false, audioGainProcess = false, invertLeftProcess = false, invertRightProcess = false;
+		bool stereoWidthProcess = false, audioGainProcess = false, invertLeftProcess = false, invertRightProcess = false, panProcess = false;
 		float stereoWidthValue = stereoWidthParam->getValue();
 		float audioGainValue = audioGainParam->getValue();
 		float invertLeftValue = invertLeftParam->getValue();
@@ -88,9 +87,7 @@ void StereoWidthCtrlAudioProcessor::processBlock(AudioSampleBuffer& buffer, Midi
 			{
 				audioGainProcess = true;
 				//convert Audio Gain value to a raw decibel gain value
-//				float valueInDecibels = DecibelConversions::mapNormalizedValueToDecibels<float>(audioGainValue, 0.0, 1.0, 0.5, -96.0, 12.0, 0.0);
-//				audioGainValue = DecibelConversions::decibelsToGain<float>(valueInDecibels, -96.0f);
-				audioGainValue = DecibelConversions::decibelRangeGainToRawDecibelGain<float>(audioGainValue, 12.0f, -96.0f);
+				audioGainValue = DecibelConversions::decibelRangeGainToRawDecibelGain<float>(audioGainValue, MaxDecibelsInRange, -96.0f);
 			}
 			if (invertLeftValue != 0.0)
 			{
@@ -99,6 +96,10 @@ void StereoWidthCtrlAudioProcessor::processBlock(AudioSampleBuffer& buffer, Midi
 			if (invertRightValue != 0.0)
 			{
 				invertRightProcess = true;
+			}
+			if (panValue != 0.5)
+			{
+				panProcess = true;
 			}
 			if (lockGainValue != 0.0 && audioGainValue > 1.0f) //Gain is converted to raw decibel gain now from above
 			{
@@ -125,7 +126,7 @@ void StereoWidthCtrlAudioProcessor::processBlock(AudioSampleBuffer& buffer, Midi
 				{
 					BufferSampleProcesses::processInvertRightChannel(&rightData[i]);
 				}
-				if (panValue != 0.5f)
+				if (panProcess)
 				{
 					//Pan processing
 					BufferSampleProcesses::processPanning(&leftData[i], &rightData[i], panValue);

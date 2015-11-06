@@ -80,7 +80,8 @@ public:
 	bool needsUIUpdate() { return UIUpdateFlag; };
 	void RequestUIUpdate(){ UIUpdateFlag = true; };
 	void ClearUIUpdateFlag() { UIUpdateFlag = false; };
-	
+	const float MaxDecibelsInRange = 24.0f;
+			
 private:
 
 	bool UIUpdateFlag;

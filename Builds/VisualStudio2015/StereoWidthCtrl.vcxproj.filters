@@ -28,9 +28,6 @@
     <Filter Include="StereoWidthCtrl\Source\components\StereoWidthCtrlSlider">
       <UniqueIdentifier>{FE43B306-4051-1D53-1B27-219013548ABD}</UniqueIdentifier>
     </Filter>
-    <Filter Include="StereoWidthCtrl\Source\params">
-      <UniqueIdentifier>{856D0085-EE2B-0735-A4FC-6267F1968054}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Juce Modules">
       <UniqueIdentifier>{422C46B7-0467-2DB0-BF3C-16DFCAFD69AC}</UniqueIdentifier>
     </Filter>
